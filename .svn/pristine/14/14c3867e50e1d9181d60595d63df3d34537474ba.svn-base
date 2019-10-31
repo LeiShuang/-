@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/frame_report_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightgray"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refresh_report"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/try_use_top_color"
+            app:srlPrimaryColor="@color/try_use_top_color"
+            app:srlAccentColor="@android:color/white"
+            app:srlEnablePreviewInEditMode="true"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_report_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/lightgray" />
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:background="@color/try_use_top_color"
+            app:srlAccentColor="@android:color/white"
+            app:srlPrimaryColor="@color/try_use_top_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    <!--<RelativeLayout
+        android:id="@+id/rl_no_data"
+        android:background="@color/colorWhite"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/tv_no_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ico_recycler_empty"
+            android:layout_centerInParent="true"/>
+        <TextView
+            android:layout_below="@+id/tv_no_data"
+            android:layout_marginTop="@dimen/ten_padding"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>-->
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorWhite"
+        app:contentInsetStart="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_vertical">
+
+            <!-- &lt;!&ndash;首页搜索&ndash;&gt;
+             <EditText
+                 android:id="@+id/et_home_search"
+                 android:layout_width="0dp"
+                 android:layout_height="match_parent"
+                 android:layout_marginBottom="10dp"
+                 android:layout_marginLeft="15dp"
+                 android:layout_marginRight="15dp"
+                 android:layout_marginTop="10dp"
+                 android:layout_weight="1"
+                 android:background="@drawable/shape_seek"
+                 android:cursorVisible="false"
+                 android:drawablePadding="10dp"
+                 android:drawableLeft="@mipmap/ico_home_search"
+                 android:padding="10dp"
+                 android:textColor="@color/colorBarText"
+                 android:textColorHint="@color/colorBarText"
+                 android:textSize="12sp" />-->
+            <ImageView
+                android:id="@+id/iv_report_detail_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="@dimen/fivteen_padding"
+                android:src="@mipmap/ico_back_white" />
+
+            <ImageView
+                android:id="@+id/iv_report_detail_share"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/twenty_one_padding"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ico_share"/>
+            <ImageView
+                android:id="@+id/iv_report_detail_like"
+                android:layout_toLeftOf="@id/iv_report_detail_share"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_marginRight="@dimen/dots_margin_bottom"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ico_unlike"/>
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+</FrameLayout>

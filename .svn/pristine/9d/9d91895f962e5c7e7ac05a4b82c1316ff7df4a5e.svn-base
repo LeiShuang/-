@@ -1,0 +1,57 @@
+package com.zfsoft.zfsoft_product.entity;
+
+/**
+ * Created by ckw
+ * on 2019/1/18.
+ */
+public class BannerBean {
+   /* bt	标题
+    hftplj	横幅图片相对路径
+    px	排序
+    lx	类型*/
+   private String xgid;
+   private String bt;
+   private String hftplj;
+   private String px;
+   private String lx;
+
+    public String getXgid() {
+        return xgid;
+    }
+
+    public void setXgid(String xgid) {
+        this.xgid = xgid;
+    }
+
+    public String getBt() {
+        return bt;
+    }
+
+    public void setBt(String bt) {
+        this.bt = bt;
+    }
+
+    public String getHftplj() {
+        return hftplj;
+    }
+
+    public void setHftplj(String hftplj) {
+        this.hftplj = hftplj;
+    }
+
+    public String getPx() {
+        return px;
+    }
+
+    public void setPx(String px) {
+        this.px = px;
+    }
+
+    public String getLx() {
+        return lx;
+    }
+
+    public void setLx(String lx) {
+        this.lx = lx;
+    }
+}

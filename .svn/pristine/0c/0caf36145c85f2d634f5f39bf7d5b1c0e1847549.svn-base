@@ -1,0 +1,132 @@
+package com.zfsoft.zfsoft_product.modules.try_use.try_use_detail;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.tencent.liteav.demo.play.SuperPlayerModel;
+import com.tencent.liteav.demo.play.SuperPlayerView;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseFragment;
+import com.zfsoft.zfsoft_product.entity.InfoServer;
+import com.zfsoft.zfsoft_product.entity.ProductInfo;
+import com.zfsoft.zfsoft_product.utils.GlideImageLoader;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
+/**
+ * 创建日期：2019/1/12 on 14:23
+ * 描述:产品详情fragment
+ * 作者:Ls
+ */
+public class ProductDetailFragment extends BaseFragment {
+    @BindView(R.id.report_detail_banner)
+    Banner mReportDetailBanner;
+    @BindView(R.id.tv_use_title)
+    TextView mTvUseTitle;
+    @BindView(R.id.tv_thing_size)
+    TextView mTvThingSize;
+    @BindView(R.id.tv_thing_price)
+    TextView mTvThingPrice;
+    @BindView(R.id.tv_time)
+    TextView mTvTime;
+    @BindView(R.id.tv_number)
+    TextView mTvNumber;
+    @BindView(R.id.tv_person_number)
+    TextView mTvPersonNumber;
+    @BindView(R.id.super_player)
+    SuperPlayerView mSuperPlayer;
+    private ProductInfo mInfo ;
+    public static ProductDetailFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        ProductDetailFragment fragment = new ProductDetailFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.fragment_producet_detail;
+    }
+
+    @Override
+    protected void initVariables() {
+        mInfo = InfoServer.getProductInfo();
+    }
+
+    @Override
+    protected void handleBundle(Bundle bundle) {
+
+    }
+
+    @Override
+    protected void operateViews(View view) {
+        initBanner();
+        mTvUseTitle.setText(mInfo.getProductName());
+        mTvThingSize.setText(mInfo.getProductSize());
+        mTvThingPrice.setText(mInfo.getProductPrice());
+        mTvTime.setText(mInfo.getProductTime());
+        mTvNumber.setText(mInfo.getProductNumber());
+        mTvPersonNumber.setText(mInfo.getUserNumber());
+        SuperPlayerModel model = new SuperPlayerModel();
+        model.videoURL = mInfo.getMap4Url();
+        mSuperPlayer.setPlayerViewCallback(new SuperPlayerView.PlayerViewCallback() {
+            @Override
+            public void hideViews() {
+
+            }
+
+            @Override
+            public void showViews() {
+
+            }
+
+            @Override
+            public void onQuit(int i) {
+
+            }
+        });
+        mSuperPlayer.playWithMode(model);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mReportDetailBanner.startAutoPlay();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mReportDetailBanner.stopAutoPlay();
+        mSuperPlayer.resetPlayer();
+    }
+
+    private void initBanner() {
+        mReportDetailBanner.setImages(mInfo.getBannerInfo())
+                .setImageLoader(new GlideImageLoader())
+                .setBannerStyle(BannerConfig.NUM_INDICATOR)
+                .setDelayTime(5000)
+                .start();
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    public void initPresenter() {
+
+    }
+
+  
+}

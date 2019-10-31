@@ -1,0 +1,64 @@
+package com.zfsoft.zfsoft_product.modules.try_use.try_use_detail;
+
+import com.zfsoft.zfsoft_product.entity.ProductInfo;
+import com.zfsoft.zfsoft_product.entity.ResponseListInfo;
+import com.zfsoft.zfsoft_product.net.ApiService;
+import com.zfsoft.zfsoft_product.net.CallBackListener;
+import com.zfsoft.zfsoft_product.net.HttpManager;
+import com.zfsoft.zfsoft_product.net.Response;
+
+import javax.inject.Inject;
+
+import io.reactivex.disposables.CompositeDisposable;
+
+/**
+ * 创建日期：2019/1/21 on 17:02
+ * 描述:试用详情presenter
+ * 作者:Ls
+ */
+public class TryUseDetailPresenter implements TryUseDetailContract.UseDetailPresenter {
+
+    private HttpManager mHttpManager;
+    private TryUseDetailContract.UseDetailView mView;
+    private CompositeDisposable mCompositeDisposable;
+    private ApiService mApiService;
+    @Inject
+    public TryUseDetailPresenter(HttpManager httpManager, ApiService apiService) {
+        mHttpManager = httpManager;
+        mApiService = apiService;
+        mCompositeDisposable = new CompositeDisposable();
+
+    }
+    /**
+     * 获取产品详情
+     * */
+    @Override
+    public void getProductsDetails(String hsk, String id) {
+            mHttpManager.request(mApiService.getProductsDetails(hsk, id), mCompositeDisposable, mView, new CallBackListener<Response<ProductInfo>>() {
+
+
+                @Override
+                public void onSuccess(Response<ProductInfo> data) {
+                    mView.getInfoSuccess(data.getData());
+                }
+
+                @Override
+                public void onError(String errorMsg) {
+                    mView.getInfoFailed(errorMsg);
+                }
+            });
+    }
+
+
+
+    @Override
+    public void takeView(TryUseDetailContract.UseDetailView view) {
+        mView = view;
+    }
+
+    @Override
+    public void dropView() {
+        mView = null;
+        mCompositeDisposable.clear();
+    }
+}

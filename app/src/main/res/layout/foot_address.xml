@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rl_add_address"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/colorWhite"
+    android:layout_width="match_parent"
+    android:layout_height="48dp">
+
+
+        <ImageView
+            android:id="@+id/iv_address"
+            android:src="@mipmap/icon_add"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="@dimen/common_margin_left"
+            android:layout_width="16dp"
+            android:layout_height="16dp" />
+
+        <TextView
+            android:layout_toRightOf="@+id/iv_address"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/common_margin_left"
+            android:layout_marginLeft="@dimen/common_margin_left"
+            android:text="新增地址"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:src="@mipmap/icon_more"
+            android:layout_marginTop="@dimen/common_margin_left"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp" />
+
+
+
+</RelativeLayout>

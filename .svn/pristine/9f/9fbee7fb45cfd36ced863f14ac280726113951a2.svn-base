@@ -1,0 +1,67 @@
+package com.zfsoft.zfsoft_product.modules.home;
+
+import android.graphics.Rect;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
+
+
+/**
+ * Created by ckw
+ * on 2019/1/16.
+ */
+public class ItemSpaceDecoration extends RecyclerView.ItemDecoration {
+
+    private int space;//这里给设置8dp所代表的值
+
+    public ItemSpaceDecoration(int space) {
+        this.space = space;
+    }
+
+    @Override
+    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+
+        if(parent.getChildAdapterPosition(view) == 2 || parent.getChildAdapterPosition(view) == 5){
+            outRect.left = space * 2;
+            outRect.right = space;
+            outRect.bottom = 0;
+        }
+        if(parent.getChildAdapterPosition(view) == 3 || parent.getChildAdapterPosition(view) == 6){
+            outRect.left = space ;
+            outRect.right = space;
+            outRect.bottom = 0;
+        }
+
+        if(parent.getChildAdapterPosition(view) == 4 || parent.getChildAdapterPosition(view) == 7){
+            outRect.left = space ;
+            outRect.right = space *2;
+            outRect.bottom = 0;
+        }
+
+        if(parent.getChildAdapterPosition(view) == 2 || parent.getChildAdapterPosition(view) == 3
+                || parent.getChildAdapterPosition(view) == 4){
+            outRect.top = 0;
+        }
+
+        if(parent.getChildAdapterPosition(view) == 5 || parent.getChildAdapterPosition(view) == 6
+                || parent.getChildAdapterPosition(view) == 7){
+            outRect.top = space * 2;
+        }
+
+        if(parent.getChildAdapterPosition(view) >10 && parent.getChildAdapterPosition(view) % 2 == 1){
+            outRect.left = space * 2 ;
+            outRect.right = space;
+            outRect.bottom = 0;
+        }
+
+        if(parent.getChildAdapterPosition(view) >10 && parent.getChildAdapterPosition(view) % 2 == 0){
+            outRect.left = space;
+            outRect.right = space * 2;
+            outRect.bottom = 0;
+        }
+
+        if(parent.getChildAdapterPosition(view) > 12 ){
+            outRect.top = space * 2;
+        }
+    }
+}

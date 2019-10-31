@@ -1,0 +1,27 @@
+package com.zfsoft.zfsoft_product.modules.home;
+
+import com.zfsoft.zfsoft_product.base.BasePresenter;
+import com.zfsoft.zfsoft_product.base.BaseView;
+import com.zfsoft.zfsoft_product.entity.BannerBean;
+import com.zfsoft.zfsoft_product.entity.TryNewProductBean;
+
+import java.util.List;
+
+/**
+ * Created by ckw
+ * on 2019/1/18.
+ */
+public class HomeContract {
+    public interface View extends BaseView{
+        void getBannerListSuccess(List<BannerBean> list);
+        void getBannerListFailure(String errorMsy);
+        void getTryNewProductListSuccess(List<TryNewProductBean> list);
+        void getTryNewProductListFailure(String errorMsy);
+    }
+
+    public interface Presenter extends BasePresenter<View> {
+        void getBannerList(String hsk,String link);
+        //首页试用新品
+        void getTryNewProductList(String hsk,String link);
+    }
+}

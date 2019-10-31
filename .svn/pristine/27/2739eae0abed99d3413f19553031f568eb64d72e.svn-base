@@ -1,0 +1,299 @@
+package com.zfsoft.zfsoft_product.net;
+
+import com.zfsoft.zfsoft_product.entity.AddressBean;
+import com.zfsoft.zfsoft_product.entity.BannerBean;
+import com.zfsoft.zfsoft_product.entity.CollectionBean;
+import com.zfsoft.zfsoft_product.entity.CommentsBean;
+import com.zfsoft.zfsoft_product.entity.IntegralBean;
+import com.zfsoft.zfsoft_product.entity.IntegralDetailBean;
+import com.zfsoft.zfsoft_product.entity.LoginBean;
+import com.zfsoft.zfsoft_product.entity.MessageListBean;
+import com.zfsoft.zfsoft_product.entity.MyTryReportBean;
+import com.zfsoft.zfsoft_product.entity.MyTrySingleBean;
+import com.zfsoft.zfsoft_product.entity.ProductInfo;
+import com.zfsoft.zfsoft_product.entity.ReportInfo;
+import com.zfsoft.zfsoft_product.entity.ResponseListInfo;
+import com.zfsoft.zfsoft_product.entity.SignBean;
+import com.zfsoft.zfsoft_product.entity.TestPersonBean;
+import com.zfsoft.zfsoft_product.entity.TestReportBean;
+import com.zfsoft.zfsoft_product.entity.ThingsInfoEntity;
+import com.zfsoft.zfsoft_product.entity.TryNewProductBean;
+import com.zfsoft.zfsoft_product.entity.User;
+import com.zfsoft.zfsoft_product.entity.UserBean;
+
+import java.util.List;
+import java.util.Map;
+
+import io.reactivex.Observable;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
+import retrofit2.http.Query;
+
+/**
+ * 创建日期：2018/12/24 on 10:15
+ * 描述:接口类
+ * 作者:Ls
+ */
+public interface ApiService {
+
+    /*
+     * 登录
+     * */
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    /*
+    * 验证码登录
+    * */
+    @FormUrlEncoded
+    @POST("system/connect/getphone")
+    Observable<Response<LoginBean>> loginByValidation(@Field("hsk") String hsk,
+                                                      @Field("telnumber") String phone,
+                                                      @Field("code") String validateCode);
+
+    /*
+     * 手机密码登录
+     * */
+    @FormUrlEncoded
+    @POST("system/connect/getLogin")
+    Observable<Response<LoginBean>> loginByPassword(@Field("hsk") String hsk,
+                                                     @Field("username") String phone,
+                                                     @Field("password") String validateCode);
+
+    /*
+    * 首页
+    * */
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /*
+     * 轮播图数据
+     * */
+    @GET("system/connect/getCarousel")
+    Observable<Response<List<BannerBean>>> getBannerList(@Query("hsk") String hsk);
+
+    /*
+    * 首页试用新品 6条数据 system/connect/cp/xplist
+    * */
+    @GET("system/connect/getNewProducts")
+    Observable<Response<List<TryNewProductBean>>> getTryNewProductList(@Query("hsk") String hsk);
+
+    /*
+    * 试用达人
+    * */
+    @GET("system/connect/getTalent")
+    Observable<Response<List<TestPersonBean>>> getTestPersonList(@Query("hsk") String hsk);
+
+    /*
+    * 首页 试用报告list
+    * */
+    @GET("system/connect/getTestReport")
+    Observable<Response<List<TestReportBean>>> getTestReportList(@Query("hsk") String hsk);
+
+    /*
+     * 我的
+     * */
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    /*
+    * 修改密码（先验证手机号）
+    * */
+    @FormUrlEncoded
+    @POST("system/connect/changePassword")
+    Observable<Response<SignBean>> forChangePassword(@Field("hsk") String hak,
+                                                     @Field("userid") String userId,
+                                                     @Field("telnumber") String phone,
+                                                        @Field("code") String code);
+
+    /*
+     * 修改手机号（先验证手机号）
+     * */
+    @FormUrlEncoded
+    @POST("system/connect/changePhoneNum")
+    Observable<Response<SignBean>> forChangePhone(@Field("hsk") String hak,
+                                                     @Field("userid") String userId,
+                                                     @Field("telnumber") String phone,
+                                                     @Field("code") String code);
+
+    /*
+     * 修改密码（验证手机号之后）
+     * */
+    @FormUrlEncoded
+    @POST("system/connect/setPassword")
+    Observable<Response<SignBean>> setPassword(@Field("hsk") String hak,
+                                                  @Field("userid") String userId,
+                                                  @Field("password") String password);
+
+    /*
+     * 修改手机号（验证手机号之后）
+     * */
+    @FormUrlEncoded
+    @POST("system/connect/setPhoneNum")
+    Observable<Response<SignBean>> setPhoneNum(@Field("hsk") String hak,
+                                                  @Field("userid") String userId,
+                                                  @Field("telnumber") String phone,
+                                                  @Field("code") String code);
+    /*
+    * 获取个人信息
+    * */
+    @GET("system/connect/getSocialInfo")
+    Observable<Response<UserBean>> getPersonalInfo(@Query("hsk") String hsk,@Query("userid") String userId);
+
+    /*
+    * 上传个人信息（注册之后的填写界面）
+    * */
+    @Multipart
+    @POST("system/connect/getMyInfo")
+    Observable<Response<SignBean>> uploadPersonalInfo(@PartMap Map<String, RequestBody> map,
+                                                      @Part List<MultipartBody.Part> images);
+
+    /*
+    * 获取个人信息（设置中的信息填写界面）
+    * */
+    @GET("system/connect/getMyInfoRequest")
+    Observable<Response<User>> getUserInfo(@Query("hsk") String hsk,@Query("userid") String userId);
+
+    /*
+    * 签到
+    * */
+    @GET("system/connect/getCheckIn")
+    Observable<Response<SignBean>> getSignResult(@Query("hsk") String hsk,@Query("userid") String userId);
+
+    /*
+    * 设置界面 进入 我的试用界面
+    * */
+    @GET("system/connect/getTrialInfo")
+    Observable<Response<ResponseListInfo<MyTrySingleBean>>> getMyTryProductList(@Query("hsk") String hsk,
+                                                                                @Query("userid") String userId,
+                                                                                @Query("commoditytype") String commoditytype,
+                                                                                @Query("page") int page,
+                                                                                @Query("size") int size);
+
+    /*
+     * 设置界面 进入 我的报告界面
+     * */
+    @GET("system/connect/getMyReport")
+    Observable<Response<ResponseListInfo<TestReportBean>>> getMyReportList(@Query("hsk") String hsk,
+                                                                            @Query("userid") String userId,
+                                                                            @Query("page") int page,
+                                                                            @Query("size") int size
+                                                                            );
+
+    /*
+    * 我的收藏
+    * */
+    @GET("system/connect/getMyCollection")
+    Observable<Response<ResponseListInfo<CollectionBean>>> getMyCollectionList(@Query("hsk") String hsk,
+                                                                               @Query("userid")String userId,
+                                                                               @Query("commoditytype") String commoditytype,
+                                                                               @Query("page") int page,
+                                                                               @Query("size") int size);
+
+    /*
+    *
+    * 新增收货地址
+    * */
+    @FormUrlEncoded
+    @POST("system/connect/saveMyAddress")
+    Observable<Response<SignBean>> addAddress(@FieldMap Map<String,String> params);
+
+    /*
+     * 获取收货地址列表
+     * */
+    @GET("system/connect/getMyAddress")
+    Observable<Response<List<AddressBean>>> getAddressList(@Query("hsk") String hsk, @Query("userid") String userId);
+
+    /*
+    * 积分商城
+    * */
+    @GET("baidu")
+    Observable<Response<ResponseListInfo<IntegralBean>>> getIntegralProductList(@Query("hsk") String hsk,@Query("page") int page,@Query("size") int size);
+
+
+    /*
+    * 积分商城 积分明细
+    * */
+    @GET("baidu")
+    Observable<Response<ResponseListInfo<IntegralDetailBean>>> getIntegralDetailList(@Query("hsk") String hsk,@Query("page") int page,@Query("size") int size);
+
+
+    /*
+     * 试用
+     * */
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /*
+    * 关注别人
+    * */
+    @GET("system/connect/getTestReportPeople")
+    Observable<Response<SignBean>> attentionPerson(@Query("hsk") String hsk,
+                                                   @Query("userid") String userId,
+                                                   @Query("talented") String targetId,
+                                                    @Query("type") String type);
+    /**
+     * 试用页面进行中商品列表获取
+     * @param   hsk  握手码
+     * @param  type 试用类别（1：进行中，2：未开始，3：已结束）
+     * @param   page
+     * @param   size
+     * */
+    @GET("system/connect/getALLNewProducts")
+    Observable<Response<ResponseListInfo<ThingsInfoEntity>>> getTryUseThingsList(@Query("hsk")String hsk,@Query("commoditytype")int type,@Query("page")int page,@Query("size")int size);
+
+
+    /**
+     * 试用产品详情数据获取
+     * @param id
+     * */
+    @GET("system/connect/getProductsDetails")
+    Observable<Response<ThingsInfoEntity>>getProductsDetails(@Query("hsk")String hsk,@Query("commodityid")String id);
+
+    /**
+     * 收藏某个商品
+     * */
+
+    @GET("system/connect/getCollectCommodity")
+    Observable<Response<SignBean>> getCollectCommodity(@Query("hsk")String hsk,@Query("commodityid")String id,@Query("userid")String userid);
+
+    /**
+     * 申请试用某个商品
+     * */
+    @GET("system/connect/getProductApplication")
+    Observable<Response<SignBean>>getProductApplication(@Query("hsk")String hsk,@Query("commodityid")String id,@Query("userid")String userid);
+    /**
+     * 获取某个商品的所有报告
+     *
+     * @param id  商品的id
+     * */
+
+    @GET("system/connect/getOneProductsTestReport")
+    Observable<Response<ResponseListInfo<ReportInfo>>> getOneProductsTestReport(@Query("hsk")String hsk,@Query("commodityid")String id,@Query("page")int page,@Query("size")int size);
+
+
+    //============================报告==================================
+    /**
+     * 获取某个报告的详情
+     * */
+    @GET("system/connect/getTestReportDetail")
+
+    Observable<Response<ReportInfo>>getTestReportDetail(@Query("hsk")String hsk,@Query("yhsybgid")int id,@Query("userid")String userId);
+
+
+    /**
+     * 获取热门评测报告列表
+     *
+     * */
+
+    @GET("system/connect/getHotTestReport")
+    Observable<Response<ResponseListInfo<TestReportBean>>>getHotTestReport(@Query("hsk")String hsk,@Query("testreportype")int type,@Query("page")int page,@Query("size")int size);
+
+    /**
+     * 获取试用报告详情评论
+     * */
+    @GET("system/connect/getTestReportComments")
+    Observable<Response<CommentsBean>> getTestReportComments(@Query("hsk")String hsk, @Query("yhsybgid")int reportId, @Query("page")int page, @Query("size")int size);
+}

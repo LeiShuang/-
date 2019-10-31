@@ -1,0 +1,65 @@
+package com.zfsoft.zfsoft_product.entity;
+
+/**
+ * Created by ckw
+ * on 2019/1/19.
+ */
+public class TryNewProductBean {
+   /*
+   id	新品ID
+cpmc	新品名称
+cpfbt	新品副标题
+tplj	新品图片相对路径
+jg     原价
+   "id":2,
+            "cpfbt":"2号",
+            "tplj":"http://10.71.21.90/profile/media/cptpk/6c009866ly1fw86is5hrjj20go0p20u9.jpg",
+            "cpmc":"2号产品",
+            "jg":110*/
+
+   private String id;
+   private String cpmc;
+   private String cpfbt;
+   private String tplj;
+   private String jg;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCpmc() {
+        return cpmc;
+    }
+
+    public void setCpmc(String cpmc) {
+        this.cpmc = cpmc;
+    }
+
+    public String getCpfbt() {
+        return cpfbt;
+    }
+
+    public void setCpfbt(String cpfbt) {
+        this.cpfbt = cpfbt;
+    }
+
+    public String getTplj() {
+        return tplj;
+    }
+
+    public void setTplj(String tplj) {
+        this.tplj = tplj;
+    }
+
+    public String getJg() {
+        return jg;
+    }
+
+    public void setJg(String jg) {
+        this.jg = jg;
+    }
+}

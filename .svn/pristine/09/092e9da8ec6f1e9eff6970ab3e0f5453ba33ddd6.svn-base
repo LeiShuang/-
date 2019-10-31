@@ -1,0 +1,34 @@
+package com.zfsoft.zfsoft_product.modules.try_use.try_use_detail;
+
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseActivity;
+
+/**
+ * 创建日期：2019/1/11 on 17:30
+ * 描述:
+ * 作者:Ls
+ */
+public class TryUseDetailActivity extends BaseActivity{
+    @Override
+    protected int getLayoutId() {
+        return R.layout.actitity_try_use_detail;
+    }
+
+    @Override
+    protected void initView(Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    protected void handleBundle(@NonNull Bundle bundle) {
+
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+}

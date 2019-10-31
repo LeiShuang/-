@@ -1,0 +1,34 @@
+package com.zfsoft.zfsoft_product.di;
+
+import com.zfsoft.zfsoft_product.net.HttpManager;
+import dagger.internal.Factory;
+import dagger.internal.Preconditions;
+import javax.annotation.Generated;
+
+@Generated(
+  value = "dagger.internal.codegen.ComponentProcessor",
+  comments = "https://google.github.io/dagger"
+)
+public final class NetModule_ProvideHttpHelperFactory implements Factory<HttpManager> {
+  private final NetModule module;
+
+  public NetModule_ProvideHttpHelperFactory(NetModule module) {
+    assert module != null;
+    this.module = module;
+  }
+
+  @Override
+  public HttpManager get() {
+    return Preconditions.checkNotNull(
+        module.provideHttpHelper(), "Cannot return null from a non-@Nullable @Provides method");
+  }
+
+  public static Factory<HttpManager> create(NetModule module) {
+    return new NetModule_ProvideHttpHelperFactory(module);
+  }
+
+  /** Proxies {@link NetModule#provideHttpHelper()}. */
+  public static HttpManager proxyProvideHttpHelper(NetModule instance) {
+    return instance.provideHttpHelper();
+  }
+}

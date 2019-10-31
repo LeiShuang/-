@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:minHeight="?attr/actionBarSize">
+
+        <ImageView
+            android:id="@+id/submit_report_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/ten_padding"
+            android:src="@mipmap/ico_back_black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/submit_discuss"
+            android:textColor="#5a5a5a"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="19dp"
+            android:text="@string/submit"
+            android:textColor="@color/try_use_top_color"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
+        android:id="@+id/video_player"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/transparent"
+        android:paddingLeft="@dimen/dots_height"
+        android:paddingRight="@dimen/dots_height"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/rl_video_pic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dots_height"
+        android:paddingRight="@dimen/dots_height"
+        android:layout_marginTop="@dimen/ten_padding"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_showPic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="封面" />
+
+        <ImageView
+            android:id="@+id/iv_video_pic"
+            android:layout_width="100dp"
+            android:layout_height="200dp"
+            android:layout_marginLeft="@dimen/ten_padding"
+            android:layout_toRightOf="@+id/tv_showPic"
+            android:scaleType="centerCrop" />
+    </RelativeLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dots_height"
+            android:paddingRight="@dimen/dots_height">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/submit_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <!--标题-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten_padding">
+
+                <TextView
+                    android:id="@+id/tv_sum_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="30"
+                    android:textColor="#CBCBCB"
+                    android:textSize="@dimen/report_detail_title_size" />
+
+                <EditText
+                    android:id="@+id/et_input_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginRight="@dimen/five_padding"
+                    android:layout_toLeftOf="@+id/tv_sum_title"
+                    android:background="@null"
+                    android:gravity="left|center_vertical"
+                    android:hint="@string/please_input_title"
+                    android:maxLength="30"
+                    android:paddingBottom="@dimen/sevent_padding"
+                    android:paddingTop="@dimen/sevent_padding"
+                    android:singleLine="true"
+                    android:textColor="#CBCBCB"
+                    android:textSize="@dimen/report_detail_title_size" />
+                <!--标题字数计数器-->
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#CBCBCB" />
+            <!--内容-->
+            <EditText
+                android:id="@+id/et_input_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/five_padding"
+                android:background="@null"
+                android:hint="@string/please_input_try_use_speak"
+                android:paddingBottom="@dimen/sevent_padding"
+                android:paddingTop="@dimen/sevent_padding"
+                android:textColor="#CBCBCB"
+                android:textSize="@dimen/report_detail_title_size" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

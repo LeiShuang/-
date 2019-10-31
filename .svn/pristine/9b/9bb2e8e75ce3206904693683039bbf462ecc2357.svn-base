@@ -1,0 +1,54 @@
+package com.zfsoft.zfsoft_product.modules.personal.my_try;
+
+import android.os.Bundle;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.zfsoft.zfsoft_product.base.BaseListFragment;
+import com.zfsoft.zfsoft_product.entity.MyTrySingleBean;
+
+import javax.inject.Inject;
+
+/**
+ * Created by ckw
+ * on 2019/1/21.
+ */
+public class MyTrySingleFragment extends BaseListFragment<MyTrySingleBean> {
+
+    @Inject
+    public MyTrySingleFragment() {
+    }
+
+    public static MyTrySingleFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        MyTrySingleFragment fragment = new MyTrySingleFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+    @Override
+    protected void initFootView(BaseQuickAdapter adapter) {
+
+    }
+
+    @Override
+    protected void initHeader(BaseQuickAdapter adapter) {
+
+    }
+
+    @Override
+    protected void onItemCLick() {
+
+    }
+
+    @Override
+    protected void loadData() {
+
+    }
+
+    @Override
+    protected BaseQuickAdapter<MyTrySingleBean, BaseViewHolder> getAdapter() {
+        return new MyTrySingleAdapter();
+    }
+}

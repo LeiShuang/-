@@ -1,0 +1,87 @@
+package com.zfsoft.zfsoft_product.modules.try_use.try_use_detail;
+
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.ImageView;
+
+import com.vondear.rxtool.view.RxToast;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseActivity;
+import com.zfsoft.zfsoft_product.modules.try_use.TryUseFragmentAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+/**
+ * 创建日期：2019/1/11 on 17:30
+ * 描述:试用详情activity
+ * 作者:Ls
+ */
+public class TryUseDetailActivity extends BaseActivity implements View.OnClickListener {
+
+    private ImageView mIvReportDetailBack;
+
+    private ImageView mIvTryUseLike;
+
+    private TabLayout mTryDetailTabLayout;
+
+    private ViewPager mTryUserDetailViewPager;
+   /* @Inject
+    ProductDetailFragment mProductDetailFragment;
+    @Inject
+    TryUseReportFragment mTryUseReportFragment;*/
+
+    private List<Fragment> mFragmentList;
+    private String[] tabTexts = new String[]{"产品详情", "试用报告"};
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.actitity_try_use_detail;
+    }
+
+    @Override
+    protected void initView(Bundle savedInstanceState) {
+        mIvReportDetailBack = findViewById(R.id.iv_report_detail_back);
+        mIvTryUseLike = findViewById(R.id.iv_try_use_like);
+        mTryDetailTabLayout = findViewById(R.id.try_detail_tabLayout);
+        mTryUserDetailViewPager = findViewById(R.id.try_user_detail_viewPager);
+
+        mFragmentList = new ArrayList<>();
+        mFragmentList.add(ProductDetailFragment.newInstance());
+        mFragmentList.add(TryUseReportFragment.newInstance());
+        FragmentManager manager = getSupportFragmentManager();
+        TryUseFragmentAdapter adapter = new TryUseFragmentAdapter(manager, tabTexts, mFragmentList);
+        mTryUserDetailViewPager.setAdapter(adapter);
+        mTryDetailTabLayout.setupWithViewPager(mTryUserDetailViewPager);
+    }
+
+    @Override
+    protected void handleBundle(@NonNull Bundle bundle) {
+
+    }
+
+    @Override
+    protected void initListener() {
+        mIvReportDetailBack.setOnClickListener(this);
+        mIvTryUseLike.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        int key = v.getId();
+        if (key == R.id.iv_report_detail_back) {
+            finish();
+        } else if (key == R.id.iv_try_use_like) {
+            RxToast.showToast("收藏");
+        }
+    }
+
+}

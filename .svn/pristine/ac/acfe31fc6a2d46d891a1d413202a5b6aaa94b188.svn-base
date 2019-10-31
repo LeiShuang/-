@@ -1,0 +1,56 @@
+package com.zfsoft.zfsoft_product.modules.login.validation;
+
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+
+import com.gyf.barlibrary.ImmersionBar;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseActivity;
+import com.zfsoft.zfsoft_product.utils.ActivityUtils;
+
+import javax.inject.Inject;
+
+/**
+ * Created by ckw
+ * on 2019/1/14.
+ * 登录 跳转的 验证码界面
+ */
+public class ValidationActivity extends BaseActivity {
+
+    @Inject
+    ValidationFragment mValidationFragment;
+
+    private String mType;//登录或者注册 类别
+
+    private FragmentManager manager;
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_validation;
+    }
+
+    @Override
+    protected void initView(Bundle savedInstanceState) {
+        manager = getSupportFragmentManager();
+        ActivityUtils.addFragmentToActivity(manager,mValidationFragment,R.id.fragment_validation_container);
+    }
+
+    @Override
+    protected void handleBundle(@NonNull Bundle bundle) {
+        mType = bundle.getString("type");
+        Bundle bundle1 = new Bundle();
+        bundle1.putString("type",mType);
+        mValidationFragment.setArguments(bundle1);
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        ImmersionBar.with(this).statusBarColor(R.color.login_bar_color).init();
+    }
+}

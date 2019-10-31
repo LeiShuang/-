@@ -1,0 +1,29 @@
+package com.zfsoft.zfsoft_product.modules.try_use;
+
+import dagger.MembersInjector;
+import dagger.internal.Factory;
+import dagger.internal.MembersInjectors;
+import javax.annotation.Generated;
+
+@Generated(
+  value = "dagger.internal.codegen.ComponentProcessor",
+  comments = "https://google.github.io/dagger"
+)
+public final class NewsFragment_Factory implements Factory<TryUseFragment> {
+  private final MembersInjector<TryUseFragment> newsFragmentMembersInjector;
+
+  public NewsFragment_Factory(MembersInjector<TryUseFragment> newsFragmentMembersInjector) {
+    assert newsFragmentMembersInjector != null;
+    this.newsFragmentMembersInjector = newsFragmentMembersInjector;
+  }
+
+  @Override
+  public TryUseFragment get() {
+    return MembersInjectors.injectMembers(newsFragmentMembersInjector, new TryUseFragment());
+  }
+
+  public static Factory<TryUseFragment> create(
+      MembersInjector<TryUseFragment> newsFragmentMembersInjector) {
+    return new NewsFragment_Factory(newsFragmentMembersInjector);
+  }
+}

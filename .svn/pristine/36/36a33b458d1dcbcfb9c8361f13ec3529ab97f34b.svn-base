@@ -1,0 +1,28 @@
+package com.zfsoft.zfsoft_product.modules.try_use.viewpager_modules;
+
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.entity.ProductInfo;
+/**
+ * 创建日期：2019/1/5 on 14:09
+ * 描述:试用Fragment  下的子view适配器
+ * 作者:Ls
+ */
+public class TryUseChildFragmentAdapter extends BaseQuickAdapter<ProductInfo,BaseViewHolder> {
+    public TryUseChildFragmentAdapter() {
+        super(R.layout.item_child_view);
+    }
+
+    @Override
+    protected void convert(BaseViewHolder helper, ProductInfo item) {
+        helper.setText(R.id.tv_child_title,item.getProductName());
+        helper.setText(R.id.tv_child_size,item.getProductSize());
+        helper.setText(R.id.tv_child_numer,item.getProductNumber());
+        helper.setText(R.id.tv_child_price,item.getProductPrice());
+        helper.setText(R.id.tv_child_fire,item.getFireNumber());
+    }
+
+
+}

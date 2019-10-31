@@ -1,0 +1,22 @@
+package com.zfsoft.zfsoft_product.modules.report.report_detail;
+
+import com.zfsoft.zfsoft_product.base.BasePresenter;
+import com.zfsoft.zfsoft_product.base.BaseView;
+import com.zfsoft.zfsoft_product.entity.ReportInfo;
+
+/**
+ * 创建日期：2019/1/24 on 16:02
+ * 描述:
+ * 作者:Ls
+ */
+public class ReportDetailContract {
+    interface View extends BaseView {
+        void getReportHeaderSuccess(ReportInfo info);
+        void getReportHeaderFailed(String errorMsg);
+    }
+
+    interface Presenter extends BasePresenter<View>{
+        void getReportInfo(String hsk,int productId,String userId);
+    }
+
+}

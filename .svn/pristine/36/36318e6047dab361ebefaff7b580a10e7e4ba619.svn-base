@@ -1,0 +1,142 @@
+package com.zfsoft.zfsoft_product.modules.personal.my_platform;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseFragment;
+import com.zfsoft.zfsoft_product.common.Config;
+import com.zfsoft.zfsoft_product.entity.PlatformBean;
+import com.zfsoft.zfsoft_product.entity.SignBean;
+import com.zfsoft.zfsoft_product.utils.DbHelper;
+import com.zfsoft.zfsoft_product.utils.ToastUtils;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+
+/**
+ * Created by ckw
+ * on 2019/3/15.
+ */
+public class MyPlatformFragment extends BaseFragment implements MyPlatformContract.View {
+
+    @Inject
+    public MyPlatformFragment() {
+    }
+
+    @Inject
+    MyPlatformPresenter myPlatformPresenter;
+
+    @BindView(R.id.et_qq)
+    EditText mEtQQ;
+    @BindView(R.id.et_wechat)
+    EditText mEtWechat;
+    @BindView(R.id.et_sina)
+    EditText mEtSina;
+    @BindView(R.id.et_red_book)
+    EditText mEtRedBook;
+    @BindView(R.id.tv_save)
+    TextView mTvSave;
+    @BindView(R.id.rl_platform_back)
+    RelativeLayout mRlBack;
+
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.fragment_my_plarform;
+    }
+
+    @Override
+    protected void initVariables() {
+
+    }
+
+    @Override
+    protected void handleBundle(Bundle bundle) {
+
+    }
+
+    @Override
+    protected void operateViews(View view) {
+        myPlatformPresenter.getMyPlatformInfo(Config.HSK,DbHelper.getUserId(mContext));
+    }
+
+    @Override
+    protected void initListener() {
+        mRlBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+        mTvSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myPlatformPresenter.saveMyPlatformInfo(Config.HSK, DbHelper.getUserId(mContext),
+                        mEtQQ.getText().toString(),mEtWechat.getText().toString(),
+                        mEtSina.getText().toString(),mEtRedBook.getText().toString());
+            }
+        });
+    }
+
+    @Override
+    public void initPresenter() {
+        myPlatformPresenter.takeView(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        myPlatformPresenter.dropView();
+    }
+
+    @Override
+    public void getMyPlatformInfoSuccess(PlatformBean platformBean) {
+        mEtQQ.setText(platformBean.getQqid());
+        mEtWechat.setText(platformBean.getWchatid());
+        mEtSina.setText(platformBean.getSinaid());
+        mEtRedBook.setText(platformBean.getXhs());
+    }
+
+    @Override
+    public void getMyPlatformInfoFailure(String errorMsg) {
+
+    }
+
+    @Override
+    public void saveMyPlatformInfoSuccess(SignBean signBean) {
+        String msgtype = signBean.getMsgtype();
+        if(msgtype.equals("1")){
+            ToastUtils.showCenterToast(getContext(),"保存成功");
+            getActivity().finish();
+        }else {
+            ToastUtils.showCenterToast(getContext(),"保存失败");
+        }
+
+    }
+
+    @Override
+    public void saveMyPlatformInfoFailure(String errorMsg) {
+        ToastUtils.showCenterToast(getContext(),errorMsg);
+    }
+
+    @Override
+    protected boolean immersionEnabled() {
+        return true;
+    }
+
+    @Override
+    protected void immersionInit() {
+        super.immersionInit();
+        if (immersionBar == null) {
+            return;
+        }
+        immersionBar.statusBarDarkFont(true);
+        immersionBar.statusBarColor(R.color.colorWhite)
+                .init();
+    }
+}

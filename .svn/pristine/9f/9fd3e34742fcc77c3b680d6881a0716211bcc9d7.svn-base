@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/colorWhite"
+    android:padding="@dimen/fivteen_padding"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:drawableLeft="@mipmap/ico_report_line"
+        android:drawablePadding="@dimen/five_padding"
+        android:text="@string/report_discuss_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_write_discuss"
+        android:text="@string/write_discuss"
+        android:textColor="@color/try_use_top_color"
+        android:gravity="center_vertical"
+        android:drawableLeft="@mipmap/ico_write"
+        android:drawablePadding="@dimen/five_padding"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

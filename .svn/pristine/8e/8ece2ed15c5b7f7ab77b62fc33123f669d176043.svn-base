@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/colorWhite"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="81dp">
+
+    <ImageView
+        android:id="@+id/iv_try"
+        android:scaleType="centerCrop"
+        android:layout_margin="@dimen/common_margin_left"
+        android:layout_width="48dp"
+        android:layout_height="48dp" />
+
+    <TextView
+        android:id="@+id/tv_try_title"
+        tools:text="这是标题"
+        android:layout_toRightOf="@+id/iv_try"
+        android:layout_toLeftOf="@+id/iv_more"
+        android:layout_marginTop="@dimen/common_margin_left"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textColor="@color/mine_text_color"
+        android:textSize="@dimen/mine_common_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_try_num"
+        tools:text="数量 100"
+        android:layout_toRightOf="@+id/iv_try"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/common_margin_left"
+        android:textColor="@color/mine_text_color"
+        android:textSize="@dimen/font_small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_try_apply"
+        tools:text="数量 100"
+        android:layout_toRightOf="@+id/tv_try_num"
+        android:layout_marginLeft="34dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/common_margin_left"
+        android:textColor="@color/mine_text_color"
+        android:textSize="@dimen/font_small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/iv_more"
+        android:src="@mipmap/icon_more"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/common_margin_left"
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
+
+    <View
+        android:layout_alignParentBottom="true"
+        android:background="@color/split_mine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+</RelativeLayout>

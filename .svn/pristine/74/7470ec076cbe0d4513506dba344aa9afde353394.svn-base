@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <com.youth.banner.Banner
+        android:id="@+id/report_detail_banner"
+        image_scale_type="center_crop"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:visibility="gone"
+        app:banner_default_image="@mipmap/icon_default_banner" />
+
+    <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
+        android:id="@+id/gsy_layer"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/transparent"
+        android:visibility="gone" />
+    <!--标题-->
+    <TextView
+        android:id="@+id/tv_report_detail_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/common_margin_right"
+        android:layout_marginTop="@dimen/nineteen_padding"
+        android:background="@color/colorWhite"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:textColor="@color/report_detail_title_bg"
+        android:textSize="@dimen/report_detail_title_size"
+        android:textStyle="bold"
+        tools:text="天然美肌爽肤乳DFRES" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/common_margin_left"
+        android:layout_marginTop="@dimen/nineteen_padding"
+        android:paddingBottom="@dimen/five_padding"
+        android:paddingTop="@dimen/five_padding">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_report_detail_photo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginLeft="@dimen/twelve_padding"
+            android:layout_toRightOf="@+id/iv_report_detail_photo">
+            <!--姓名-->
+            <TextView
+                android:id="@+id/iv_report_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:gravity="top"
+                android:singleLine="true"
+                android:textColor="@color/report_detail_name_bg"
+                android:textSize="@dimen/font_normal"
+                android:textStyle="bold"
+                tools:text="夏洛特烦恼" />
+
+            <TextView
+                android:id="@+id/iv_report_speak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="bottom"
+                android:singleLine="true"
+                android:textColor="@color/report_detail_name_bg"
+                android:textSize="@dimen/font_small"
+                tools:text="我就是我,烟火不一样的颜色" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_attention"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/fivteen_padding"
+            android:background="@drawable/report_detail_attention_bg"
+            android:paddingBottom="@dimen/five_padding"
+            android:paddingLeft="@dimen/fivteen_padding"
+            android:paddingRight="@dimen/fivteen_padding"
+            android:paddingTop="@dimen/five_padding"
+            android:text="@string/report_detail_attention"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/font_normal" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#CBCBCB" />
+
+    <TextView
+        android:id="@+id/report_detail_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:padding="@dimen/common_margin_left"
+        android:textColor="@color/report_detail_name_bg"
+        android:textSize="@dimen/font_normal"
+        tools:text="@string/app_name" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--时间-->
+        <TextView
+            android:id="@+id/report_detail_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/common_margin_left"
+            android:paddingBottom="@dimen/five_padding"
+            android:paddingTop="@dimen/five_padding"
+            android:textColor="@color/report_detail_time"
+            android:textSize="@dimen/font_normal"
+            tools:text="2019-01-22" />
+        <!--评价-->
+        <TextView
+            android:id="@+id/tv_report_discuss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/nineteen_padding"
+            android:drawableLeft="@mipmap/ico_discuss"
+            android:drawablePadding="@dimen/five_padding"
+            android:gravity="center_vertical"
+            android:textColor="@color/report_star_bg"
+            android:textSize="@dimen/font_small"
+            tools:text="30" />
+
+        <TextView
+            android:id="@+id/tv_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/fivteen_padding"
+            android:layout_toLeftOf="@+id/tv_report_discuss"
+            android:gravity="center_vertical"
+            android:textColor="@color/report_star_bg"
+            android:textSize="@dimen/font_small"
+            tools:text="15" />
+
+        <ImageView
+            android:id="@+id/iv_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/tv_star"
+            android:gravity="center_vertical"
+            android:paddingRight="@dimen/five_padding"
+            android:src="@mipmap/ico_unstar" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fivteen_padding"
+        android:background="@color/color_child_bg" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/fivteen_padding">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@mipmap/ico_report_line"
+            android:drawablePadding="@dimen/five_padding"
+            android:text="@string/report_discuss_top" />
+
+        <TextView
+            android:id="@+id/tv_write_discuss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:drawableLeft="@mipmap/ico_write"
+            android:drawablePadding="@dimen/five_padding"
+            android:gravity="center_vertical"
+            android:text="@string/write_discuss"
+            android:textColor="@color/try_use_top_color" />
+    </RelativeLayout>
+</LinearLayout>

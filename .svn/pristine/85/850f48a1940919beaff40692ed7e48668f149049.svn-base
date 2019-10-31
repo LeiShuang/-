@@ -1,0 +1,33 @@
+package com.zfsoft.zfsoft_product.modules.try_use.viewpager_modules;
+
+
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.entity.ProductInfo;
+import com.zfsoft.zfsoft_product.entity.ThingsInfoEntity;
+import com.zfsoft.zfsoft_product.utils.ImageLoaderHelper;
+
+/**
+ * 创建日期：2019/1/5 on 14:09
+ * 描述:试用Fragment  下的子view适配器
+ * 作者:Ls
+ */
+public class TryUseChildFragmentAdapter extends BaseQuickAdapter<ThingsInfoEntity,BaseViewHolder> {
+    public TryUseChildFragmentAdapter() {
+        super(R.layout.item_child_view);
+    }
+
+    @Override
+    protected void convert(BaseViewHolder helper, ThingsInfoEntity item) {
+        Glide.with(mContext).load(item.getCommodityurl()).into((ImageView)helper.getView(R.id.iv_child_pic));
+        helper.setText(R.id.tv_child_title,item.getCommoditytitle());
+        helper.setText(R.id.tv_child_size,item.getCommodityparameters());
+        helper.setText(R.id.tv_child_numer,"数量:  " + String.valueOf(item.getCommoditysum()));
+        helper.setText(R.id.tv_child_price,item.getCommodityprice());
+        helper.setText(R.id.tv_child_fire, String.valueOf(item.getCommoditybrowse()));
+    }
+}

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/background_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_send_validation"
+        android:visibility="invisible"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="60dp"
+        android:textSize="18sp"
+        android:text="@string/validation_send"
+        android:textColor="@color/colorWhite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/et_validation"
+        android:layout_below="@+id/tv_send_validation"
+        android:paddingLeft="16dp"
+        android:inputType="number"
+        android:layout_marginTop="18dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:hint="@string/validation_tip"
+        android:background="@drawable/background_input"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp" />
+
+
+    <com.zfsoft.zfsoft_product.modules.login.CountDownTextView
+        android:id="@+id/count_down_view"
+        android:text="@string/get_validation"
+        android:layout_alignBaseline="@+id/et_validation"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="44dp"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <EditText
+        android:id="@+id/et_validation_pwd"
+        android:visibility="gone"
+        android:layout_below="@+id/et_validation"
+        android:paddingLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:hint="设置新登录密码"
+        android:background="@drawable/background_input"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp" />
+
+    <EditText
+        android:id="@+id/et_validation_pwd_again"
+        android:visibility="gone"
+        android:layout_below="@+id/et_validation_pwd"
+        android:paddingLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:hint="@string/set_pwd_again"
+        android:background="@drawable/background_input"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp" />
+
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_below="@+id/et_validation_pwd_again"
+        android:textColor="#fa857c"
+        android:textSize="15sp"
+        android:background="@drawable/background_login_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="登录"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:layout_height="45dp" />
+
+    <TextView
+        android:id="@+id/tv_tip_agreement"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="28dp"
+        android:layout_marginTop="@dimen/common_margin_left"
+        android:layout_below="@+id/btn_login"
+        android:text="用户协议"
+        android:visibility="gone"
+        android:autoLink="all"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/font_normal"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp" />
+
+    <TextView
+        android:id="@+id/tv_tip_agreement_left"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/common_margin_left"
+        android:layout_below="@+id/btn_login"
+        android:layout_toLeftOf="@+id/tv_tip_agreement"
+        android:textSize="@dimen/font_normal"
+        android:textColor="@color/colorWhite"
+        android:text="注册代表您同意"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+
+</RelativeLayout>

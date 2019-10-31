@@ -1,0 +1,21 @@
+package com.zfsoft.zfsoft_product.modules.login.validation;
+
+import com.zfsoft.zfsoft_product.base.BasePresenter;
+import com.zfsoft.zfsoft_product.base.BaseView;
+import com.zfsoft.zfsoft_product.entity.LoginBean;
+import com.zfsoft.zfsoft_product.entity.SignBean;
+
+/**
+ * Created by ckw
+ * on 2019/1/25.
+ */
+public class ValidationContract {
+    public interface View extends BaseView{
+        void loginByValidateSuccess(LoginBean loginBean);
+        void loginByValidateFailure(String errorMsg);
+    }
+
+    public interface Presenter extends BasePresenter<View>{
+        void loginByValidate(String hsk,String phone,String validateCode);
+    }
+}

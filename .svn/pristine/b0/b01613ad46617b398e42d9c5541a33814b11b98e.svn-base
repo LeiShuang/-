@@ -1,0 +1,29 @@
+package com.zfsoft.zfsoft_product.base;
+
+import android.support.v4.app.Fragment;
+import com.zfsoft.zfsoft_product.di.FragmentScoped;
+import com.zfsoft.zfsoft_product.modules.personal.PersonalFragment;
+import dagger.Binds;
+import dagger.Module;
+import dagger.Subcomponent;
+import dagger.android.AndroidInjector;
+import dagger.android.support.FragmentKey;
+import dagger.multibindings.IntoMap;
+
+@Module(subcomponents = HomeModule_MPersonalFragment.PersonalFragmentSubcomponent.class)
+public abstract class HomeModule_MPersonalFragment {
+  private HomeModule_MPersonalFragment() {}
+
+  @Binds
+  @IntoMap
+  @FragmentKey(PersonalFragment.class)
+  abstract AndroidInjector.Factory<? extends Fragment> bindAndroidInjectorFactory(
+      PersonalFragmentSubcomponent.Builder builder);
+
+  @Subcomponent
+  @FragmentScoped
+  public interface PersonalFragmentSubcomponent extends AndroidInjector<PersonalFragment> {
+    @Subcomponent.Builder
+    abstract class Builder extends AndroidInjector.Builder<PersonalFragment> {}
+  }
+}

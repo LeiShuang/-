@@ -1,0 +1,194 @@
+package com.zfsoft.zfsoft_product.modules.try_use.try_use_detail;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.tencent.liteav.demo.play.SuperPlayerModel;
+import com.tencent.liteav.demo.play.SuperPlayerView;
+import com.vondear.rxtool.view.RxToast;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseFragment;
+import com.zfsoft.zfsoft_product.di.ActivityScoped;
+import com.zfsoft.zfsoft_product.entity.InfoServer;
+import com.zfsoft.zfsoft_product.entity.ProductInfo;
+import com.zfsoft.zfsoft_product.utils.GlideImageLoader;
+import com.zfsoft.zfsoft_product.utils.ShareUtils;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import cn.iwgang.countdownview.CountdownView;
+
+/**
+ * 创建日期：2019/1/12 on 14:23
+ * 描述:产品详情fragment
+ * 作者:Ls
+ */
+@ActivityScoped
+public class ProductDetailFragment extends BaseFragment implements View.OnClickListener {
+    @BindView(R.id.report_detail_banner)
+    Banner mReportDetailBanner;
+    @BindView(R.id.tv_use_title)
+    TextView mTvUseTitle;
+    @BindView(R.id.tv_thing_size)
+    TextView mTvThingSize;
+    @BindView(R.id.tv_thing_price)
+    TextView mTvThingPrice;
+    @BindView(R.id.tv_number)
+    TextView mTvNumber;
+    @BindView(R.id.tv_person_number)
+    TextView mTvPersonNumber;
+    @BindView(R.id.super_player)
+    SuperPlayerView mSuperPlayer;
+    @BindView(R.id.tv_try_use_detail_share)
+    TextView mTvTryUseDetailShare;
+    @BindView(R.id.tv_try_sue_detail_get)
+    TextView mTvTrySueDetailGet;
+    @BindView(R.id.iv_product_like)
+    ImageView mIvProductLike;
+    @BindView(R.id.tv_simple_title)
+    TextView mTvSimpleTitle;
+    @BindView(R.id.rl_share_gift)
+    RelativeLayout mRlShareGift;
+    @BindView(R.id.view_divider)
+    View mViewDivider;
+    @BindView(R.id.scroll)
+    NestedScrollView mScroll;
+    @BindView(R.id.count_down_time)
+    CountdownView mCountDownTime;
+
+    private ProductInfo mInfo;
+
+    @Inject
+    public ProductDetailFragment() {
+
+    }
+
+    public static ProductDetailFragment newInstance() {
+        Bundle args = new Bundle();
+        ProductDetailFragment fragment = new ProductDetailFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.fragment_producet_detail;
+    }
+
+    @Override
+    protected void initVariables() {
+        mInfo = InfoServer.getProductListInfo(1).get(0);
+    }
+
+    @Override
+    protected void handleBundle(Bundle bundle) {
+
+    }
+
+    @Override
+    protected void operateViews(View view) {
+        initBanner();
+        mTvUseTitle.setText(mInfo.getProductName());
+        mTvThingSize.setText(mInfo.getProductSize());
+        mTvThingPrice.setText(mInfo.getProductPrice());
+        mCountDownTime.start(Integer.valueOf(mInfo.getProductTime()));
+        mTvNumber.setText(mInfo.getProductNumber());
+        mTvPersonNumber.setText(mInfo.getUserNumber());
+        SuperPlayerModel model = new SuperPlayerModel();
+        model.videoURL = mInfo.getMap4Url();
+        mSuperPlayer.setPlayerViewCallback(new SuperPlayerView.PlayerViewCallback() {
+            @Override
+            public void hideViews() {
+
+            }
+
+            @Override
+            public void showViews() {
+
+            }
+
+            @Override
+            public void onQuit(int i) {
+
+            }
+        });
+        mSuperPlayer.playWithMode(model);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mReportDetailBanner.startAutoPlay();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mReportDetailBanner.stopAutoPlay();
+        mSuperPlayer.resetPlayer();
+    }
+
+    private void initBanner() {
+        mReportDetailBanner.setImages(mInfo.getBannerInfo())
+                .setImageLoader(new GlideImageLoader())
+                .setBannerStyle(BannerConfig.NUM_INDICATOR)
+                .setDelayTime(5000)
+                .start();
+    }
+
+    @Override
+    protected void initListener() {
+        mRlShareGift.setOnClickListener(this);
+        mTvTrySueDetailGet.setOnClickListener(this);
+        mIvProductLike.setOnClickListener(this);
+    }
+
+    @Override
+    public void initPresenter() {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        int key = v.getId();
+        if (key == R.id.rl_share_gift) {
+            //分享得积分
+            ShareUtils.setShareInfo(mContext);
+        } else if (key == R.id.tv_try_sue_detail_get) {
+            //立即申请
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("是否申请此商品?")
+                    .setPositiveButton("立即申请", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            RxToast.showToast("申请成功!");
+                        }
+                    }).setNegativeButton("取消申请", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    RxToast.showToast(getString(R.string.cancel_get));
+                }
+            });
+            builder.show();
+        } else if (key == R.id.iv_report_detail_like) {
+            mIvProductLike.setImageResource(R.mipmap.ico_report_detail_liked);
+            RxToast.showToast("收藏");
+        }
+    }
+
+
+
+}

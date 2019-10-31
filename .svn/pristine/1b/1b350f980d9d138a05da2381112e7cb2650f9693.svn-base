@@ -1,0 +1,133 @@
+package com.zfsoft.zfsoft_product.entity;
+
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
+import java.io.Serializable;
+import java.util.List;
+
+/**
+ * 创建日期：2019/1/8 on 15:58
+ * 描述:报告详情实体
+ * 作者:Ls
+ */
+public class ReportDetailEntity implements MultiItemEntity{
+    private DiscussFatherEntity mDiscussFatherEntity;
+    private DiscussChildEntity mDiscussChildEntity;
+    private int itemType;
+    public ReportDetailEntity(int itemType){
+
+        this.itemType = itemType;
+        mDiscussFatherEntity = new DiscussFatherEntity();
+        mDiscussChildEntity = new DiscussChildEntity();
+
+    }
+
+    public static final int VIEW_ITEM_TYPE_FATHER = 1;
+    public static final int VIEW_ITEM_TYPE_CHILD = 2;
+
+
+
+    public DiscussFatherEntity getDiscussFatherEntity() {
+        return mDiscussFatherEntity;
+    }
+
+    public void setDiscussFatherEntity(DiscussFatherEntity discussFatherEntity) {
+        mDiscussFatherEntity = discussFatherEntity;
+    }
+
+    public DiscussChildEntity getDiscussChildEntity() {
+        return mDiscussChildEntity;
+    }
+
+    public void setDiscussChildEntity(DiscussChildEntity discussChildEntity) {
+        mDiscussChildEntity = discussChildEntity;
+    }
+
+    @Override
+    public int getItemType() {
+        return itemType;
+    }
+
+    public class DiscussFatherEntity implements Serializable{
+        public DiscussFatherEntity(){
+        }
+        private String fatherPicUrl;//一级评论头像
+        private String fatherName;//一级评论姓名
+        private String discussTime;//评论时间
+        private String discussStarNumber;//点赞数量
+        private String discussContent;//评论内容
+
+        public String getFatherPicUrl() {
+            return fatherPicUrl;
+        }
+
+        public void setFatherPicUrl(String fatherPicUrl) {
+            this.fatherPicUrl = fatherPicUrl;
+        }
+
+        public String getFatherName() {
+            return fatherName;
+        }
+
+        public void setFatherName(String fatherName) {
+            this.fatherName = fatherName;
+        }
+
+        public String getDiscussTime() {
+            return discussTime;
+        }
+
+        public void setDiscussTime(String discussTime) {
+            this.discussTime = discussTime;
+        }
+
+        public String getDiscussStarNumber() {
+            return discussStarNumber;
+        }
+
+        public void setDiscussStarNumber(String discussStarNumber) {
+            this.discussStarNumber = discussStarNumber;
+        }
+
+        public String getDiscussContent() {
+            return discussContent;
+        }
+
+        public void setDiscussContent(String discussContent) {
+            this.discussContent = discussContent;
+        }
+    }
+
+    public class  DiscussChildEntity implements Serializable{
+        public DiscussChildEntity(){
+
+        }
+        private String id;
+        private String name;
+        private String commment;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getCommment() {
+            return commment;
+        }
+
+        public void setCommment(String commment) {
+            this.commment = commment;
+        }
+    }
+}

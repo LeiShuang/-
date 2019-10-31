@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.gcssloop.widget.RCRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:round_corner="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite">
+        <!--物品图片-->
+        <ImageView
+            android:id="@+id/ic_report_show_pic"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/icon_default" />
+
+        <ImageView
+            android:id="@+id/iv_video_start"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ico_video_start"
+            android:visibility="gone" />
+        <!--标题-->
+        <TextView
+            android:id="@+id/tv_report_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ic_report_show_pic"
+            android:gravity="center_vertical"
+            android:padding="@dimen/five_padding"
+            android:textColor="@color/colorSmallBlack"
+            android:textSize="@dimen/font_normal"
+            android:maxLines="2"
+            android:maxEms="17"
+            android:ellipsize="end"
+            android:textStyle="bold"
+            tools:text="这是一个标题这是一个标题这是一个标题这是一个标题" />
+
+        <RelativeLayout
+            android:id="@+id/rl_report_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_report_title"
+            android:padding="@dimen/five_padding">
+            <!--发布者头像-->
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/tv_reporter_pic"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/icon_default_head" />
+            <!--报告编辑人-->
+            <TextView
+                android:id="@+id/tv_reporter_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="4dp"
+                android:layout_toRightOf="@id/tv_reporter_pic"
+                android:textColor="@color/report_detail_title_bg"
+                android:textSize="@dimen/discuss_write_size"
+                android:textStyle="bold"
+                tools:text="王麻子" />
+            <!--点赞数量-->
+            <TextView
+                android:id="@+id/tv_star_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/ten_padding"
+                android:textColor="@color/report_star_bg"
+                android:textSize="@dimen/discuss_write_size"
+                tools:text="11" />
+
+            <ImageView
+                android:id="@+id/iv_star"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/five_padding"
+                android:layout_toLeftOf="@+id/tv_star_number"
+                android:src="@mipmap/ico_unstar" />
+        </RelativeLayout>
+    </RelativeLayout>
+</com.gcssloop.widget.RCRelativeLayout>

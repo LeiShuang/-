@@ -1,0 +1,67 @@
+package com.zfsoft.zfsoft_product.base;
+
+import com.zfsoft.zfsoft_product.di.ActivityScoped;
+import com.zfsoft.zfsoft_product.di.FragmentScoped;
+import com.zfsoft.zfsoft_product.modules.home.HomeContract;
+import com.zfsoft.zfsoft_product.modules.home.HomeFragment;
+import com.zfsoft.zfsoft_product.modules.home.HomePresenter;
+import com.zfsoft.zfsoft_product.modules.personal.PersonalContract;
+import com.zfsoft.zfsoft_product.modules.personal.PersonalPresenter;
+import com.zfsoft.zfsoft_product.modules.report.report_child.ReportViewPagerFragment;
+import com.zfsoft.zfsoft_product.modules.try_use.TryUseFragment;
+import com.zfsoft.zfsoft_product.modules.personal.PersonalFragment;
+import com.zfsoft.zfsoft_product.modules.report.ReportFragment;
+import com.zfsoft.zfsoft_product.modules.try_use.viewpager_modules.TryUseViewPagerFragment;
+import com.zfsoft.zfsoft_product.net.ApiService;
+import com.zfsoft.zfsoft_product.net.HttpManager;
+
+import dagger.Module;
+import dagger.Provides;
+import dagger.android.ContributesAndroidInjector;
+
+/**
+ * 创建日期：2018/12/25 on 13:58
+ * 描述:
+ * 作者:Ls
+ */
+@Module
+public abstract  class HomeModule {
+    @FragmentScoped
+    @ContributesAndroidInjector
+    abstract HomeFragment mHomeFragment();
+
+    @FragmentScoped
+    @ContributesAndroidInjector
+    abstract ReportFragment mShoppingFragment();
+
+
+    @FragmentScoped
+    @ContributesAndroidInjector
+    abstract TryUseFragment mNewsFragment();
+
+
+    @FragmentScoped
+    @ContributesAndroidInjector
+    abstract PersonalFragment mPersonalFragment();
+
+    @FragmentScoped
+    @ContributesAndroidInjector
+    abstract TryUseViewPagerFragment mTryUseViewPagerFragment();
+
+    @FragmentScoped
+    @ContributesAndroidInjector
+    abstract ReportViewPagerFragment mReportViewPagerFragment();
+
+    @ActivityScoped
+    @Provides
+    HomeContract.Presenter homePresenter(HttpManager httpManager, ApiService apiService){
+        HomeContract.Presenter presenter= new HomePresenter(apiService,httpManager);
+        return presenter;
+    }
+
+    @ActivityScoped
+    @Provides
+    PersonalContract.Presenter personalPresenter(HttpManager httpManager, ApiService apiService){
+        return new PersonalPresenter(httpManager,apiService);
+    }
+}

@@ -1,0 +1,32 @@
+package com.zfsoft.zfsoft_product.modules.report.write;
+
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.zfsoft.zfsoft_product.R;
+
+/**
+ * 创建日期：2019/1/19 on 14:55
+ * 描述:拍照界面
+ * 作者:Ls
+ */
+public class CameraFragment extends Fragment {
+    public static CameraFragment newInstance() {
+        
+        Bundle args = new Bundle();
+        
+        CameraFragment fragment = new CameraFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_take_photo,container,false);
+    }
+}

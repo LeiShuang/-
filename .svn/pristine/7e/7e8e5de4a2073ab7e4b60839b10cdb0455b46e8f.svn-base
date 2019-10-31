@@ -1,0 +1,107 @@
+package com.zfsoft.zfsoft_product.entity;
+
+import java.security.PrivateKey;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 创建日期：2019/1/12 on 14:30
+ * 描述:假数据帮助类
+ * 作者:Ls
+ */
+public class InfoServer {
+    private static List<ReportInfo> mReportInfos;
+    private static ProductInfo mProductInfo;
+  /*  public static List<ReportInfo> getReportList(int size){
+        mReportInfos = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            ReportInfo info = new ReportInfo();
+            info.setShowPicUrl("http://dpic.tiankong.com/fx/g1/QJ6846644164.jpg");
+            info.setReportTitle("报告标题" + i);
+            info.setPersonalName("张麻子"+ i);
+            info.setPersonalPhotoUrl("http://tupian.qqw21.com/article/UploadPic/2016-4/201641121524755187.jpg");
+            info.setStartNumer("" + i);
+            mReportInfos.add(info);
+        }
+        return mReportInfos;
+    }*/
+
+    public static List<ProductInfo> getProductListInfo(int size){
+        List<String> imageLists = new ArrayList<>();
+        List<String> userPics = new ArrayList<>();
+    List<ProductInfo> productLists = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            mProductInfo = new ProductInfo();
+            for (int j = 0; j < 5; j++) {
+                imageLists.add("http://dpic.tiankong.com/fx/g1/QJ6846644164.jpg");
+                userPics.add("http://tupian.qqw21.com/article/UploadPic/2016-4/201641121524755187.jpg");
+            }
+            mProductInfo.setBannerInfo(imageLists);
+            mProductInfo.setPicLists(userPics);
+            mProductInfo.setProductName("屈臣氏美白面膜" + i);
+            mProductInfo.setProductPrice("单价 : 230");
+            mProductInfo.setProductSize("50ml");
+            mProductInfo.setProductNumber("数量 :1200");
+            mProductInfo.setProductTime("1382400000");
+            mProductInfo.setUserNumber("共350人申请");
+            mProductInfo.setMap4Url("http://200024424.vod.myqcloud.com/200024424_709ae516bdf811e6ad39991f76a4df69.f20.mp4");
+            productLists.add(mProductInfo);
+        }
+       return  productLists;
+
+    }
+
+    public static List<ReportDetailEntity> getDiscussInfos(int limit1,int limit2) {
+        List<ReportDetailEntity> discussInfos = new ArrayList<>();
+        for (int i = 0; i < limit1; i++) {
+            ReportDetailEntity reportDetailEntity = new ReportDetailEntity(ReportDetailEntity.VIEW_ITEM_TYPE_FATHER);
+            reportDetailEntity.getDiscussFatherEntity().setDiscussContent("王老" + i + " : 这个东西用起来真的很好!");
+            reportDetailEntity.getDiscussFatherEntity().setDiscussStarNumber("" + i);
+            reportDetailEntity.getDiscussFatherEntity().setDiscussTime("2019-01-11");
+            reportDetailEntity.getDiscussFatherEntity().setFatherName("王麻子" + i);
+            reportDetailEntity.getDiscussFatherEntity().setFatherPicUrl("http://tupian.qqw21.com/article/UploadPic/2016-4/201641121524755187.jpg");
+
+            discussInfos.add(reportDetailEntity);
+            for (int j = 0; j < limit2;j++){
+                ReportDetailEntity reportDetailEntity2 = new ReportDetailEntity(ReportDetailEntity.VIEW_ITEM_TYPE_CHILD);
+
+                reportDetailEntity2.getDiscussChildEntity().setCommment("陈老 "+ j + ": 自古" + j + "楼出人才" );
+                discussInfos.add(reportDetailEntity2);
+            }
+            ReportDetailEntity reportDetailEntity3 = new ReportDetailEntity(ReportDetailEntity.VIEW_ITEM_TPE_COMMENT);
+            reportDetailEntity3.getCommentNumber().setNumber("共有15条评论");
+            discussInfos.add(reportDetailEntity3);
+        }
+        return discussInfos;
+    }
+
+    /**
+     * 获取个人信息
+     * */
+    public static  UserInfo getUserInfo(){
+        UserInfo info = new UserInfo();
+        info.setName("有梦想不睡觉");
+        info.setAttentionNumber("100");
+        info.setFensNumber("10002");
+        info.setStarNumber("6666");
+        info.setHasAttention(true);
+        info.setPersonalSpeak("I hava a dream!");
+        info.setPersonPicUrl("http://tupian.qqw21.com/article/UploadPic/2016-4/201641121524755187.jpg");
+        return info;
+    }
+
+
+    public static List<ThingsInfoEntity> getThingsList(int index){
+        List<ThingsInfoEntity> thingsInfoEntities = new ArrayList<>();
+        for (int i = 0; i < index; i++) {
+            ThingsInfoEntity entity = new ThingsInfoEntity();
+            entity.setCommoditytitle("屈臣氏美白面膜" + i);
+            entity.setCommodityprice("200");
+            entity.setCommoditybrowse(500);
+            entity.setCommodityparameters("50ml");
+            entity.setCommoditysum(10);
+            thingsInfoEntities.add(entity);
+        }
+        return thingsInfoEntities;
+    }
+}

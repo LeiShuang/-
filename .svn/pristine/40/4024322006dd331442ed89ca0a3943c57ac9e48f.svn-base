@@ -1,0 +1,59 @@
+package com.zfsoft.zfsoft_product.modules.report.report_detail;
+
+import com.zfsoft.zfsoft_product.entity.ProductInfo;
+import com.zfsoft.zfsoft_product.entity.ReportInfo;
+import com.zfsoft.zfsoft_product.net.ApiService;
+import com.zfsoft.zfsoft_product.net.CallBackListener;
+import com.zfsoft.zfsoft_product.net.HttpManager;
+import com.zfsoft.zfsoft_product.net.Response;
+
+import javax.inject.Inject;
+
+import io.reactivex.disposables.CompositeDisposable;
+
+/**
+ * 创建日期：2019/1/24 on 16:02
+ * 描述:报告详情Presenter
+ * 作者:Ls
+ */
+public class ReportDetailPresenter implements ReportDetailContract.Presenter {
+
+    private CompositeDisposable mCompositeDisposable;
+    private HttpManager mHttpManager;
+    private ReportDetailContract.View mView;
+    private ApiService mApiService;
+
+    @Inject
+    public ReportDetailPresenter(HttpManager httpManager, ApiService apiService) {
+        mHttpManager = httpManager;
+        mApiService = apiService;
+        mCompositeDisposable = new CompositeDisposable();
+    }
+
+    @Override
+    public void getReportInfo(String hsk, int productId,String userId) {
+        mHttpManager.request(mApiService.getTestReportDetail(hsk,productId,userId),mCompositeDisposable,mView,new CallBackListener<ReportInfo>(){
+
+            @Override
+            public void onSuccess(ReportInfo data) {
+                mView.getReportHeaderSuccess(data);
+            }
+
+            @Override
+            public void onError(String errorMsg) {
+                mView.getReportHeaderFailed(errorMsg);
+            }
+        });
+    }
+
+    @Override
+    public void takeView(ReportDetailContract.View view) {
+        mView = view;
+    }
+
+    @Override
+    public void dropView() {
+        mView = null;
+        mCompositeDisposable.clear();
+    }
+}

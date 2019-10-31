@@ -1,0 +1,84 @@
+package com.zfsoft.zfsoft_product.modules.personal.my_collection;
+
+import android.os.Bundle;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.zfsoft.zfsoft_product.base.BaseListFragment;
+import com.zfsoft.zfsoft_product.common.Config;
+import com.zfsoft.zfsoft_product.entity.CollectionBean;
+import com.zfsoft.zfsoft_product.entity.MyTrySingleBean;
+import com.zfsoft.zfsoft_product.modules.personal.my_try.MyTryContract;
+import com.zfsoft.zfsoft_product.modules.personal.my_try.MyTryPresenter;
+import com.zfsoft.zfsoft_product.modules.personal.my_try.MyTrySingleAdapter;
+import com.zfsoft.zfsoft_product.utils.DbHelper;
+
+import javax.inject.Inject;
+
+/**
+ * Created by ckw
+ * on 2019/1/21.
+ */
+public class MyCollectionSingleFragment extends BaseListFragment<CollectionBean,MyCollectionPresenter>  implements MyCollectionContract.View{
+
+    @Inject
+    public MyCollectionSingleFragment() {
+    }
+
+    @Inject
+    MyCollectionPresenter myCollectionPresenter;
+
+    private int mType;
+
+    public static MyCollectionSingleFragment newInstance(int type) {
+
+        Bundle args = new Bundle();
+        args.putInt("type",type);
+        MyCollectionSingleFragment fragment = new MyCollectionSingleFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void setSpecificPresenter() {
+        myCollectionPresenter.takeView(this);
+    }
+
+    @Override
+    protected void onItemCLick(BaseQuickAdapter adapter, int position) {
+
+    }
+
+    @Override
+    protected void initFootView(BaseQuickAdapter adapter) {
+
+    }
+
+    @Override
+    protected void initHeader(BaseQuickAdapter adapter) {
+
+    }
+
+
+
+
+    @Override
+    public void loadData() {
+        super.loadData();
+        mType = getArguments().getInt("type");
+        myCollectionPresenter.getMyCollectionList(Config.HSK, DbHelper.getUserId(mContext),String.valueOf(mType),start_page,PAGE_SIZE);
+    }
+
+    @Override
+    protected BaseQuickAdapter<CollectionBean, BaseViewHolder> getAdapter() {
+        return new MyCollectionSingleAdapter();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        myCollectionPresenter.dropView();
+    }
+
+
+}

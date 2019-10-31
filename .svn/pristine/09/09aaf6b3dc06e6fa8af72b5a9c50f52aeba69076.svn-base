@@ -1,0 +1,192 @@
+package com.zfsoft.zfsoft_product.modules.report;
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.RelativeLayout;
+
+import com.vondear.rxtool.view.RxToast;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseFragment;
+import com.zfsoft.zfsoft_product.common.Config;
+import com.zfsoft.zfsoft_product.di.ActivityScoped;
+import com.zfsoft.zfsoft_product.entity.ProductTypeEntity;
+import com.zfsoft.zfsoft_product.modules.report.report_child.ReportViewPagerFragment;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+
+/**
+ * 创建日期：2018/12/24 on 10:55
+ * 描述:
+ * 作者:Ls
+ */
+@ActivityScoped
+public class ReportFragment extends BaseFragment implements View.OnClickListener, ReportContract.View {
+
+    @BindView(R.id.report_search)
+    SearchView mReportSearch;
+    @BindView(R.id.report_tabLayout)
+    TabLayout mReportTabLayout;
+    @BindView(R.id.report_view_pager)
+    ViewPager mReportViewPager;
+    @BindView(R.id.rl_report_search)
+    RelativeLayout mRlReportSearch;
+
+    private List<ReportViewPagerFragment> fragmentLists;
+    private String[] tabTexts;
+
+    private SearchListenerCallBack mSearchListener;
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.fragment_report;
+    }
+
+    @Inject
+    public ReportFragment() {
+
+    }
+
+    @Inject
+    ReportPresenter mReportPresenter;
+
+    @Override
+    protected void initVariables() {
+        mReportPresenter.getProductType(Config.HSK);
+        fragmentLists = new ArrayList<>();
+
+
+    }
+
+    @Override
+    protected void handleBundle(Bundle bundle) {
+
+    }
+
+    @Override
+    protected void operateViews(View view) {
+        setUnderLinetransparent(mReportSearch);
+        mReportPresenter.getProductType(Config.HSK);
+        SearchView.SearchAutoComplete textView = (SearchView.SearchAutoComplete) mReportSearch.findViewById(R.id.search_src_text);
+        textView.setTextColor(getResources().getColor(R.color.white));
+        textView.setTextSize(14);
+        textView.setHintTextColor(getResources().getColor(R.color.white));
+        AppCompatImageView button = (AppCompatImageView) mReportSearch.findViewById(android.support.v7.appcompat.R.id.search_button);
+        AppCompatImageView button1 = (AppCompatImageView) mReportSearch.findViewById(android.support.v7.appcompat.R.id.search_go_btn);
+        AppCompatImageView button2 = (AppCompatImageView) mReportSearch.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+        button.setImageResource(R.mipmap.ico_search);
+        button1.setImageResource(R.mipmap.ico_search_next);
+        button2.setImageResource(R.mipmap.ico_close_white);
+    }
+
+    @Override
+    protected void initListener() {
+        mReportSearch.setIconifiedByDefault(true);
+        mReportSearch.setQueryHint("请输入关键字");
+        mReportSearch.setSubmitButtonEnabled(true);
+        mReportSearch.onActionViewExpanded();
+        mReportSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                int selectedTabPosition = mReportTabLayout.getSelectedTabPosition();
+                mSearchListener = fragmentLists.get(selectedTabPosition).getSearchListener();
+                mSearchListener.submitSearch(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (TextUtils.isEmpty(newText)) {
+                    int selectedTabPosition = mReportTabLayout.getSelectedTabPosition();
+                    mSearchListener = fragmentLists.get(selectedTabPosition).getSearchListener();
+                    mSearchListener.submitSearch("");
+                    for (int i = 0; i < fragmentLists.size(); i++) {
+                        if ( fragmentLists.get(i).getSearchListener() != null){
+                            fragmentLists.get(i).getSearchListener().clearQuery();
+                        }
+                    }
+                }
+                return false;
+            }
+
+        });
+
+    }
+
+    @Override
+    public void initPresenter() {
+        mReportPresenter.takeView(this);
+    }
+
+
+    @Override
+    public void onClick(View v) {
+
+    }
+
+
+    /**
+     * 设置SearchView下划线透明
+     **/
+    private void setUnderLinetransparent(SearchView searchView) {
+        try {
+            Class<?> argClass = searchView.getClass();
+            // mSearchPlate是SearchView父布局的名字
+            Field ownField = argClass.getDeclaredField("mSearchPlate");
+            ownField.setAccessible(true);
+            View mView = (View) ownField.get(searchView);
+            mView.setBackgroundColor(Color.TRANSPARENT);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void getTypeSuccess(List<ProductTypeEntity> info) {
+        if (info.size() != 0) {
+            tabTexts = new String[info.size()];
+        }
+        for (int i = 0; i < info.size(); i++) {
+            fragmentLists.add(ReportViewPagerFragment.newInstance(info.get(i).getId()));
+            tabTexts[i] = info.get(i).getName();
+        }
+        FragmentManager fm = ReportFragment.this.getChildFragmentManager();
+        ReportViewPagerAdapter adapter = new ReportViewPagerAdapter(fm, tabTexts, fragmentLists);
+        mReportViewPager.setAdapter(adapter);
+        mReportTabLayout.setupWithViewPager(mReportViewPager);
+
+    }
+
+    @Override
+    public void getTypeFailed(String msg) {
+        RxToast.showToast("数据获取异常");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mReportPresenter.dropView();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mRlReportSearch.setFocusable(true);
+        mRlReportSearch.setFocusableInTouchMode(true);
+        mRlReportSearch.requestFocus();
+    }
+}

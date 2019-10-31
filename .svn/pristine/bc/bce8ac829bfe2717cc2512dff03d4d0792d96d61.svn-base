@@ -1,0 +1,77 @@
+package com.zfsoft.zfsoft_product.modules.personal.accout_safe;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseFragment;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+
+/**
+ * Created by ckw
+ * on 2019/1/18.
+ */
+public class AccountSafeFragment extends BaseFragment {
+    @Inject
+    public AccountSafeFragment() {
+    }
+
+    @BindView(R.id.rl_back)
+    RelativeLayout mBack;
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.fragment_account_safe;
+    }
+
+    @Override
+    protected void initVariables() {
+
+    }
+
+    @Override
+    protected void handleBundle(Bundle bundle) {
+
+    }
+
+    @Override
+    protected void operateViews(View view) {
+
+    }
+
+    @Override
+    protected void initListener() {
+        mBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+    }
+
+    @Override
+    public void initPresenter() {
+
+    }
+
+    @Override
+    protected boolean immersionEnabled() {
+        return true;
+    }
+
+    @Override
+    protected void immersionInit() {
+        super.immersionInit();
+        if (immersionBar == null) {
+            return;
+        }
+        immersionBar.statusBarDarkFont(true);
+        immersionBar.statusBarColor(R.color.colorWhite)
+                .init();
+    }
+}

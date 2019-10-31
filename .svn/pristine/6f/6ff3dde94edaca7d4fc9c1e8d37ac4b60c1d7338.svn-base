@@ -1,0 +1,29 @@
+package com.zfsoft.zfsoft_product.modules.home;
+
+import dagger.MembersInjector;
+import dagger.internal.Factory;
+import dagger.internal.MembersInjectors;
+import javax.annotation.Generated;
+
+@Generated(
+  value = "dagger.internal.codegen.ComponentProcessor",
+  comments = "https://google.github.io/dagger"
+)
+public final class HomeFragment_Factory implements Factory<HomeFragment> {
+  private final MembersInjector<HomeFragment> homeFragmentMembersInjector;
+
+  public HomeFragment_Factory(MembersInjector<HomeFragment> homeFragmentMembersInjector) {
+    assert homeFragmentMembersInjector != null;
+    this.homeFragmentMembersInjector = homeFragmentMembersInjector;
+  }
+
+  @Override
+  public HomeFragment get() {
+    return MembersInjectors.injectMembers(homeFragmentMembersInjector, new HomeFragment());
+  }
+
+  public static Factory<HomeFragment> create(
+      MembersInjector<HomeFragment> homeFragmentMembersInjector) {
+    return new HomeFragment_Factory(homeFragmentMembersInjector);
+  }
+}

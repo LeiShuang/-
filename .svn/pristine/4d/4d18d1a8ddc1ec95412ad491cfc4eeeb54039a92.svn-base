@@ -1,0 +1,94 @@
+package com.zfsoft.zfsoft_product.modules.home;
+
+
+import android.content.Context;
+import android.graphics.Paint;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.zfsoft.zfsoft_product.R;
+
+import java.util.List;
+
+/**
+ * 创建日期：2019/1/3 on 15:18
+ * 描述:首页Adapter
+ * 作者:Ls
+ */
+public class HomeAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseViewHolder> {
+
+    private ItemRecyclerClickListener itemRecyclerClickListener;
+
+    public HomeAdapter(Context context, List data,ItemRecyclerClickListener itemRecyclerClickListener) {
+        super(data);
+        this.itemRecyclerClickListener = itemRecyclerClickListener;
+        addItemType(MultipleItem.TEXT, R.layout.item_title_text);
+        addItemType(MultipleItem.IMG_SIX, R.layout.item_image_six);
+        addItemType(MultipleItem.IMG_SCROLL, R.layout.item_image_scroll);
+        addItemType(MultipleItem.IMG_SINGLE, R.layout.item_image_single);
+    }
+
+
+    @Override
+    protected void convert(BaseViewHolder helper, MultipleItem item) {
+        switch (item.getItemType()){
+            case MultipleItem.TEXT:
+                helper.setText(R.id.tv_item_title,item.getTitleEntity().getTitle());
+                helper.addOnClickListener(R.id.tv_see_more);//查看更多的点击事件
+                if(item.getTitleEntity().getTitle().equals("试用达人")){
+                    ((TextView)helper.getView(R.id.tv_see_more)).setVisibility(View.INVISIBLE);
+                }else {
+                    ((TextView)helper.getView(R.id.tv_see_more)).setVisibility(View.VISIBLE);
+                }
+                break;
+            case MultipleItem.IMG_SIX:
+                if(item.getSixImgEntity().getPrice() != null){
+                    helper.setText(R.id.tv_price_one,"¥" + item.getSixImgEntity().getPrice());
+                }
+                TextView tvPrice = helper.getView(R.id.tv_price_one);
+                tvPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);
+                if(item.getSixImgEntity().getImgUrl() != null){
+                    Glide.with(mContext).load(item.getSixImgEntity().getImgUrl()).into((ImageView)helper.getView(R.id.iv_head_one));
+                }
+
+                if("0".equals(item.getSixImgEntity().getState())){
+                    helper.setText(R.id.tv_apply_one,"已申请");
+                }else if("1".equals(item.getSixImgEntity().getState())){
+                    helper.setText(R.id.tv_apply_one,"申请成功");
+                }else {
+                    helper.setText(R.id.tv_apply_one,"申请");
+                }
+                helper.addOnClickListener(R.id.tv_apply_one);//申请的点击事件设置
+                break;
+            case MultipleItem.IMG_SCROLL:
+
+                RecyclerView recyclerView = helper.getView(R.id.rv_scroll);
+                recyclerView.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false));
+                HorizontalScrollAdapter adapter = new HorizontalScrollAdapter(mContext,item.getScrollImgListEntity().getList(),itemRecyclerClickListener);
+                recyclerView.setAdapter(adapter);
+                break;
+            case MultipleItem.IMG_SINGLE:
+                helper.setText(R.id.tv_user_name,item.getSingleImgEntity().getName());
+                helper.setText(R.id.tv_content,item.getSingleImgEntity().getContent());
+                helper.setText(R.id.tv_user_name,item.getSingleImgEntity().getName());
+                helper.setText(R.id.tv_thumb_up_number,item.getSingleImgEntity().getThumbUpNum());
+                if(item.getSingleImgEntity().getHeadUrl() != null){
+                    Glide.with(mContext).load(item.getSingleImgEntity().getHeadUrl()).into((ImageView) helper.getView(R.id.iv_single));
+                }
+
+                if(item.getSingleImgEntity().getUserUrl() != null){
+                    Glide.with(mContext).load(item.getSingleImgEntity().getUserUrl()).into((ImageView) helper.getView(R.id.civ_user_img));
+                }
+
+                break;
+        }
+    }
+}

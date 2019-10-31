@@ -1,0 +1,136 @@
+package com.zfsoft.zfsoft_product.modules.try_use;
+
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageView;
+
+import com.vondear.rxtool.RxFragmentTool;
+import com.vondear.rxtool.view.RxToast;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseFragment;
+import com.zfsoft.zfsoft_product.di.ActivityScoped;
+import com.zfsoft.zfsoft_product.modules.try_use.viewpager_modules.TryUseViewPagerFragment;
+import com.zfsoft.zfsoft_product.widget.MenuPopwindow;
+import com.zfsoft.zfsoft_product.widget.MenuPopwindowinfo;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
+/**
+ * 创建日期：2018/12/24 on 10:55
+ * 描述:使用Fragment
+ * 作者:Ls
+ */
+@ActivityScoped
+public class TryUseFragment extends BaseFragment implements View.OnClickListener, AdapterView.OnItemClickListener {
+    @BindView(R.id.tabLayout)
+    TabLayout mTabLayout;
+    @BindView(R.id.try_view_pager)
+    ViewPager mViewPager;
+    @BindView(R.id.iv_list)
+    ImageView mIvList;
+    private String listSortTexts[] = {"最新", "最热"};
+    //private int listSortPics[] = {R.mipmap.ico_most_new, R.mipmap.ico_most_hot};
+    private List<TryUseViewPagerFragment> fragmentLists;
+    private String[] tabTexts = new String[]{"进行中", "即将截止", "往期精品"};
+    private List<MenuPopwindowinfo> mPopwindowinfoList;//popwindow所需要的集合
+    private MenuPopwindow mMenuPopwindow;//右上角弹框popwindow
+    private MenuWindowCallBackListener mMenuWindowCallBackListener;
+
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.fragment_try_use;
+    }
+
+    @Inject
+    public TryUseFragment() {
+
+    }
+
+    @Override
+    protected void initVariables() {
+        fragmentLists = new ArrayList<>();
+        for (int i = 1; i <= tabTexts.length; i++) {
+            fragmentLists.add(TryUseViewPagerFragment.newInstance(i));
+        }
+        mPopwindowinfoList = new ArrayList<>();
+        for (int i = 0; i < listSortTexts.length; i++) {
+            MenuPopwindowinfo popwindowinfo = new MenuPopwindowinfo();
+            popwindowinfo.setText(listSortTexts[i]);
+            mPopwindowinfoList.add(popwindowinfo);
+        }
+    }
+
+    @Override
+    protected void handleBundle(Bundle bundle) {
+
+    }
+
+    @Override
+    protected void operateViews(View view) {
+        mMenuPopwindow = new MenuPopwindow(getActivity(), mPopwindowinfoList);
+        FragmentManager fm = TryUseFragment.this.getChildFragmentManager();
+        TryUseFragmentAdapter adapter = new TryUseFragmentAdapter(fm, tabTexts, fragmentLists);
+        mViewPager.setAdapter(adapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+
+    }
+
+    @Override
+    protected void initListener() {
+        mIvList.setOnClickListener(this);
+        mMenuPopwindow.setOnItemClick(this);
+    }
+
+    @Override
+    public void initPresenter() {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        int key = v.getId();
+        switch (key) {
+            case R.id.iv_list:
+                //点击了列表筛选
+                mMenuPopwindow.showPopupWindow(mIvList);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        int selectFragment = mTabLayout.getSelectedTabPosition();
+        mMenuWindowCallBackListener = fragmentLists.get(selectFragment).getMenuWindowListener();
+        switch (position) {
+            case 0:
+                //说明选择最新的排序方式
+                //获取
+                mMenuWindowCallBackListener.changeSortType("0");
+                mMenuPopwindow.dismiss();
+                break;
+            case 1:
+                //最热
+                mMenuWindowCallBackListener.changeSortType("1");
+                mMenuPopwindow.dismiss();
+                break;
+            default:
+                break;
+        }
+    }
+}

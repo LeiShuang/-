@@ -1,0 +1,29 @@
+package com.zfsoft.zfsoft_product.base;
+
+import android.support.v4.app.Fragment;
+import com.zfsoft.zfsoft_product.di.FragmentScoped;
+import com.zfsoft.zfsoft_product.modules.home.HomeFragment;
+import dagger.Binds;
+import dagger.Module;
+import dagger.Subcomponent;
+import dagger.android.AndroidInjector;
+import dagger.android.support.FragmentKey;
+import dagger.multibindings.IntoMap;
+
+@Module(subcomponents = HomeModule_MHomeFragment.HomeFragmentSubcomponent.class)
+public abstract class HomeModule_MHomeFragment {
+  private HomeModule_MHomeFragment() {}
+
+  @Binds
+  @IntoMap
+  @FragmentKey(HomeFragment.class)
+  abstract AndroidInjector.Factory<? extends Fragment> bindAndroidInjectorFactory(
+      HomeFragmentSubcomponent.Builder builder);
+
+  @Subcomponent
+  @FragmentScoped
+  public interface HomeFragmentSubcomponent extends AndroidInjector<HomeFragment> {
+    @Subcomponent.Builder
+    abstract class Builder extends AndroidInjector.Builder<HomeFragment> {}
+  }
+}

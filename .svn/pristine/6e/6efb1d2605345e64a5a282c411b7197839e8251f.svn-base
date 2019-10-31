@@ -1,0 +1,30 @@
+package com.zfsoft.zfsoft_product.modules.try_use.try_use_detail;
+
+
+import android.widget.ImageView;
+import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.entity.ReportInfo;
+import de.hdodenhof.circleimageview.CircleImageView;
+
+/**
+ * 创建日期：2019/1/12 on 15:12
+ * 描述:试用报告列表适配器
+ * 作者:Ls
+ */
+public class TryUseReportAdapter extends BaseQuickAdapter<ReportInfo,BaseViewHolder> {
+    public TryUseReportAdapter() {
+        super(R.layout.try_use_report_item);
+    }
+
+    @Override
+    protected void convert(BaseViewHolder helper, ReportInfo item) {
+        Glide.with(mContext).load(item.getShowPicUrl()).into((ImageView) helper.getView(R.id.ic_use_report));
+        Glide.with(mContext).load(item.getPersonalPhotoUrl()).into((CircleImageView)helper.getView(R.id.tv_report_pic));
+        helper.setText(R.id.tv_use_report_title,item.getReportTitle());
+        helper.setText(R.id.tv_user_report_name,item.getPersonalName());
+        helper.setText(R.id.tv_star_number,item.getStartNumer());
+    }
+}

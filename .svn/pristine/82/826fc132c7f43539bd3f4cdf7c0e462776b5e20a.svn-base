@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite">
+        <!--物品图片-->
+        <ImageView
+            android:id="@+id/ic_report_show_pic"
+            android:layout_width="match_parent"
+            android:layout_height="139dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ico_child_bg" />
+        <!--标题-->
+        <TextView
+            android:id="@+id/tv_report_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ic_report_show_pic"
+            android:gravity="center_vertical"
+            android:padding="@dimen/five_padding"
+            android:textColor="@color/colorSmallBlack"
+            android:textSize="@dimen/font_normal"
+            android:textStyle="bold"
+            tools:text="这是一个标题" />
+
+        <RelativeLayout
+            android:id="@+id/rl_report_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_report_title"
+            android:padding="@dimen/five_padding">
+            <!--发布者头像-->
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/tv_reporter_pic"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_alignParentLeft="true"
+                android:scaleType="centerCrop"
+                android:layout_centerVertical="true" />
+            <!--报告编辑人-->
+            <TextView
+                android:id="@+id/tv_reporter_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="4dp"
+                android:layout_toRightOf="@id/tv_reporter_pic"
+                android:textSize="@dimen/discuss_write_size"
+                android:textStyle="bold"
+                android:textColor="@color/report_detail_title_bg"
+                tools:text="王麻子" />
+            <!--点赞数量-->
+            <TextView
+                android:id="@+id/tv_star_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/ten_padding"
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/discuss_write_size"
+                android:textColor="@color/report_star_bg"
+                tools:text="11"/>
+
+            <ImageView
+                android:id="@+id/iv_star"
+                android:layout_toLeftOf="@+id/tv_star_number"
+                android:layout_marginRight="@dimen/five_padding"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ico_unstar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

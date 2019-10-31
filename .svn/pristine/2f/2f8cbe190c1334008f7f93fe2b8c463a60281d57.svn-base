@@ -1,0 +1,62 @@
+package com.zfsoft.zfsoft_product.modules.home;
+
+
+import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.zfsoft.zfsoft_product.R;
+
+import java.util.List;
+
+/**
+ * 创建日期：2019/1/3 on 15:18
+ * 描述:首页Adapter
+ * 作者:Ls
+ */
+public class HomeAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseViewHolder> {
+
+    public HomeAdapter(Context context, List data) {
+        super(data);
+        addItemType(MultipleItem.TEXT, R.layout.item_title_text);
+        addItemType(MultipleItem.IMG_SIX, R.layout.item_image_six);
+        addItemType(MultipleItem.IMG_SCROLL, R.layout.item_image_scroll);
+        addItemType(MultipleItem.IMG_SINGLE, R.layout.item_image_single);
+    }
+
+
+    @Override
+    protected void convert(BaseViewHolder helper, MultipleItem item) {
+        switch (item.getItemType()){
+            case MultipleItem.TEXT:
+                helper.setText(R.id.tv_item_title,item.getTitleEntity().getTitle());
+                break;
+            case MultipleItem.IMG_SIX:
+                helper.setText(R.id.tv_price_one,item.getSixImgEntity().getPrice());
+                Glide.with(mContext).load(item.getSixImgEntity().getImgUrl()).into((ImageView)helper.getView(R.id.iv_head_one));
+
+                break;
+            case MultipleItem.IMG_SCROLL:
+
+                RecyclerView recyclerView = helper.getView(R.id.rv_scroll);
+                recyclerView.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false));
+                HorizontalScrollAdapter adapter = new HorizontalScrollAdapter(mContext,item.getScrollImgListEntity().getList());
+                recyclerView.setAdapter(adapter);
+                break;
+            case MultipleItem.IMG_SINGLE:
+                helper.setText(R.id.tv_user_name,item.getSingleImgEntity().getName());
+                helper.setText(R.id.tv_content,item.getSingleImgEntity().getContent());
+                helper.setText(R.id.tv_user_name,item.getSingleImgEntity().getName());
+                helper.setText(R.id.tv_thumb_up_number,item.getSingleImgEntity().getThumbUpNum());
+                Glide.with(mContext).load(item.getSingleImgEntity().getHeadUrl()).into((ImageView) helper.getView(R.id.iv_single));
+                Glide.with(mContext).load(item.getSingleImgEntity().getUserUrl()).into((ImageView) helper.getView(R.id.civ_user_img));
+
+                break;
+        }
+    }
+}

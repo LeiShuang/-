@@ -1,0 +1,131 @@
+package com.zfsoft.zfsoft_product.net;
+
+import com.zfsoft.zfsoft_product.entity.AddressBean;
+import com.zfsoft.zfsoft_product.entity.BannerBean;
+import com.zfsoft.zfsoft_product.entity.CollectionBean;
+import com.zfsoft.zfsoft_product.entity.IntegralBean;
+import com.zfsoft.zfsoft_product.entity.IntegralDetailBean;
+import com.zfsoft.zfsoft_product.entity.MessageListBean;
+import com.zfsoft.zfsoft_product.entity.MyTryReportBean;
+import com.zfsoft.zfsoft_product.entity.MyTrySingleBean;
+import com.zfsoft.zfsoft_product.entity.ProductInfo;
+import com.zfsoft.zfsoft_product.entity.ReportInfo;
+import com.zfsoft.zfsoft_product.entity.ResponseListInfo;
+import com.zfsoft.zfsoft_product.entity.SignBean;
+import com.zfsoft.zfsoft_product.entity.ThingsInfoEntity;
+import com.zfsoft.zfsoft_product.entity.TryNewProductBean;
+
+import java.util.List;
+import java.util.Map;
+
+import io.reactivex.Observable;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Query;
+
+/**
+ * 创建日期：2018/12/24 on 10:15
+ * 描述:接口类
+ * 作者:Ls
+ */
+public interface ApiService {
+
+
+    /*
+     * 轮播图数据
+     * */
+    @GET("system/connect/getCarousel")
+    Observable<Response<List<BannerBean>>> getBannerList(@Query("hsk") String hsk, @Query("link") String link);
+
+    /*
+    * 首页试用新品 6条数据 system/connect/cp/xplist
+    * */
+    @GET("system/connect/getNewProducts")
+    Observable<Response<List<TryNewProductBean>>> getTryNewProductList(@Query("hsk") String hsk, @Query("link") String link);
+
+
+    /*
+    * 签到
+    * */
+    @GET("system/connect/getCheckIn")
+    Observable<Response<SignBean>> getSignResult(@Query("hsk") String hsk,@Query("userid") String userId);
+
+    /*
+    * 设置界面 进入 我的试用界面
+    * */
+    @GET("system/connect/getTrialInfo")
+    Observable<Response<ResponseListInfo<MyTrySingleBean>>> getMyTryProductList(@Query("hsk") String hsk, @Query("userid") String userId,
+                                                                                @Query("commoditytype") String commoditytype,
+                                                                                @Query("page") int page,@Query("size") int size);
+
+    /*
+     * 设置界面 进入 我的报告界面
+     * */
+    @GET("baidu")
+    Observable<Response<ResponseListInfo<MyTryReportBean>>> getMyReportList(@Query("hsk") String hsk, @Query("link") String link);
+
+    /*
+    * 我的收藏
+    * */
+    @GET("system/connect/getMyCollection")
+    Observable<Response<ResponseListInfo<CollectionBean>>> getMyCollectionList(@Query("hsk") String hsk,
+                                                                               @Query("userid")String userId,
+                                                                               @Query("commoditytype") String commoditytype,
+                                                                               @Query("page") int page,
+                                                                               @Query("size") int size);
+
+    /*
+    *
+    * 新增收货地址
+    * */
+    @FormUrlEncoded
+    @POST("system/connect/saveMyAddress")
+    Observable<Response<SignBean>> addAddress(@FieldMap Map<String,String> params);
+
+    /*
+     * 获取收货地址列表
+     * */
+    @GET("system/connect/getMyAddress")
+    Observable<Response<List<AddressBean>>> getAddressList(@Query("hsk") String hsk, @Query("userid") String userId);
+
+    /*
+    * 积分商城
+    * */
+    @GET("baidu")
+    Observable<Response<ResponseListInfo<IntegralBean>>> getIntegralProductList(@Query("hsk") String hsk,@Query("page") int page,@Query("size") int size);
+
+
+    /*
+    * 积分商城 积分明细
+    * */
+    @GET("baidu")
+    Observable<Response<ResponseListInfo<IntegralDetailBean>>> getIntegralDetailList(@Query("hsk") String hsk,@Query("page") int page,@Query("size") int size);
+    /**
+     * 试用页面进行中商品列表获取
+     * @param   hsk  握手码
+     * @param  type 试用类别（1：进行中，2：未开始，3：已结束）
+     * @param   page
+     * @param   size
+     * */
+    @GET("system/connect/getALLNewProducts")
+    Observable<Response<ResponseListInfo<ThingsInfoEntity>>> getTryUseThingsList(@Query("hsk")String hsk,@Query("commoditytype")int type,@Query("page")int page,@Query("size")int size);
+
+
+    /**
+     * 试用详情页面数据获取
+     * @param id
+     * */
+    @GET("system/connect/getProductsDetails")
+    Observable<Response<ProductInfo>>getProductsDetails(@Query("hsk")String hsk,@Query("commodityid")String id);
+
+    /**
+     * 获取某个商品的所有报告
+     *
+     * @param id  商品的id
+     * */
+
+    @GET("system/connect/getOneProductsTestReport")
+    Observable<Response<ResponseListInfo<ReportInfo>>> getOneProductsTestReport(@Query("hsk")String hsk,@Query("commodityid")String id,@Query("page")int page,@Query("size")int size);
+}

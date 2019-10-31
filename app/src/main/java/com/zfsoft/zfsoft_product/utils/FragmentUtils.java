@@ -15,6 +15,8 @@ import android.support.v4.view.ViewCompat;
 import android.util.Log;
 import android.view.View;
 
+import com.zfsoft.zfsoft_product.modules.personal.PersonalFragment;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -42,13 +44,12 @@ public final class FragmentUtils {
 
     /**
      * 新增 fragment
-     *
-     * @param fm          fragment 管理器
-     * @param containerId 布局 Id
+     *  @param fm          fragment 管理器
      * @param add         要新增的 fragment
+     * @param containerId 布局 Id
      */
     public static void add(@NonNull final FragmentManager fm,
-                           @NonNull final Fragment add,
+                           @NonNull final PersonalFragment add,
                            @IdRes final int containerId) {
         add(fm, add, containerId, false, false);
     }

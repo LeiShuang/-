@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/fivteen_padding"
+        android:paddingLeft="@dimen/five_padding"
+        android:layout_marginLeft="53dp"
+        android:layout_marginRight="@dimen/twenty_six"
+        android:background="@color/discuss_second_bg">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circle_image"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginTop="@dimen/five_padding"
+            android:layout_alignParentLeft="true"
+            android:scaleType="centerCrop" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/circle_image">
+
+            <RelativeLayout
+                android:id="@+id/rl_child_name_out"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+               <!-- <TextView
+                    android:id="@+id/tv_star"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@mipmap/ico_unstar"
+                    android:drawablePadding="@dimen/five_padding"
+                    android:textColor="@color/colorSmallGray"
+                    android:textSize="@dimen/discuss_write_size" />-->
+                <!--姓名-->
+                <TextView
+                    android:id="@+id/tv_discuss_child_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/ten_padding"
+                    android:gravity="center_vertical"
+                    android:maxLength="15"
+                    tools:text="这是姓名"
+                    android:paddingBottom="@dimen/five_padding"
+                    android:paddingTop="@dimen/five_padding"
+                    android:singleLine="true"
+                    android:textColor="@color/colorSmallGray"
+                    android:textSize="@dimen/font_normal" />
+
+            </RelativeLayout>
+            <!--评论内容-->
+            <TextView
+                android:id="@+id/tv_child_discuss_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_child_name_out"
+                android:layout_marginLeft="@dimen/ten_padding"
+                android:paddingBottom="@dimen/five_padding"
+                android:paddingTop="@dimen/five_padding"
+                android:textColor="@color/home_item_more" />
+
+            <TextView
+                android:id="@+id/tv_child_discuss_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_child_discuss_content"
+                android:layout_marginLeft="@dimen/ten_padding"
+                android:singleLine="true"
+                android:textColor="@color/colorSmallGray"
+                android:textSize="@dimen/font_normal"
+                tools:text="2019-01-01"
+                android:paddingBottom="@dimen/five_padding"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

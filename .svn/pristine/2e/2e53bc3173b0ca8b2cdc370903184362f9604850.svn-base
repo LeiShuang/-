@@ -1,0 +1,135 @@
+package com.zfsoft.zfsoft_product.modules.login.info;
+
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseFragment;
+import com.zfsoft.zfsoft_product.base.HomeActivity;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+
+/**
+ * Created by ckw
+ * on 2019/1/17.
+ */
+public class SetInfoFragment extends BaseFragment {
+
+    @Inject
+    public SetInfoFragment() {
+    }
+
+    @BindView(R.id.iv_show_dialog)
+    ImageView mIvShowDialog;
+    @BindView(R.id.tv_save)
+    TextView mTvSave;
+    @BindView(R.id.rl_back)
+    RelativeLayout mRlBack;
+
+    private int yourChoice;
+    private final String[] items = { "男","女" };
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.fragment_set_info;
+    }
+
+    @Override
+    protected void initVariables() {
+
+    }
+
+    @Override
+    protected void handleBundle(Bundle bundle) {
+
+    }
+
+    @Override
+    protected void operateViews(View view) {
+
+    }
+
+    @Override
+    protected void initListener() {
+        mIvShowDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSingleChoiceDialog();
+            }
+        });
+
+        mTvSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mRlBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+
+    private void showSingleChoiceDialog(){
+
+        yourChoice = 0;
+        AlertDialog.Builder singleChoiceDialog =
+                new AlertDialog.Builder(getContext());
+        singleChoiceDialog.setTitle("性别");
+        // 第二个参数是默认选项，此处设置为0
+        singleChoiceDialog.setSingleChoiceItems(items, 0,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        yourChoice = which;
+                    }
+                });
+        singleChoiceDialog.setPositiveButton("确定",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getContext(),
+                                "你选择了" + items[yourChoice],
+                                Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+        singleChoiceDialog.show();
+    }
+
+    @Override
+    public void initPresenter() {
+
+    }
+
+    @Override
+    protected boolean immersionEnabled() {
+        return true;
+    }
+
+    @Override
+    protected void immersionInit() {
+        super.immersionInit();
+        if (immersionBar == null) {
+            return;
+        }
+        immersionBar.statusBarDarkFont(true);
+        immersionBar.statusBarColor(R.color.colorWhite)
+                .init();
+    }
+}

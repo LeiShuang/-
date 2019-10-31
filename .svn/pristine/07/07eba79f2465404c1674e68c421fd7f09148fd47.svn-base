@@ -1,0 +1,29 @@
+package com.zfsoft.zfsoft_product.base;
+
+import android.support.v4.app.Fragment;
+import com.zfsoft.zfsoft_product.di.FragmentScoped;
+import com.zfsoft.zfsoft_product.modules.try_use.TryUseFragment;
+import dagger.Binds;
+import dagger.Module;
+import dagger.Subcomponent;
+import dagger.android.AndroidInjector;
+import dagger.android.support.FragmentKey;
+import dagger.multibindings.IntoMap;
+
+@Module(subcomponents = HomeModule_MNewsFragment.TryUseFragmentSubcomponent.class)
+public abstract class HomeModule_MNewsFragment {
+  private HomeModule_MNewsFragment() {}
+
+  @Binds
+  @IntoMap
+  @FragmentKey(TryUseFragment.class)
+  abstract AndroidInjector.Factory<? extends Fragment> bindAndroidInjectorFactory(
+      TryUseFragmentSubcomponent.Builder builder);
+
+  @Subcomponent
+  @FragmentScoped
+  public interface TryUseFragmentSubcomponent extends AndroidInjector<TryUseFragment> {
+    @Subcomponent.Builder
+    abstract class Builder extends AndroidInjector.Builder<TryUseFragment> {}
+  }
+}

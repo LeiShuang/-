@@ -1,0 +1,50 @@
+package com.zfsoft.zfsoft_product.modules.personal.change_pwd;
+
+import android.os.Bundle;
+import android.view.View;
+
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseFragment;
+
+import javax.inject.Inject;
+
+/**
+ * Created by ckw
+ * on 2019/1/18.
+ */
+public class ChangePwdFragment extends BaseFragment {
+
+    @Inject
+    public ChangePwdFragment() {
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.fragment_change_pwd;
+    }
+
+    @Override
+    protected void initVariables() {
+
+    }
+
+    @Override
+    protected void handleBundle(Bundle bundle) {
+
+    }
+
+    @Override
+    protected void operateViews(View view) {
+
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    public void initPresenter() {
+
+    }
+}

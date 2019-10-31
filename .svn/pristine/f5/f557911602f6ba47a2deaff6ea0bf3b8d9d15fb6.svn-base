@@ -1,0 +1,29 @@
+package com.zfsoft.zfsoft_product.modules.report;
+
+import dagger.MembersInjector;
+import dagger.internal.Factory;
+import dagger.internal.MembersInjectors;
+import javax.annotation.Generated;
+
+@Generated(
+  value = "dagger.internal.codegen.ComponentProcessor",
+  comments = "https://google.github.io/dagger"
+)
+public final class ReportFragment_Factory implements Factory<ReportFragment> {
+  private final MembersInjector<ReportFragment> reportFragmentMembersInjector;
+
+  public ReportFragment_Factory(MembersInjector<ReportFragment> reportFragmentMembersInjector) {
+    assert reportFragmentMembersInjector != null;
+    this.reportFragmentMembersInjector = reportFragmentMembersInjector;
+  }
+
+  @Override
+  public ReportFragment get() {
+    return MembersInjectors.injectMembers(reportFragmentMembersInjector, new ReportFragment());
+  }
+
+  public static Factory<ReportFragment> create(
+      MembersInjector<ReportFragment> reportFragmentMembersInjector) {
+    return new ReportFragment_Factory(reportFragmentMembersInjector);
+  }
+}

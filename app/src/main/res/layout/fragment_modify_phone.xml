@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rl_header"
+        android:background="@color/colorWhite"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/rl_modify_container"
+            android:layout_centerVertical="true"
+            android:layout_width="45dp"
+            android:layout_height="45dp">
+
+            <ImageView
+                android:src="@mipmap/ico_back_black"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+
+
+        <TextView
+            android:id="@+id/tv_modify_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="修改密码"
+            android:textColor="#5a5a5a"
+            android:textSize="16sp" />
+
+
+    </RelativeLayout>
+
+    <View
+        android:background="#CBCBCB"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+
+    <EditText
+        android:id="@+id/et_input_phone"
+        android:layout_below="@+id/rl_header"
+        android:paddingLeft="16dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:hint="@string/login_tip"
+        android:inputType="number"
+        android:background="@drawable/background_corner_24_stroke_1"
+        android:textColor="@color/colorSmallBlack"
+        android:textColorHint="#a7a7a7"
+        android:textSize="15sp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp" />
+
+
+    <EditText
+        android:id="@+id/et_validation"
+        android:layout_below="@+id/et_input_phone"
+        android:paddingLeft="16dp"
+        android:inputType="number"
+        android:layout_marginTop="18dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:hint="@string/validation_tip"
+        android:background="@drawable/background_corner_24_stroke_1"
+        android:textColor="@color/colorSmallBlack"
+        android:textColorHint="#a7a7a7"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp" />
+
+
+    <com.zfsoft.zfsoft_product.modules.login.CountDownTextView
+        android:id="@+id/count_down_view"
+        android:text="@string/get_validation"
+        android:layout_alignBaseline="@+id/et_validation"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="44dp"
+        android:textColor="@color/login_bar_color"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <RelativeLayout
+        android:id="@+id/rl_next"
+        android:layout_marginTop="18dp"
+        android:layout_below="@+id/et_validation"
+        android:layout_marginBottom="@dimen/common_margin_left"
+        android:layout_marginLeft="@dimen/common_margin_left"
+        android:layout_marginRight="@dimen/common_margin_left"
+        android:background="@drawable/background_text_concern_26"
+        android:layout_width="match_parent"
+        android:layout_height="51dp">
+
+        <TextView
+            android:layout_centerInParent="true"
+            android:text="下一步"
+            android:textColor="@color/colorWhite"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

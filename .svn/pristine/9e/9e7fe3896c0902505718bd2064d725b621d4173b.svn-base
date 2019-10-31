@@ -1,0 +1,119 @@
+package com.zfsoft.zfsoft_product.modules.personal.account_address.add;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.hengyi.wheelpicker.listener.OnCityWheelComfirmListener;
+import com.hengyi.wheelpicker.ppw.CityWheelPickerPopupWindow;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseFragment;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+
+/**
+ * Created by ckw
+ * on 2019/1/19.
+ */
+public class NewAddAddressFragment extends BaseFragment {
+
+    @BindView(R.id.rl_back)
+    RelativeLayout mRlBack;//返回
+    @BindView(R.id.tv_save)
+    TextView mTvSave;//保存
+    @BindView(R.id.iv_select_address)
+    ImageView mIvSelectAddress;
+    @BindView(R.id.tv_province)
+    TextView mTvProvince;//省份
+    @BindView(R.id.tv_city)
+    TextView mTvCity;//市
+    @BindView(R.id.tv_district)
+    TextView mTvDistrict;//区
+
+    private CityWheelPickerPopupWindow wheelPickerPopupWindow;
+
+    @Inject
+    public NewAddAddressFragment() {
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.fragment_new_add_address;
+    }
+
+    @Override
+    protected void initVariables() {
+
+    }
+
+    @Override
+    protected void handleBundle(Bundle bundle) {
+
+    }
+
+    @Override
+    protected void operateViews(View view) {
+        wheelPickerPopupWindow = new CityWheelPickerPopupWindow(getActivity());
+
+    }
+
+    @Override
+    protected void initListener() {
+        mIvSelectAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wheelPickerPopupWindow.show();
+            }
+        });
+
+        wheelPickerPopupWindow.setListener(new OnCityWheelComfirmListener() {
+            @Override
+            public void onSelected(String Province, String City, String District, String PostCode) {
+                if(!Province.isEmpty()){
+                    mTvProvince.setText(Province);
+                }
+                if (!City.isEmpty()) {
+                    mTvCity.setText(City);
+                }
+
+                if (!District.isEmpty()) {
+                    mTvDistrict.setText(District);
+                }
+            }
+        });
+
+        mRlBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+
+    }
+
+    @Override
+    public void initPresenter() {
+
+    }
+
+    @Override
+    protected boolean immersionEnabled() {
+        return true;
+    }
+
+    @Override
+    protected void immersionInit() {
+        super.immersionInit();
+        if (immersionBar == null) {
+            return;
+        }
+        immersionBar.statusBarDarkFont(true);
+        immersionBar.statusBarColor(R.color.colorWhite)
+                .init();
+    }
+}

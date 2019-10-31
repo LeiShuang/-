@@ -1,0 +1,154 @@
+package com.zfsoft.zfsoft_product.modules.personal.accout_safe.modify;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseFragment;
+import com.zfsoft.zfsoft_product.modules.login.CountDownTextView;
+import com.zfsoft.zfsoft_product.modules.personal.change_pwd.ChangePwdActivity;
+
+import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+
+/**
+ * Created by ckw
+ * on 2019/1/25.
+ */
+public class ModifyPhoneFragment extends BaseFragment{
+
+    @Inject
+    public ModifyPhoneFragment() {
+    }
+
+    @BindView(R.id.rl_modify_container)
+    RelativeLayout mRlGoBack;//返回
+    @BindView(R.id.tv_modify_title)
+    TextView mTitle;//标题
+
+    @BindView(R.id.et_input_phone)
+    EditText mEtPhone;//手机号
+    @BindView(R.id.et_validation)
+    EditText mEtValidation;//验证码
+    @BindView(R.id.count_down_view)
+    CountDownTextView mCountDownTextView;//倒计时
+
+    @BindView(R.id.rl_next)
+    RelativeLayout mRlGoNext;//下一步
+
+    private int mType;//0修改密码，1修改手机号
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.fragment_modify_phone;
+    }
+
+    @Override
+    protected void initVariables() {
+
+    }
+
+    @Override
+    protected void handleBundle(Bundle bundle) {
+        mType = bundle.getInt("type");
+    }
+
+    @Override
+    protected void operateViews(View view) {
+        count();
+        if(mType == 0){
+            mTitle.setText("修改密码");
+            mEtPhone.setHint("请输入手机号");
+        }else {
+            mTitle.setText("手机号设置");
+            mEtPhone.setHint("请输入旧手机号");
+        }
+    }
+
+    @Override
+    protected void initListener() {
+        mRlGoNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ChangePwdActivity.class);
+                intent.putExtra("type",mType);
+                startActivity(intent);
+            }
+        });
+
+        mRlGoBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+    }
+
+    @Override
+    public void initPresenter() {
+
+    }
+
+    @Override
+    protected boolean immersionEnabled() {
+        return true;
+    }
+
+    @Override
+    protected void immersionInit() {
+        super.immersionInit();
+        if (immersionBar == null) {
+            return;
+        }
+        immersionBar.statusBarDarkFont(true);
+        immersionBar.statusBarColor(R.color.colorWhite)
+                .init();
+    }
+
+    /**
+     * 验证码代码
+     * */
+    private void count() {
+        mCountDownTextView
+                .setNormalText("获取验证码")
+                .setCountDownText("重新获取(", "s)")
+                .setCloseKeepCountDown(false)//关闭页面保持倒计时开关
+                .setCountDownClickable(false)//倒计时期间点击事件是否生效开关
+                .setShowFormatTime(false)//是否格式化时间
+                .setIntervalUnit(TimeUnit.SECONDS)
+                .setOnCountDownStartListener(new CountDownTextView.OnCountDownStartListener() {
+                    @Override
+                    public void onStart() {
+//                        Toast.makeText(getContext(), "开始计时", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setOnCountDownTickListener(new CountDownTextView.OnCountDownTickListener() {
+                    @Override
+                    public void onTick(long untilFinished) {
+                        //剩余的时间
+                    }
+                })
+                .setOnCountDownFinishListener(new CountDownTextView.OnCountDownFinishListener() {
+                    @Override
+                    public void onFinish() {
+                        mEtValidation.setText("735481");
+//                        Toast.makeText(getContext(), "倒计时完毕", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+//                        SMSSDK.getVerificationCode("86", mPhoneNum);
+
+                        mCountDownTextView.startCountDown(3);
+                    }
+                });
+    }
+}

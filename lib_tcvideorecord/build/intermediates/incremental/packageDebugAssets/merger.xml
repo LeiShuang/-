@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="F:\Demon\PersonalDevelop\TG\lib_tcvideorecord\src\main\assets"/><source path="F:\Demon\PersonalDevelop\TG\lib_tcvideorecord\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="F:\Demon\PersonalDevelop\TG\lib_tcvideorecord\src\debug\assets"/></dataSet></merger>

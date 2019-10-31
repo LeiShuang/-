@@ -1,0 +1,62 @@
+package com.zfsoft.zfsoft_product.modules.try_use.viewpager_modules;
+
+import com.zfsoft.zfsoft_product.entity.ResponseListInfo;
+import com.zfsoft.zfsoft_product.entity.ThingsInfoEntity;
+import com.zfsoft.zfsoft_product.net.ApiService;
+import com.zfsoft.zfsoft_product.net.CallBackListener;
+import com.zfsoft.zfsoft_product.net.HttpManager;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import io.reactivex.disposables.CompositeDisposable;
+
+/**
+ * 创建日期：2019/1/21 on 9:32
+ * 描述:
+ * 作者:Ls
+ */
+public class TryUseChildFragmentPresenter implements TryUseChildFragmentContract.Presenter {
+    private CompositeDisposable mCompositeDisposable;
+    private HttpManager mHttpManager;
+    private TryUseChildFragmentContract.View mView;
+    private ApiService mApiService;
+
+    @Inject
+    public TryUseChildFragmentPresenter(ApiService apiService,HttpManager httpManager){
+        this.mApiService = apiService;
+        this.mHttpManager = httpManager;
+        mCompositeDisposable = new CompositeDisposable();
+
+    }
+    @Override
+    public void getThingsListInfo(String hsk, String sortType,String title,int type,int page, int size) {
+        mHttpManager.request(mApiService.getTryUseThingsList(hsk,sortType,title,type, page, size), mCompositeDisposable, mView, new CallBackListener<ResponseListInfo<ThingsInfoEntity>>() {
+
+
+            @Override
+            public void onSuccess(ResponseListInfo<ThingsInfoEntity> data) {
+                mView.loadSuccess(data);
+            }
+
+            @Override
+            public void onError(String errorMsg) {
+                mView.loadFailure(errorMsg);
+            }
+        });
+
+
+    }
+
+    @Override
+    public void takeView(TryUseChildFragmentContract.View view) {
+        mView = view;
+    }
+
+    @Override
+    public void dropView() {
+        mView = null;
+        mCompositeDisposable.clear();
+    }
+}

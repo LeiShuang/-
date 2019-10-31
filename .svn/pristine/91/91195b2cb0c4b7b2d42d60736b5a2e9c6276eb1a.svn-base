@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorWhite"
+    android:layout_width="match_parent"
+    android:layout_height="231dp">
+
+    <ImageView
+        android:id="@+id/iv_single"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_launcher"
+        android:layout_width="match_parent"
+        android:layout_height="139dp" />
+
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:textColor="#5A5A5A"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="@dimen/common_padding_top"
+        android:maxLines="2"
+        android:ellipsize="end"
+        tools:text="哈卡的那倒是看淡课给你抵抗啊dakgkakdangkasdngkasndkansdkngangnaskdng都看"
+        android:layout_below="@+id/iv_single"
+        android:textSize="12sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civ_user_img"
+        android:src="@mipmap/ic_launcher"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="26dp"
+        android:layout_height="26dp" />
+
+    <TextView
+        android:id="@+id/tv_user_name"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="21dp"
+        android:layout_marginLeft="4dp"
+        android:layout_toRightOf="@+id/civ_user_img"
+        tools:text="用户名"
+        android:textSize="11sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_thumb_up_number"
+        tools:text="1142"
+        android:textColor="#B1B1B1"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:textSize="11sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/iv_thumb_up"
+        android:layout_toLeftOf="@+id/tv_thumb_up_number"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="22dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_width="12dp"
+        android:layout_height="11dp" />
+
+</RelativeLayout>

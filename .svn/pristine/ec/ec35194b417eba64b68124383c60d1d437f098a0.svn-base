@@ -1,0 +1,29 @@
+package com.zfsoft.zfsoft_product.base;
+
+import android.support.v4.app.Fragment;
+import com.zfsoft.zfsoft_product.di.FragmentScoped;
+import com.zfsoft.zfsoft_product.modules.report.ReportFragment;
+import dagger.Binds;
+import dagger.Module;
+import dagger.Subcomponent;
+import dagger.android.AndroidInjector;
+import dagger.android.support.FragmentKey;
+import dagger.multibindings.IntoMap;
+
+@Module(subcomponents = HomeModule_MShoppingFragment.ReportFragmentSubcomponent.class)
+public abstract class HomeModule_MShoppingFragment {
+  private HomeModule_MShoppingFragment() {}
+
+  @Binds
+  @IntoMap
+  @FragmentKey(ReportFragment.class)
+  abstract AndroidInjector.Factory<? extends Fragment> bindAndroidInjectorFactory(
+      ReportFragmentSubcomponent.Builder builder);
+
+  @Subcomponent
+  @FragmentScoped
+  public interface ReportFragmentSubcomponent extends AndroidInjector<ReportFragment> {
+    @Subcomponent.Builder
+    abstract class Builder extends AndroidInjector.Builder<ReportFragment> {}
+  }
+}

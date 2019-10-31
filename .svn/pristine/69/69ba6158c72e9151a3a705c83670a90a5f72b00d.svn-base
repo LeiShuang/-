@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--头部状态栏颜色-->
+    <color name="colorPrimary">#4cb2ff</color>
+    <!--toolbar和底部导航栏的文字颜色-->
+    <color name="colorWhite">#ffffff</color>
+    <!--统一的文字颜色-->
+    <color name="colorText">#000000</color>
+    <color name="colorBarText">#F0F5E5</color>
+    <!--通用分割线-->
+    <color name="common_divider_color">#f3f6f9</color>
+    <!--统一的背景颜色-->
+    <color name="colorGray">#cccccc</color>
+    <color name="color_child_bg">#F9F9F9</color>
+    <color name="grey">#808080</color> <!--灰色 -->
+    <color name="lightgray">#D3D3D3</color> <!--亮灰色 -->
+    <color name="colorDark">#111111</color>
+    <color name="colorListItem">#232323</color>
+    <color name="colorSmallBlack">#1b1b1b</color>
+    <color name="colorSmallGray">#bab5b5</color>
+    <color name="colorYellow">#fcef03</color>
+    <color name="colorRotaryItem">#a18531</color>
+    <color name="transparent">#00000000</color>
+    <color name="report_detail_title_bg">#5A5A5A</color>
+    <color name="report_detail_name_bg">#707070</color>
+    <!--深红色-->
+    <color name="red">#ff0006</color>
+    <color name="home_tab_color">#FBA39C</color>
+    <color name="try_use_top_color">#FA7A79</color>
+    <color name="try_use_search_bg">#FA8085</color>
+    <color name="blueViolet">#8A2BE2</color> <!--紫罗兰蓝色 -->
+    <color name="lightSkyBlue">#87CEFA</color> <!--亮天蓝色 -->
+    <color name="skyBlue">#87CEEB</color> <!--天蓝色 -->
+
+    <!--报告-->
+    <color name="report_detail_time">#5A5A5A</color>
+    <color name="report_star_bg">#B1B1B1</color>
+
+    <color name="login_bar_color">#FA857C</color>
+</resources>

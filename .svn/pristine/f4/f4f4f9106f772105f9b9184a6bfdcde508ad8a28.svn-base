@@ -1,0 +1,30 @@
+package com.zfsoft.zfsoft_product.modules.personal.my_try;
+
+import android.support.annotation.Nullable;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.entity.MyTrySingleBean;
+
+import java.util.List;
+
+/**
+ * Created by ckw
+ * on 2019/1/21.
+ */
+public class MyTrySingleAdapter extends BaseQuickAdapter<MyTrySingleBean,BaseViewHolder>{
+    public MyTrySingleAdapter() {
+        super(R.layout.item_my_try);
+    }
+
+    @Override
+    protected void convert(BaseViewHolder helper, MyTrySingleBean item) {
+        helper.setText(R.id.tv_try_title,item.getProductTitle());
+        helper.setText(R.id.tv_try_num,item.getProductNum());
+        helper.setText(R.id.tv_try_apply,item.getProductApplyNum());
+        Glide.with(mContext).load(item.getProductUrl()).into((ImageView)helper.getView(R.id.iv_try));
+    }
+}

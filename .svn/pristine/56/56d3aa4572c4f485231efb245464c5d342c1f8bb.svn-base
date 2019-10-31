@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="207dp"
+                android:background="#FA857C" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="22dp"
+                android:layout_marginRight="22dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/share_red_bg">
+                <!--输入url的框-->
+                <EditText
+                    android:id="@+id/et_input_share_url"
+                    android:paddingLeft="@dimen/common_padding_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/twenty_six"
+                    android:layout_marginRight="@dimen/twenty_six"
+                    android:layout_marginTop="28dp"
+                    android:textSize="@dimen/font_small"
+                    android:background="@drawable/share_red_book_et_bg"
+                    android:gravity="center_vertical"
+                    android:hint="@string/please_input_share_url"
+                    android:textColor="#A7A7A7"
+                    android:textColorHint="@color/grey"
+                    android:textIsSelectable="true" />
+
+                <Button
+                    android:id="@+id/btn_submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/mine_item_height"
+                    android:layout_below="@+id/et_input_share_url"
+                    android:layout_marginLeft="@dimen/twenty_six"
+                    android:layout_marginRight="@dimen/twenty_six"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/btn_share_url_bg"
+                    android:gravity="center"
+                    android:text="@string/submit_share_url"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/share_url_text_size" />
+
+                <TextView
+                    android:id="@+id/tv_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btn_submit"
+                    android:layout_marginTop="@dimen/twenty_six"
+                    android:gravity="center"
+                    android:paddingLeft="29dp"
+                    android:paddingRight="29dp"
+                    android:paddingTop="@dimen/five_padding"
+                    android:paddingBottom="@dimen/five_padding"
+                    android:text="@string/share_url_text_title"
+                    android:textColor="#A7A7A7"
+                    android:textSize="@dimen/report_detail_title_size" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_text"
+                    android:paddingBottom="@dimen/five_padding"
+                    android:paddingLeft="29dp"
+                    android:paddingRight="29dp"
+                    android:paddingTop="@dimen/five_padding"
+                    android:textSize="@dimen/font_normal"
+                    android:textColor="@color/split_mine"
+                    android:lineSpacingExtra="5dp"
+                    android:text="@string/share_url_text_hint"/>
+            </RelativeLayout>
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/ten_padding"
+            android:orientation="vertical">
+            <WebView
+                android:id="@+id/share_web_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"/>
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

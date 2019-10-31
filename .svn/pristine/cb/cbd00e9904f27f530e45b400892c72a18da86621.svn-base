@@ -1,0 +1,56 @@
+package com.zfsoft.zfsoft_product.modules.personal.my_try;
+
+import com.zfsoft.zfsoft_product.entity.MyTrySingleBean;
+import com.zfsoft.zfsoft_product.entity.ResponseListInfo;
+import com.zfsoft.zfsoft_product.net.ApiService;
+import com.zfsoft.zfsoft_product.net.CallBackListener;
+import com.zfsoft.zfsoft_product.net.HttpManager;
+
+import io.reactivex.disposables.CompositeDisposable;
+
+/**
+ * Created by ckw
+ * on 2019/1/21.
+ */
+public class MyTryPresenter implements MyTryContract.Presenter {
+
+    private CompositeDisposable mCompositeDisposable;
+    private MyTryContract.View mView;
+    private ApiService mApiService;
+    private HttpManager mHttpManager;
+
+    public MyTryPresenter( ApiService mApiService, HttpManager mHttpManager) {
+        this.mApiService = mApiService;
+        this.mHttpManager = mHttpManager;
+        mCompositeDisposable = new CompositeDisposable();
+    }
+
+    @Override
+    public void getMyTryList(String hsk, String link) {
+        mHttpManager.request(mApiService.getMyTryProductList(hsk, link), mCompositeDisposable, mView,
+                new CallBackListener<ResponseListInfo<MyTrySingleBean>>() {
+                    @Override
+                    public void onSuccess(ResponseListInfo<MyTrySingleBean> data) {
+                        mView.getMyTryListSuccess(data);
+                    }
+
+                    @Override
+                    public void onError(String errorMsg) {
+                        mView.getMyTryListFailure(errorMsg);
+                        //TODO 这里加假数据
+                        ResponseListInfo<MyTrySingleBean> bean = new ResponseListInfo<>();
+                    }
+                });
+    }
+
+    @Override
+    public void takeView(MyTryContract.View view) {
+        mView = view;
+    }
+
+    @Override
+    public void dropView() {
+        mCompositeDisposable.clear();
+        mView = null;
+    }
+}

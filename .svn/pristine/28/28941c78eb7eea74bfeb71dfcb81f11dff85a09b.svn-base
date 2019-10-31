@@ -1,0 +1,24 @@
+package com.zfsoft.zfsoft_product.modules.personal.my_platform;
+
+import com.zfsoft.zfsoft_product.base.BasePresenter;
+import com.zfsoft.zfsoft_product.base.BaseView;
+import com.zfsoft.zfsoft_product.entity.PlatformBean;
+import com.zfsoft.zfsoft_product.entity.SignBean;
+
+/**
+ * Created by ckw
+ * on 2019/3/15.
+ */
+public class MyPlatformContract {
+    public interface View extends BaseView{
+        void getMyPlatformInfoSuccess(PlatformBean platformBean);
+        void getMyPlatformInfoFailure(String errorMsg);
+        void saveMyPlatformInfoSuccess(SignBean signBean);
+        void saveMyPlatformInfoFailure(String errorMsg);
+    }
+
+    public interface Presenter extends BasePresenter<View>{
+        void saveMyPlatformInfo(String hsk,String userId,String qqid,String wchatid,String sinaid,String xhs);
+        void getMyPlatformInfo(String hsk,String userId);
+    }
+}

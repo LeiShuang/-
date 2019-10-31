@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="E:\zjgsdx\zfsoft_product\build\intermediates\Mob\assets"><file name="ShareSDK.xml" path="E:\zjgsdx\zfsoft_product\build\intermediates\Mob\assets\ShareSDK.xml"/></source><source path="E:\zjgsdx\zfsoft_product\app\src\main\assets"/><source path="E:\zjgsdx\zfsoft_product\app\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="E:\zjgsdx\zfsoft_product\app\src\debug\assets"/></dataSet></merger>

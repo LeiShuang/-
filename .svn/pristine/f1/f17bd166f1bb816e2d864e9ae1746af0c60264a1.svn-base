@@ -1,0 +1,66 @@
+package com.zfsoft.zfsoft_product.entity;
+
+import java.util.List;
+
+/**
+ * 创建日期：2019/1/8 on 16:21
+ * 描述:评论实体
+ * 作者:Ls
+ */
+public class DiscussEntity {
+    private String fatherPicUrl;//一级评论头像
+    private String fatherName;//一级评论姓名
+    private String discussTime;//评论时间
+    private String discussStarNumber;//点赞数量
+    private List<DiscussEntity> childDiscuss;
+
+    public DiscussEntity(String fatherPicUrl, String fatherName, String discussTime, String discussStarNumber, List<DiscussEntity> childDiscuss) {
+        this.fatherPicUrl = fatherPicUrl;
+        this.fatherName = fatherName;
+        this.discussTime = discussTime;
+        this.discussStarNumber = discussStarNumber;
+        this.childDiscuss = childDiscuss;
+    }
+
+    public String getFatherPicUrl() {
+        return fatherPicUrl;
+    }
+
+    public void setFatherPicUrl(String fatherPicUrl) {
+        this.fatherPicUrl = fatherPicUrl;
+    }
+
+    public String getFatherName() {
+        return fatherName;
+    }
+
+    public void setFatherName(String fatherName) {
+        this.fatherName = fatherName;
+    }
+
+    public String getDiscussTime() {
+        return discussTime;
+    }
+
+    public void setDiscussTime(String discussTime) {
+        this.discussTime = discussTime;
+    }
+
+    public String getDiscussStarNumber() {
+        return discussStarNumber;
+    }
+
+    public void setDiscussStarNumber(String discussStarNumber) {
+        this.discussStarNumber = discussStarNumber;
+    }
+
+    public List<DiscussEntity> getChildDiscuss() {
+        return childDiscuss;
+    }
+
+    public void setChildDiscuss(List<DiscussEntity> childDiscuss) {
+        this.childDiscuss = childDiscuss;
+    }
+
+
+}

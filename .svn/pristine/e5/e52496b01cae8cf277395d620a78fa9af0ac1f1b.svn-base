@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rl_header"
+        android:background="@color/colorWhite"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/rl_back"
+            android:layout_centerVertical="true"
+            android:layout_width="45dp"
+            android:layout_height="45dp">
+
+            <ImageView
+                android:src="@mipmap/ico_back_black"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="我的报告"
+            android:textColor="#5a5a5a"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_manage"
+            android:layout_alignParentRight="true"
+            android:text="管理"
+            android:layout_centerVertical="true"
+            android:textSize="15sp"
+            android:textColor="@color/mine_text_color"
+            android:layout_marginRight="@dimen/common_margin_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </RelativeLayout>
+
+    <View
+        android:background="#CBCBCB"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refresh_my_report"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_my_report"
+            android:background="@color/color_child_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+</LinearLayout>

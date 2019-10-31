@@ -1,0 +1,98 @@
+package com.zfsoft.zfsoft_product.modules.try_use.viewpager_modules;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseListFragment;
+import com.zfsoft.zfsoft_product.di.ActivityScoped;
+import com.zfsoft.zfsoft_product.entity.InfoServer;
+import com.zfsoft.zfsoft_product.entity.ProductInfo;
+import com.zfsoft.zfsoft_product.entity.ReportInfo;
+import com.zfsoft.zfsoft_product.entity.ResponseListInfo;
+import com.zfsoft.zfsoft_product.entity.ThingsInfoEntity;
+import com.zfsoft.zfsoft_product.modules.personal.my_try.MyTryPresenter;
+import com.zfsoft.zfsoft_product.modules.report.report_detail.ReportDetailActivity;
+import com.zfsoft.zfsoft_product.modules.try_use.try_use_detail.TryUseDetailActivity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
+/**
+ * 创建日期：2019/1/5 on 13:17
+ * 描述:试用Fragment 下viewpager所使用的Fragment
+ * 作者:Ls
+ */
+@ActivityScoped
+public class TryUseViewPagerFragment extends BaseListFragment<ThingsInfoEntity,MyTryPresenter> implements  TryUseChildFragmentContract.View{
+    @Inject
+    public TryUseViewPagerFragment() {
+    }
+
+    @Inject
+    TryUseChildFragmentPresenter mPresenter;
+    public static TryUseViewPagerFragment newInstance() {
+        Bundle args = new Bundle();
+        TryUseViewPagerFragment fragment = new TryUseViewPagerFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    protected void setSpecificPresenter() {
+
+    }
+
+    @Override
+    protected void initFootView(BaseQuickAdapter adapter) {
+
+    }
+
+    @Override
+    protected void initHeader(BaseQuickAdapter adapter) {
+
+    }
+
+    @Override
+    protected void onItemCLick() {
+        getContext().startActivity(new Intent(getActivity(), TryUseDetailActivity.class));
+    }
+
+    @Override
+    public void loadData() {
+         super.loadData();
+       // mPresenter.getThingsListInfo("C5FCEC7318A311E9A7B300E04C12991C",String.valueOf(start_page),String.valueOf(PAGE_SIZE));
+
+
+    }
+
+    @Override
+    public void initPresenter() {
+        super.initPresenter();
+    }
+
+    @Override
+    protected BaseQuickAdapter<ThingsInfoEntity, BaseViewHolder> getAdapter() {
+        TryUseChildFragmentAdapter adapter = new TryUseChildFragmentAdapter();
+       // adapter.setNewData(InfoServer.());
+        return adapter;
+    }
+
+}

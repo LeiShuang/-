@@ -1,0 +1,124 @@
+package com.zfsoft.zfsoft_product.di;
+
+import com.zfsoft.zfsoft_product.base.HomeActivity;
+import com.zfsoft.zfsoft_product.base.HomeModule;
+import com.zfsoft.zfsoft_product.modules.login.LoginActivity;
+import com.zfsoft.zfsoft_product.modules.login.LoginModule;
+import com.zfsoft.zfsoft_product.modules.login.info.SetInfoActivity;
+import com.zfsoft.zfsoft_product.modules.login.info.SetInfoModule;
+import com.zfsoft.zfsoft_product.modules.login.validation.ValidationActivity;
+import com.zfsoft.zfsoft_product.modules.login.validation.ValidationModule;
+import com.zfsoft.zfsoft_product.modules.personal.integral_mall.IntegralMallActivity;
+import com.zfsoft.zfsoft_product.modules.personal.integral_mall.IntegralMallModule;
+import com.zfsoft.zfsoft_product.modules.personal.my_collection.MyCollectionActivity;
+import com.zfsoft.zfsoft_product.modules.personal.my_collection.MyCollectionModule;
+import com.zfsoft.zfsoft_product.modules.personal.my_report.MyReportActivity;
+import com.zfsoft.zfsoft_product.modules.personal.my_report.MyReportModule;
+import com.zfsoft.zfsoft_product.modules.personal.my_try.MyTryActivity;
+import com.zfsoft.zfsoft_product.modules.personal.my_try.MyTryModule;
+import com.zfsoft.zfsoft_product.modules.report.other_info.OtherInformationActivity;
+import com.zfsoft.zfsoft_product.modules.report.other_info.OtherInformationModule;
+import com.zfsoft.zfsoft_product.modules.personal.account_address.AccountAddressActivity;
+import com.zfsoft.zfsoft_product.modules.personal.account_address.AccountAddressModule;
+import com.zfsoft.zfsoft_product.modules.personal.account_address.add.NewAddAddressActivity;
+import com.zfsoft.zfsoft_product.modules.personal.account_address.add.NewAddAddressModule;
+import com.zfsoft.zfsoft_product.modules.personal.accout_safe.AccountSafeActivity;
+import com.zfsoft.zfsoft_product.modules.personal.accout_safe.AccountSafeModule;
+import com.zfsoft.zfsoft_product.modules.personal.change_pwd.ChangePwdActivity;
+import com.zfsoft.zfsoft_product.modules.personal.change_pwd.ChangePwdModule;
+import com.zfsoft.zfsoft_product.modules.personal.message.MessageActivity;
+import com.zfsoft.zfsoft_product.modules.personal.message.MessageModule;
+import com.zfsoft.zfsoft_product.modules.personal.setting.SettingActivity;
+import com.zfsoft.zfsoft_product.modules.personal.setting.SettingModule;
+import com.zfsoft.zfsoft_product.modules.report.report_detail.ReportDetailActivity;
+import com.zfsoft.zfsoft_product.modules.report.report_detail.ReportDetailModule;
+import com.zfsoft.zfsoft_product.modules.report.write.WriteReportActivity;
+import com.zfsoft.zfsoft_product.modules.report.write.WriteReportModule;
+import com.zfsoft.zfsoft_product.modules.try_use.try_use_detail.TryUseDetailActivity;
+import com.zfsoft.zfsoft_product.modules.try_use.try_use_detail.TryUseDetailModule;
+
+import dagger.Module;
+import dagger.android.ContributesAndroidInjector;
+
+/**
+ * 创建日期：2018/12/24 on 10:11
+ * 描述:
+ * 作者:Ls
+ */
+@Module
+public abstract class ActivityBindingModule {
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = HomeModule.class)
+    abstract HomeActivity homeActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = ReportDetailModule.class)
+    abstract ReportDetailActivity mReportDetailActivity();
+
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = WriteReportModule.class)
+    abstract WriteReportActivity mWriteReportActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = LoginModule.class)
+    abstract LoginActivity loginActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = TryUseDetailModule.class)
+    abstract TryUseDetailActivity mTryUseDetailActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = ValidationModule.class)
+    abstract ValidationActivity validationActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = SetInfoModule.class)
+    abstract SetInfoActivity setInfoActivity();
+
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = OtherInformationModule.class)
+    abstract OtherInformationActivity mOtherInformationActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = SettingModule.class)
+    abstract SettingActivity settingActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = AccountSafeModule.class)
+    abstract AccountSafeActivity accountSafeActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = ChangePwdModule.class)
+    abstract ChangePwdActivity changePwdActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = AccountAddressModule.class)
+    abstract AccountAddressActivity accountAddressActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = NewAddAddressModule.class)
+    abstract NewAddAddressActivity newAddAddressActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = MessageModule.class)
+    abstract MessageActivity messageActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = MyTryModule.class)
+    abstract MyTryActivity myTryActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = MyCollectionModule.class)
+    abstract MyCollectionActivity myCollectionActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = MyReportModule.class)
+    abstract MyReportActivity myReportActivity ();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = IntegralMallModule.class)
+    abstract IntegralMallActivity integralMallActivity ();
+
+}

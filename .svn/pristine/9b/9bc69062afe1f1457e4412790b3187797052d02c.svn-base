@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".base.HomeActivity">
+
+    <FrameLayout
+        android:id="@+id/rl_home_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/home_line" />
+
+    <View
+        android:id="@+id/home_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_heigt_nodata"
+        android:layout_above="@+id/ll_home_bottom"
+        android:background="@color/line" />
+
+    <LinearLayout
+        android:id="@+id/ll_home_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/five_padding"
+        android:paddingTop="@dimen/five_padding">
+        <!--首页按钮-->
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/bottom_home"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:autoSizeMinTextSize="@dimen/font_small"
+            android:autoSizeMaxTextSize="@dimen/font_normal"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/bottom_home_text"
+            android:textColor="@color/report_star_bg"
+            android:autoSizeTextType="uniform"
+            tools:ignore="UnusedAttribute" />
+        <!--免费按钮-->
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/bottom_try"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/bottom_try_text"
+            android:textColor="@color/report_star_bg"
+            android:autoSizeMinTextSize="@dimen/font_small"
+            android:autoSizeMaxTextSize="@dimen/font_normal"
+            android:autoSizeTextType="uniform"
+            tools:ignore="UnusedAttribute" />
+        <!--发布报告按钮-->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/btn_home_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/home_submit_report"
+                android:src="@mipmap/ico_add" />
+        </RelativeLayout>
+        <!--报告按钮-->
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/bottom_share"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/bottom_share_text"
+            android:textColor="@color/report_star_bg"
+            android:autoSizeMinTextSize="@dimen/font_small"
+            android:autoSizeMaxTextSize="@dimen/font_normal"
+            android:autoSizeTextType="uniform"
+            tools:ignore="UnusedAttribute" />
+        <!--个人界面按钮-->
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/bottom_mine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/bottom_mine_text"
+            android:textColor="@color/report_star_bg"
+            android:autoSizeMinTextSize="@dimen/font_small"
+            android:autoSizeMaxTextSize="@dimen/font_normal"
+            android:autoSizeTextType="uniform"
+            tools:ignore="UnusedAttribute" />
+    </LinearLayout>
+    <!-- <devlight.io.library.ntb.NavigationTabBar
+         android:id="@+id/ntb"
+         android:layout_width="match_parent"
+         android:layout_height="56dp"
+         android:layout_gravity="bottom"
+         app:ntb_title_mode="active"
+         app:ntb_titled="true"
+         app:ntb_title_size="@dimen/home_bottom_text_size"
+         app:ntb_badged="false"
+         app:ntb_icon_size_fraction="0.5"
+         app:ntb_bg_color="@color/colorWhite"
+         app:ntb_active_color="@color/home_tab_color"
+         app:ntb_inactive_color="@color/grey" />-->
+</RelativeLayout>

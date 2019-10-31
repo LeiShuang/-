@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="57dp"
+        android:layout_marginRight="@dimen/ten_padding"
+        android:background="@color/discuss_second_bg"
+        android:padding="@dimen/ten_padding">
+        <!--评论内容-->
+        <TextView
+            android:id="@+id/tv_child_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            tools:text="主人回复 ： 萨达所大所大所大所多撒大所多撒多" />
+
+       <!-- <TextView
+            android:id="@+id/tv_sum_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/five_padding"
+            android:layout_below="@+id/tv_child_content"
+            android:drawablePadding="@dimen/five_padding"
+            android:drawableRight="@mipmap/ico_right_back"
+            android:text="共4条回复" />-->
+    </RelativeLayout>
+</RelativeLayout>

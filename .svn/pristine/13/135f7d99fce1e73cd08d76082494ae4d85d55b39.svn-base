@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/colorWhite"
+        android:paddingLeft="@dimen/fivteen_padding"
+        android:paddingRight="@dimen/nineteen_padding">
+
+        <ImageView
+            android:id="@+id/iv_report_detail_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ico_back_black" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/try_detail_tabLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite"
+            app:tabIndicatorColor="@color/try_use_top_color"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/five_padding"
+            android:layout_marginLeft="@dimen/twenty_one_padding" />
+    </RelativeLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/try_user_detail_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

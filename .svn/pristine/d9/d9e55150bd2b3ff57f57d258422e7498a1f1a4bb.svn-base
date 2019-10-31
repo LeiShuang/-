@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.gcssloop.widget.RCRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:round_corner="4dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_single"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="138dp" />
+
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:textColor="#5A5A5A"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="@dimen/common_padding_top"
+            android:maxLines="2"
+            android:ellipsize="end"
+            tools:text="哈卡的那倒是看淡课给你抵抗啊dakgkakdangkasdngkasndkansdkngangnaskdng都看"
+            android:layout_below="@+id/iv_single"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_price_one"
+            tools:text="价格"
+            android:textSize="14sp"
+            android:maxLines="1"
+            app:autoSizeTextType="uniform"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeMinTextSize="8sp"
+            app:autoSizeMaxTextSize="14sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="14dp"
+            android:layout_alignParentLeft="true"
+            android:textColor="#CBCBCB"
+            android:layout_below="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:id="@+id/tv_integral_number"
+            android:layout_below="@+id/tv_content"
+            android:layout_marginTop="14dp"
+            tools:text="1142"
+            android:textColor="#B1B1B1"
+            android:layout_marginRight="12dp"
+            android:layout_alignParentRight="true"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/iv_integral_tip"
+            android:layout_marginTop="14dp"
+            android:layout_toLeftOf="@+id/tv_integral_number"
+            android:layout_below="@+id/tv_content"
+            android:layout_marginBottom="12dp"
+            android:src="@mipmap/icon_concern_big"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+
+    </RelativeLayout>
+
+
+
+</com.gcssloop.widget.RCRelativeLayout>

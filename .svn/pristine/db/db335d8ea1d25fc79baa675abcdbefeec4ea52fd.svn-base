@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rl_header"
+        android:background="@color/colorWhite"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/rl_platform_back"
+            android:layout_centerVertical="true"
+            android:layout_width="45dp"
+            android:layout_height="45dp">
+
+            <ImageView
+                android:src="@mipmap/ico_back_black"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+
+
+        <TextView
+            android:id="@+id/tv_modify_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="第三方账户"
+            android:textColor="#5a5a5a"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_save"
+            android:text="保存"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_width="60dp"
+            android:layout_height="50dp" />
+
+
+    </RelativeLayout>
+
+    <View
+        android:background="#CBCBCB"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+
+    <RelativeLayout
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+
+        <TextView
+            android:id="@+id/tv_number_red_book"
+            android:layout_marginTop="@dimen/common_padding_top"
+            android:layout_marginLeft="@dimen/common_margin_right"
+            android:text="小红书号"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_number_book"
+            android:layout_toRightOf="@+id/tv_number_red_book"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="14dp"
+            android:layout_marginLeft="@dimen/common_margin_left"
+            android:layout_marginRight="@dimen/common_margin_left"
+            android:hint="请输入小红书号"
+            android:textColorHint="#a7a7a7"
+            android:background="@drawable/background_input"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp" />
+
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="#CBCBCB"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <TextView
+            android:id="@+id/tv_nick_red_book"
+            android:layout_marginTop="@dimen/common_padding_top"
+            android:layout_marginLeft="@dimen/common_margin_right"
+            android:text="小红书昵称"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_nick_book"
+            android:layout_toRightOf="@+id/tv_nick_red_book"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="14dp"
+            android:layout_marginLeft="@dimen/common_margin_left"
+            android:layout_marginRight="@dimen/common_margin_left"
+            android:hint="请输入昵称"
+            android:textColorHint="#a7a7a7"
+            android:background="@drawable/background_input"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp" />
+
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="#CBCBCB"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <TextView
+            android:id="@+id/tv_address_red_book"
+            android:layout_marginTop="@dimen/common_padding_top"
+            android:layout_marginLeft="@dimen/common_margin_right"
+            android:text="小红书主页地址"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_address_book"
+            android:layout_toRightOf="@+id/tv_address_red_book"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="14dp"
+            android:layout_marginLeft="@dimen/common_margin_left"
+            android:layout_marginRight="@dimen/common_margin_left"
+            android:hint="请输入主页地址"
+            android:textColorHint="#a7a7a7"
+            android:background="@drawable/background_input"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp" />
+
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="#CBCBCB"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <TextView
+            android:id="@+id/tv_fans_red_book"
+            android:layout_marginTop="@dimen/common_padding_top"
+            android:layout_marginLeft="@dimen/common_margin_right"
+            android:text="小红书粉丝数"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_fans_book"
+            android:layout_toRightOf="@+id/tv_fans_red_book"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="14dp"
+            android:layout_marginLeft="@dimen/common_margin_left"
+            android:layout_marginRight="@dimen/common_margin_left"
+            android:hint="请输入粉丝数"
+            android:textColorHint="#a7a7a7"
+            android:background="@drawable/background_input"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp" />
+
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="#CBCBCB"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+
+    </RelativeLayout>
+
+   <!-- <RelativeLayout
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <TextView
+            android:id="@+id/tv_tip_qq"
+            android:text="QQ账号"
+            android:layout_marginLeft="@dimen/common_margin_left"
+            android:layout_centerVertical="true"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_qq"
+            android:layout_toRightOf="@+id/tv_tip_qq"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="14dp"
+            android:layout_marginLeft="@dimen/common_margin_left"
+            android:layout_marginRight="@dimen/common_margin_left"
+            android:hint="请输入QQ账号"
+            android:textColorHint="#a7a7a7"
+            android:background="@drawable/background_input"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp" />
+
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="#CBCBCB"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <TextView
+            android:id="@+id/tv_tip_wechat"
+            android:text="微信账号"
+            android:layout_marginLeft="@dimen/common_margin_left"
+            android:layout_centerVertical="true"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_wechat"
+            android:layout_toRightOf="@+id/tv_tip_wechat"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="14dp"
+            android:layout_marginLeft="@dimen/common_margin_left"
+            android:layout_marginRight="@dimen/common_margin_left"
+            android:hint="请输入微信账号"
+            android:textColorHint="#a7a7a7"
+            android:background="@drawable/background_input"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp" />
+
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="#CBCBCB"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <TextView
+            android:id="@+id/tv_tip_sina"
+            android:text="新浪账号"
+            android:layout_marginLeft="@dimen/common_margin_left"
+            android:layout_centerVertical="true"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_sina"
+            android:layout_toRightOf="@+id/tv_tip_sina"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="14dp"
+            android:layout_marginLeft="@dimen/common_margin_left"
+            android:layout_marginRight="@dimen/common_margin_left"
+            android:hint="请输入新浪账号"
+            android:textColorHint="#a7a7a7"
+            android:background="@drawable/background_input"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp" />
+
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="#CBCBCB"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <TextView
+            android:id="@+id/tv_tip_red_book"
+            android:text="小红书账号"
+            android:layout_marginLeft="@dimen/common_margin_left"
+            android:layout_centerVertical="true"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_red_book"
+            android:layout_toRightOf="@+id/tv_tip_red_book"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="14dp"
+            android:layout_marginLeft="@dimen/common_margin_left"
+            android:layout_marginRight="@dimen/common_margin_left"
+            android:hint="请输入小红书账号"
+            android:textColorHint="#a7a7a7"
+            android:background="@drawable/background_input"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp" />
+
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="#CBCBCB"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+
+    </RelativeLayout>-->
+
+
+</LinearLayout>

@@ -1,0 +1,52 @@
+package com.zfsoft.zfsoft_product.modules.login;
+
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+
+import com.gyf.barlibrary.ImmersionBar;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseActivity;
+import com.zfsoft.zfsoft_product.utils.ActivityUtils;
+
+import javax.inject.Inject;
+
+/**
+ * Created by ckw
+ * on 2019/1/12.
+ */
+public class LoginActivity extends BaseActivity{
+
+    @Inject
+    LoginFragment mLoginFragment;
+
+    private FragmentManager manager;
+
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_login;
+    }
+
+    @Override
+    protected void initView(Bundle savedInstanceState) {
+        manager = getSupportFragmentManager();
+        ActivityUtils.addFragmentToActivity(manager,mLoginFragment,R.id.fragment_login_container);
+    }
+
+    @Override
+    protected void handleBundle(@NonNull Bundle bundle) {
+
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        ImmersionBar.with(this).statusBarColor(R.color.login_bar_color).init();
+    }
+}

@@ -1,0 +1,164 @@
+package com.zfsoft.zfsoft_product.modules.try_use;
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+
+import com.gyf.barlibrary.ImmersionBar;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseFragment;
+import com.zfsoft.zfsoft_product.di.ActivityScoped;
+import com.zfsoft.zfsoft_product.modules.try_use.viewpager_modules.SearchListenerCallBack;
+import com.zfsoft.zfsoft_product.modules.try_use.viewpager_modules.TryUseViewPagerFragment;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
+/**
+ * 创建日期：2018/12/24 on 10:55
+ * 描述:使用Fragment
+ * 作者:Ls
+ */
+@ActivityScoped
+public class TryUseFragment extends BaseFragment {
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.tabLayout)
+    TabLayout mTabLayout;
+    @BindView(R.id.appbar)
+    AppBarLayout mAppbar;
+    @BindView(R.id.try_view_pager)
+    ViewPager mViewPager;
+    @BindView(R.id.try_search)
+    SearchView mTrySearch;
+    @BindView(R.id.ll_search)
+    LinearLayout mLlSearch;
+
+    private List<TryUseViewPagerFragment> fragmentLists;
+    private String[] tabTexts = new String[]{"进行中", "即将截止", "往期精品"};
+    private SearchListenerCallBack mSearchListener;
+
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.fragment_try_use;
+    }
+
+    @Inject
+    public TryUseFragment() {
+
+    }
+
+    @Override
+    protected void initVariables() {
+        fragmentLists = new ArrayList<>();
+        for (int i = 1; i <= tabTexts.length; i++) {
+            fragmentLists.add(TryUseViewPagerFragment.newInstance(i));
+        }
+    }
+
+    @Override
+    protected void handleBundle(Bundle bundle) {
+
+    }
+
+    @Override
+    protected void operateViews(View view) {
+        mToolbar.setTitle("");
+        ImmersionBar.setTitleBar(getActivity(), mToolbar);
+        setUnderLinetransparent(mTrySearch);
+        FragmentManager fm = TryUseFragment.this.getChildFragmentManager();
+        TryUseFragmentAdapter adapter = new TryUseFragmentAdapter(fm, tabTexts, fragmentLists);
+        mViewPager.setAdapter(adapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+
+        SearchView.SearchAutoComplete textView = (SearchView.SearchAutoComplete) mTrySearch.findViewById(R.id.search_src_text);
+        textView.setTextColor(getResources().getColor(R.color.white));
+        textView.setTextSize(14);
+        textView.setHintTextColor(getResources().getColor(R.color.white));
+        AppCompatImageView button = (AppCompatImageView) mTrySearch.findViewById(android.support.v7.appcompat.R.id.search_button);
+        AppCompatImageView button1 = (AppCompatImageView) mTrySearch.findViewById(android.support.v7.appcompat.R.id.search_go_btn);
+        AppCompatImageView button2 = (AppCompatImageView) mTrySearch.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+        button.setImageResource(R.mipmap.ico_search);
+        button1.setImageResource(R.mipmap.ico_search_next);
+        button2.setImageResource(R.mipmap.ico_close_white);
+
+
+    }
+
+    @Override
+    protected void initListener() {
+        mTrySearch.setIconifiedByDefault(true);
+        mTrySearch.setSubmitButtonEnabled(true);
+        mTrySearch.setQueryHint("请输入关键字");
+        mTrySearch.onActionViewExpanded();
+        mTrySearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                int selectedTabPosition = mTabLayout.getSelectedTabPosition();
+                mSearchListener = fragmentLists.get(selectedTabPosition).getSearchListener();
+                mSearchListener.submitSearch(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (TextUtils.isEmpty(newText)) {
+                    int selectedTabPosition = mTabLayout.getSelectedTabPosition();
+                    mSearchListener = fragmentLists.get(selectedTabPosition).getSearchListener();
+                    mSearchListener.submitSearch("");
+                }
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public void initPresenter() {
+
+    }
+
+    /**
+     * 设置SearchView下划线透明
+     **/
+    private void setUnderLinetransparent(SearchView searchView) {
+        try {
+            Class<?> argClass = searchView.getClass();
+            // mSearchPlate是SearchView父布局的名字
+            Field ownField = argClass.getDeclaredField("mSearchPlate");
+            ownField.setAccessible(true);
+            View mView = (View) ownField.get(searchView);
+            mView.setBackgroundColor(Color.TRANSPARENT);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mLlSearch.setFocusable(true);
+        mLlSearch.setFocusableInTouchMode(true);
+        mLlSearch.requestFocus();
+    }
+}

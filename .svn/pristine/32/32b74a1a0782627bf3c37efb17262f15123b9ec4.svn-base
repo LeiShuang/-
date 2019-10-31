@@ -1,0 +1,42 @@
+package com.zfsoft.zfsoft_product.modules.login;
+
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+
+import com.zfsoft.zfsoft_product.base.BaseActivity;
+
+import javax.inject.Inject;
+
+/**
+ * Created by ckw
+ * on 2019/1/12.
+ */
+public class LoginActivity extends BaseActivity{
+
+    @Inject
+    LoginFragment mLoginFragment;
+
+    private FragmentManager manager;
+
+
+    @Override
+    protected int getLayoutId() {
+        return 0;
+    }
+
+    @Override
+    protected void initView(Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    protected void handleBundle(@NonNull Bundle bundle) {
+
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+}

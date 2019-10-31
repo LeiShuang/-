@@ -1,0 +1,588 @@
+package com.zfsoft.zfsoft_product.modules.home;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.gyf.barlibrary.ImmersionBar;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.vondear.rxtool.RxActivityTool;
+import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerListener;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseFragment;
+import com.zfsoft.zfsoft_product.common.Config;
+import com.zfsoft.zfsoft_product.di.ActivityScoped;
+import com.zfsoft.zfsoft_product.entity.BannerBean;
+import com.zfsoft.zfsoft_product.entity.SignBean;
+import com.zfsoft.zfsoft_product.entity.TestPersonBean;
+import com.zfsoft.zfsoft_product.entity.TestReportBean;
+import com.zfsoft.zfsoft_product.entity.TryNewProductBean;
+import com.zfsoft.zfsoft_product.modules.login.LoginActivity;
+import com.zfsoft.zfsoft_product.modules.login.info.SetInfoActivity;
+import com.zfsoft.zfsoft_product.modules.personal.account_address.AccountAddressActivity;
+import com.zfsoft.zfsoft_product.modules.report.other_info.OtherInformationActivity;
+import com.zfsoft.zfsoft_product.modules.report.report_detail.ReportDetailActivity;
+import com.zfsoft.zfsoft_product.modules.try_use.try_use_detail.TryUseDetailActivity;
+import com.zfsoft.zfsoft_product.utils.DbHelper;
+import com.zfsoft.zfsoft_product.utils.GlideImageLoader;
+import com.zfsoft.zfsoft_product.utils.SizeUtils;
+import com.zfsoft.zfsoft_product.utils.ToastUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+
+/**
+ * 创建日期：2018/12/24 on 10:54
+ * 描述:
+ * 作者:Ls
+ */
+@ActivityScoped
+public class HomeFragment extends BaseFragment implements HomeContract.View {
+
+
+    @Inject
+    HomePresenter mHomePresenter;
+
+    @BindView(R.id.rv_home)
+    RecyclerView mRvHome;
+    @BindView(R.id.frame_home)
+    FrameLayout mFrameHome;
+    @BindView(R.id.refresh_home)
+    RefreshLayout mRefreshHome;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
+    private List<MultipleItem> mItemList = new ArrayList<>();
+    private List<String> mImages = new ArrayList<>();
+    private HomeAdapter mAdapter;
+    private Banner mBanner;
+
+    //试用新品数据源
+    private List<TryNewProductBean> mListTryNew;
+    //试用报告
+    private List<TestReportBean> mListTestReport;
+    //试用达人
+    private List<TestPersonBean> mListTestPerson;
+
+    private HomeItemClickListener mHomeItemClickListener;
+    private TextView mAttentionView;
+
+    private boolean isRefresh = false;
+    private boolean isSetItemDecoration  = false;//是否已经设置过ItemDecoration
+
+    private TextView mTvApplyState;
+    private MultipleItem.ScrollImgListEntity.ScrollImgEntity mScrollImgEntity;
+    private List<BannerBean> mBannerList;
+
+    public void setmHomeItemClickListener(HomeItemClickListener mHomeItemClickListener) {
+        this.mHomeItemClickListener = mHomeItemClickListener;
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.fragment_home;
+    }
+
+    @Override
+    protected void initVariables() {
+        mListTryNew = new ArrayList<>();
+        mListTestReport = new ArrayList<>();
+        mListTestPerson = new ArrayList<>();
+    }
+
+    @Inject
+    public HomeFragment() {
+
+    }
+
+    @Override
+    protected void handleBundle(Bundle bundle) {
+
+    }
+
+    @Override
+    protected void operateViews(View view) {
+        mToolbar.setTitle("");
+        ImmersionBar.setTitleBar(getActivity(), mToolbar);
+
+        GridLayoutManager manager = new GridLayoutManager(getContext(), 6);
+        mRvHome.setLayoutManager(manager);
+        mAdapter = new HomeAdapter(getContext(), mItemList, new ItemRecyclerClickListener() {
+
+            /*
+            * 试用达人的点击事件
+            * */
+            @Override
+            public void onRecyclerItemClick(int position) {
+                //位置 0-5
+                if(DbHelper.checkUserIsLogin(mContext)){
+                    TestPersonBean testPersonBean = mListTestPerson.get(position);
+                    Intent intent = new Intent(getContext(),OtherInformationActivity.class);
+                    if (testPersonBean.getTalented() != null) {
+                        intent.putExtra("otherUserId",testPersonBean.getTalented());
+                    }
+                    if (testPersonBean.getTalentname() != null && !"".equals(testPersonBean.getTalentname())) {
+                        intent.putExtra("otherUserName",testPersonBean.getTalentname());
+                    }
+
+                    HomeFragment.this.startActivityForResult(intent,1);
+                }else {
+                    RxActivityTool.skipActivity(mContext,LoginActivity.class);
+                }
+
+            }
+
+            @Override
+            public void onRecyclerItemInItemClick(int position, TextView attentionView) {
+                mAttentionView = attentionView;
+                //位置 0-5
+                if(DbHelper.checkUserIsLogin(mContext)){
+                    int realPos = 0;
+                    int tryNew = mListTryNew.size();
+                    if(tryNew > 0){
+                        realPos = tryNew + 2;
+                    }
+
+                    if(mListTestPerson.size() > 0){
+                        MultipleItem scrollEntity = mItemList.get(realPos);
+                        MultipleItem.ScrollImgListEntity scrollImgListEntity = scrollEntity.getScrollImgListEntity();
+                        List<MultipleItem.ScrollImgListEntity.ScrollImgEntity> list = scrollImgListEntity.getList();
+                        mScrollImgEntity = list.get(position);
+                        String talented = mScrollImgEntity.getTalented();
+                        String type = mScrollImgEntity.getType();
+
+                        if(type.equals("1")){//未关注
+                            mHomePresenter.addAttention(Config.HSK, DbHelper.getUserId(mContext),talented,"1");
+                        }else {//已经关注 0
+                            mHomePresenter.addAttention(Config.HSK, DbHelper.getUserId(mContext),talented,"2");
+                        }
+                    }
+
+
+                }else {
+                    RxActivityTool.skipActivity(mContext, LoginActivity.class);
+                }
+
+            }
+        }, new itemReportClickListener() {
+            @Override
+            public void onRecyclerItemClick(int position) {
+                TestReportBean testReportBean = mListTestReport.get(position);
+                int id = testReportBean.getId();
+                Bundle bundle = new Bundle();
+                bundle.putInt("reportId",id);
+                bundle.putString("reportUserId",testReportBean.getTalented());
+                RxActivityTool.skipActivity(getContext(), ReportDetailActivity.class,bundle);
+            }
+        });
+        mAdapter.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
+                int type = mItemList.get(position).getItemType();
+                if(type == MultipleItem.TEXT){
+                    return MultipleItem.TEXT_SPAN_SIZE;
+                }else if(type == MultipleItem.IMG_SIX){
+                    return MultipleItem.IMG_SIX_SPAN_SIZE;
+                }else if(type == MultipleItem.IMG_SCROLL){
+                    return MultipleItem.IMG_SCROLL_SPAN_SIZE;
+                }else {
+                    return MultipleItem.IMG_SINGLE_SPAN_SIZE;
+                }
+            }
+        });
+        mAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
+        mRvHome.setAdapter(mAdapter);
+
+        addHeaderView();
+
+        //初始化 轮播图数据
+        mHomePresenter.getBannerList(Config.HSK);
+
+        //试用新品
+        mHomePresenter.getTryNewProductList(Config.HSK,DbHelper.getUserId(mContext));
+
+
+    }
+
+    //给RecyclerView添加头布局
+    private void addHeaderView() {
+        View mHeaderView = LayoutInflater.from(getActivity()).inflate(R.layout.home_header_banner,(ViewGroup) mRvHome.getParent(),false);
+        mBanner = mHeaderView.findViewById(R.id.home_banner);
+        mBanner.setImages(mImages)
+                .setImageLoader(new GlideImageLoader())
+                .setDelayTime(3000)
+                .start();
+
+        mBanner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                // picturetype 1  跳commodityid  picturetype 2 跳 报告详情
+                if(mBannerList != null){
+                    BannerBean bannerBean = mBannerList.get(position);
+                    if(bannerBean.getCommodityid() != null){
+                        String picturetype = bannerBean.getPicturetype();
+                        if(picturetype.equals("1")){
+                            Bundle bundle = new Bundle();
+                            bundle.putString("thingsId",bannerBean.getCommodityid());
+                            RxActivityTool.skipActivity(getContext(), TryUseDetailActivity.class,bundle);
+                        }
+
+                        if(picturetype.equals("2")){
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("reportId",Integer.valueOf(bannerBean.getCommodityid()));
+                            bundle.putString("reportUserId",bannerBean.getTalented());
+                            RxActivityTool.skipActivity(getContext(), ReportDetailActivity.class,bundle);
+                        }
+                    }
+
+                }
+            }
+        });
+        mAdapter.addHeaderView(mHeaderView,-2);
+    }
+
+    @Override
+    protected void initListener() {
+
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                /*
+                * 这边的position区别于 ItemSpaceDecoration，这里不包括头布局，所以item从0开始
+                * ItemSpaceDecoration中的position包括头布局
+                * */
+                //试用新品position （0）1-6;
+                //试用达人 (7) recycleview 8
+                // 试用报告 （9）从10开始
+                int size = mListTryNew.size();
+                int tryPersonSize = mListTestPerson.size() > 0 ? 2 : 0;
+
+                if(position >= 1 && position <= mListTryNew.size()){
+                    TryNewProductBean tryNewProductBean = mListTryNew.get(position - 1);
+                    String commodityid = tryNewProductBean.getCommodityid();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("thingsId",commodityid);
+                    RxActivityTool.skipActivity(getContext(), TryUseDetailActivity.class,bundle);
+                }
+                else if(position >= mListTryNew.size() +tryPersonSize + 2){
+
+                }
+            }
+        });
+
+        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                //position 同上
+//                Toast.makeText(getContext(), "子控件的点击:" + position, Toast.LENGTH_SHORT).show();
+                // 0 7 9 是各自的 查看更多
+
+                if(position == 0){
+                    mHomeItemClickListener.setOnTryNewMoreClick();
+                }else if(position == 7){//废弃
+                    mHomeItemClickListener.setOnTryPersonClick();
+                }else if(position == mListTryNew.size() + 3){
+                    mHomeItemClickListener.setOnTryReportClick();
+                }
+
+                if(position > 0 && position <= mListTryNew.size()){
+
+                    TryNewProductBean tryNewProductBean = mListTryNew.get(position - 1);
+                    String commodityid = tryNewProductBean.getCommodityid();
+
+
+                    if(DbHelper.checkUserIsLogin(mContext)){
+
+                        String sqzt = tryNewProductBean.getSqzt();
+                        if("0".equals(sqzt) || "1".equals(sqzt)){
+                            ToastUtils.showCenterToast(getContext(),"请勿重复申请");
+                        }else {
+                            //立即申请
+                            mTvApplyState = (TextView) view;
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                            builder.setTitle("是否申请此商品?")
+                                    .setPositiveButton("立即申请", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            mHomePresenter.tryUseProDuct(Config.HSK,commodityid,DbHelper.getUserId(mContext));
+                                        }
+                                    }).setNegativeButton("取消申请", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    ToastUtils.showCenterToast(getContext(),getString(R.string.cancel_get));
+                                }
+                            });
+                            builder.show();
+                        }
+
+                    }else {
+                        RxActivityTool.skipActivity(mContext,LoginActivity.class);
+                    }
+
+                }
+            }
+        });
+
+
+        mRefreshHome.setOnRefreshListener(new OnRefreshListener(){
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+
+                RefreshState state = refreshLayout.getState();
+
+                refreshLayout.finishRefresh(2000);
+                isRefresh = true;
+                mItemList.clear();
+                mHomePresenter.getBannerList(Config.HSK);
+                mHomePresenter.getTryNewProductList(Config.HSK,DbHelper.getUserId(mContext));
+            }
+
+        });
+
+        mRefreshHome.setOnLoadMoreListener(null);
+    }
+
+    @Override
+    public void initPresenter() {
+        mHomePresenter.takeView(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mHomePresenter.dropView();
+    }
+    @Override
+    public void getBannerListSuccess(List<BannerBean> list) {
+
+        mBannerList = list;
+        List<String> imgs = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            imgs.add(list.get(i).getPictureaddress());
+        }
+
+        mBanner.update(imgs);
+    }
+
+    @Override
+    public void getBannerListFailure(String errorMsy) {
+        ToastUtils.showCenterToast(getContext(),errorMsy);
+    }
+
+    @Override
+    public void getTryNewProductListSuccess(List<TryNewProductBean> list) {
+        //试用达人
+        mHomePresenter.getTestPersonList(Config.HSK,DbHelper.getUserId(mContext));
+        mItemList.clear();
+        mListTryNew.clear();
+        mListTryNew.addAll(list);
+
+        if(list.size() > 0){
+            MultipleItem.TitleEntity titleEntity = new MultipleItem.TitleEntity();
+            titleEntity.setTitle("试用新品");
+            MultipleItem multipleItem = new MultipleItem(MultipleItem.TEXT,MultipleItem.TEXT_SPAN_SIZE,titleEntity);
+            mItemList.add(0,multipleItem);
+
+            for (int i = 0; i < list.size(); i++) {
+                TryNewProductBean tryNewProductBean = list.get(i);
+
+                MultipleItem.SixImgEntity sixImgEntity = new MultipleItem.SixImgEntity();
+                sixImgEntity.setState(tryNewProductBean.getSqzt());
+                sixImgEntity.setImgUrl(tryNewProductBean.getCommodityurl());
+                sixImgEntity.setPrice(tryNewProductBean.getCommodityprice());
+                MultipleItem multipleItemSix = new MultipleItem(MultipleItem.IMG_SIX,MultipleItem.IMG_SIX_SPAN_SIZE,sixImgEntity);
+                mItemList.add((i + 1),multipleItemSix);
+            }
+        }
+
+        mAdapter.notifyDataSetChanged();
+
+
+    }
+
+    @Override
+    public void getTryNewProductListFailure(String errorMsy) {
+        ToastUtils.showCenterToast(getContext(),errorMsy);
+        //试用达人
+        mHomePresenter.getTestPersonList(Config.HSK,DbHelper.getUserId(mContext));
+    }
+
+    @Override
+    public void getTestReportListSuccess(List<TestReportBean> list) {
+        mListTestReport.clear();
+        mListTestReport.addAll(list);
+
+        MultipleItem.TitleEntity titleEntityThree = new MultipleItem.TitleEntity();
+        titleEntityThree.setTitle("试用报告");
+        MultipleItem multipleItemThree = new MultipleItem(MultipleItem.TEXT,MultipleItem.TEXT_SPAN_SIZE,titleEntityThree);
+        mItemList.add(multipleItemThree);
+
+        List<MultipleItem.SingleImgEntity> reports = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            TestReportBean testReportBean = list.get(i);
+            MultipleItem.SingleImgEntity singleImgEntity = new MultipleItem.SingleImgEntity();
+            singleImgEntity.setHeadUrl(testReportBean.getTestreporturl());
+            singleImgEntity.setUserUrl(testReportBean.getTalenturl());
+            singleImgEntity.setContent(testReportBean.getTestreporttitle());
+            singleImgEntity.setName(testReportBean.getTalentname());
+            singleImgEntity.setThumbUpNum(testReportBean.getLikesum());
+            reports.add(singleImgEntity);
+        }
+        MultipleItem.SingleImageList singleImageList = new MultipleItem.SingleImageList();
+        singleImageList.setList(reports);
+        MultipleItem multipleItemSingle = new MultipleItem(MultipleItem.IMG_SINGLE,MultipleItem.IMG_SINGLE_SPAN_SIZE,singleImageList);
+        mItemList.add(multipleItemSingle);
+        mAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void getTestReportListFailure(String errorMsg) {
+        mHomePresenter.getTestReportList(Config.HSK);
+        ToastUtils.showCenterToast(getContext(),errorMsg);
+    }
+
+    @Override
+    public void getTestPersonListSuccess(List<TestPersonBean> list) {
+        mHomePresenter.getTestReportList(Config.HSK);
+
+        mListTestPerson.clear();
+        mListTestPerson.addAll(list);
+        if(list.size() > 0){
+            MultipleItem.TitleEntity titleEntityTwo = new MultipleItem.TitleEntity();
+            titleEntityTwo.setTitle("试用达人");
+            MultipleItem multipleItemTwo = new MultipleItem(MultipleItem.TEXT,MultipleItem.TEXT_SPAN_SIZE,titleEntityTwo);
+            mItemList.add(multipleItemTwo);
+
+            MultipleItem.ScrollImgListEntity scrollImgListEntity = new MultipleItem.ScrollImgListEntity();
+            List<MultipleItem.ScrollImgListEntity.ScrollImgEntity> scrollImgEntities = new ArrayList<>();
+            for (int i = 0; i < list.size(); i++) {
+                TestPersonBean testPersonBean = list.get(i);
+                MultipleItem.ScrollImgListEntity.ScrollImgEntity scrollImgEntity = new MultipleItem.ScrollImgListEntity.ScrollImgEntity();
+                scrollImgEntity.setTalented(testPersonBean.getTalented());
+                scrollImgEntity.setFansNum(testPersonBean.getTalentfans());
+                scrollImgEntity.setHeadUrl(testPersonBean.getTalenturl());
+                scrollImgEntity.setName(testPersonBean.getTalentname());
+                scrollImgEntity.setReportNum(testPersonBean.getTalentreport());
+                scrollImgEntity.setType(testPersonBean.getType());
+                scrollImgEntities.add(scrollImgEntity);
+            }
+            scrollImgListEntity.setList(scrollImgEntities);
+            MultipleItem multipleItemScroll = new MultipleItem(MultipleItem.IMG_SCROLL,MultipleItem.IMG_SCROLL_SPAN_SIZE,scrollImgListEntity);
+            mItemList.add(multipleItemScroll);
+        }
+
+        if(!isRefresh){
+            isSetItemDecoration = true;
+            mRvHome.addItemDecoration(new ItemSpaceDecoration(
+                    SizeUtils.dp2px(8,getContext()),mListTryNew.size() > 6 ? 6 : mListTryNew.size(),mListTestPerson.size()>0 ? 2 : 0));
+        }
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void getTestPersonListFailure(String errorMsg) {
+        mRvHome.addItemDecoration(new ItemSpaceDecoration(
+                SizeUtils.dp2px(8,getContext()),mListTryNew.size() > 6 ? 6 : mListTryNew.size(),mListTestPerson.size()>0 ? 2 : 0));
+        ToastUtils.showCenterToast(getContext(),errorMsg);
+    }
+
+    @Override
+    public void addAttentionSuccess(SignBean signBean) {
+        String msgtype = signBean.getMsgtype();
+        //(1:关注成功，2：关注失败)
+        if(mScrollImgEntity.getType().equals("1")){//未关注，调关注接口
+            if(msgtype.equals("1")){
+                mAttentionView.setText("已关注");
+                mAttentionView.setBackgroundResource(R.drawable.background_full_concern);
+                mScrollImgEntity.setType("0");
+                ToastUtils.showCenterToast(getContext(),"关注成功");
+            }else {
+                mAttentionView.setText("关注");
+                mAttentionView.setBackgroundResource(R.drawable.background_text_concern);
+                mScrollImgEntity.setType("1");
+                ToastUtils.showCenterToast(getContext(),"关注失败");
+            }
+        }else if(mScrollImgEntity.getType().equals("0")){// 已关注
+            if(msgtype.equals("1")){//取消关注成功
+                mAttentionView.setText("关注");
+                mAttentionView.setBackgroundResource(R.drawable.background_text_concern);
+                mScrollImgEntity.setType("1");
+                ToastUtils.showCenterToast(getContext(),"取关成功");
+            }else {
+                mAttentionView.setText("已关注");
+                mAttentionView.setBackgroundResource(R.drawable.background_full_concern);
+                mScrollImgEntity.setType("0");
+                ToastUtils.showCenterToast(getContext(),"取关失败");
+            }
+        }
+
+        mAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void addAttentionFailure(String errorMsg) {
+        ToastUtils.showCenterToast(getContext(),errorMsg);
+    }
+
+    @Override
+    public void TryUseSuccess(SignBean info) {
+        String tryuseType = info.getMsgtype();
+        if ("1".equals(tryuseType)) {
+            ToastUtils.showCenterToast(getContext(),"提交申请成功");
+            mTvApplyState.setText("申请中");
+            mTvApplyState.setTextColor(mContext.getResources().getColor(R.color.record_settings_tip));
+            mTvApplyState.setBackgroundResource(R.drawable.background_text_already_apply);
+        } else if ("2".equals(tryuseType)) {
+            ToastUtils.showCenterToast(getContext(),"提交申请失败");
+            mTvApplyState.setText("申请");
+            mTvApplyState.setTextColor(mContext.getResources().getColor(R.color.apply_color));
+            mTvApplyState.setBackgroundResource(R.drawable.background_text_apply);
+        } else if ("3".equals(tryuseType)) {
+            ToastUtils.showCenterToast(getContext(),"请勿重复申请!");
+        } else if ("4".equals(tryuseType)) {
+            ToastUtils.showCenterToast(getContext(),"请先填写个人信息");
+            mContext.startActivity(new Intent(getActivity(), SetInfoActivity.class));
+        } else if ("5".equals(tryuseType)) {
+            ToastUtils.showCenterToast(getContext(),"请先完善收货地址");
+            mContext.startActivity(new Intent(getActivity(), AccountAddressActivity.class));
+        }else {
+            ToastUtils.showCenterToast(getContext(),"等待审核");
+        }
+    }
+
+    @Override
+    public void TryUseFailed(String errorMsg) {
+        ToastUtils.showCenterToast(getContext(),errorMsg);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+//        isRefresh = true;
+//        mItemList.clear();
+//        mHomePresenter.getTryNewProductList(Config.HSK,DbHelper.getUserId(mContext));
+    }
+}

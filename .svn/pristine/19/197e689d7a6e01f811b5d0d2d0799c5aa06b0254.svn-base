@@ -1,0 +1,230 @@
+package com.zfsoft.zfsoft_product.modules.login.validation;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
+import com.vondear.rxtool.view.RxToast;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseFragment;
+import com.zfsoft.zfsoft_product.base.HomeActivity;
+import com.zfsoft.zfsoft_product.modules.login.CountDownTextView;
+import com.zfsoft.zfsoft_product.modules.login.info.SetInfoActivity;
+
+
+import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
+
+/**
+ * Created by ckw
+ * on 2019/1/14.
+ */
+public class ValidationFragment extends BaseFragment {
+
+
+    @Inject
+    public ValidationFragment() {
+    }
+
+    @BindView(R.id.btn_go)
+    ImageButton mBtnGo;//下一步
+    @BindView(R.id.tv_send_validation)
+    TextView mTvSendValidationTip;//验证码发送提示信息
+    @BindView(R.id.et_validation)
+    EditText mEtValidation;//输入验证码框
+    @BindView(R.id.et_validation_pwd)
+    EditText mEtValidationPwd;//输入密码框(注册用)
+    @BindView(R.id.et_validation_pwd_again)
+    EditText mEtValidationPwdAgain;//再次输入密码框（注册用）
+    @BindView(R.id.count_down_view)
+    CountDownTextView mCountDownTextView;//倒计时控件
+    @BindView(R.id.et_pwd)
+    EditText mEtPwd;//登录时输入的密码
+    @BindView(R.id.tv_change_login)
+    TextView mTvChange;//通过密码登录
+
+    private String mValidationCode;
+
+
+    public static final String TYPE_REGISTER = "register";
+    public static final String TYPE_LOGIN = "login";
+    public static final String LOGIN_BY_PASSWORD = "password";
+    public static final String LOGIN_BY_VALIDATION= "validation";
+    private String mType;//登录或者注册
+    private String mPhoneNum;
+
+    private String mLoginType = "validation";//登录方式 password validation
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.fragment_validation;
+    }
+
+    @Override
+    protected void initVariables() {
+
+    }
+
+    @Override
+    protected void handleBundle(Bundle bundle) {
+        mType = bundle.getString("type");
+        mPhoneNum = bundle.getString("phone");
+    }
+
+    @Override
+    protected void operateViews(View view) {
+        if(mType.equals(TYPE_REGISTER)){
+            mEtValidationPwd.setVisibility(View.VISIBLE);
+            mEtValidationPwdAgain.setVisibility(View.VISIBLE);
+            mEtPwd.setVisibility(View.GONE);
+            mTvChange.setVisibility(View.GONE);
+            mCountDownTextView.setVisibility(View.GONE);
+            mEtValidation.setText(mPhoneNum);
+        }else {
+            mEtValidationPwd.setVisibility(View.GONE);
+            mEtValidationPwdAgain.setVisibility(View.GONE);
+        }
+
+        // 注册一个事件回调，用于处理SMSSDK接口请求的结果
+        SMSSDK.registerEventHandler(eventHandler);
+
+        count();
+
+    }
+
+    @Override
+    protected void initListener() {
+        mBtnGo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(mType.equals(TYPE_REGISTER)){//注册
+                    Intent intent = new Intent(getActivity(), SetInfoActivity.class);
+                    intent.putExtra("jumpFrom",0);//从注册（validationFragment）界面进入为0，从设置界面进入为1
+                    startActivity(intent);
+                }else {
+                    if(mLoginType.equals(LOGIN_BY_VALIDATION)){//通过验证码登录
+                        mValidationCode = mEtValidation.getText().toString().trim();
+                        if(mValidationCode.equals("")){
+                            RxToast.showToast("请输入验证码");
+                        }else {
+                            //提交验证码
+                            SMSSDK.submitVerificationCode("86",mPhoneNum,mValidationCode);
+                        }
+                    }else {
+                        //通过密码登录
+                        Intent intent = new Intent(getActivity(), HomeActivity.class);
+                        startActivity(intent);
+                    }
+
+                }
+            }
+        });
+
+        mTvChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mLoginType.equals(LOGIN_BY_VALIDATION)){
+                    mLoginType = "password";//改为密码登录
+                    mTvChange.setText("通过验证码登录");
+                    mEtPwd.setVisibility(View.VISIBLE);
+                    mCountDownTextView.setVisibility(View.GONE);
+                    mEtValidation.setText(mPhoneNum);
+                }else {
+                    mLoginType = "validation";
+                    mTvChange.setText("通过密码登录");
+                    mCountDownTextView.setVisibility(View.VISIBLE);
+                    mEtPwd.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void initPresenter() {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SMSSDK.unregisterEventHandler(eventHandler);
+    }
+
+    EventHandler eventHandler=new EventHandler(){
+
+        @Override
+        public void afterEvent(int event, int result, Object data) {
+
+            if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
+                if (result == SMSSDK.RESULT_COMPLETE) {
+                    // 请注意，此时只是完成了发送验证码的请求，验证码短信还需要几秒钟之后才送达
+                    mTvSendValidationTip.setVisibility(View.VISIBLE);
+                } else {
+                    RxToast.showToast("验证码发送失败");
+                    mTvSendValidationTip.setVisibility(View.INVISIBLE);
+                }
+            } else if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
+                if (result == SMSSDK.RESULT_COMPLETE) {
+                    //验证成功
+                    RxToast.showToast("验证成功");
+                    Intent intent = new Intent(getActivity(), HomeActivity.class);
+                    startActivity(intent);
+                } else {
+                    RxToast.showToast("验证失败");
+                }
+            }
+
+        }
+    };
+
+    /**
+     * 验证码代码
+     * */
+    private void count() {
+        mCountDownTextView
+                .setNormalText("获取验证码")
+                .setCountDownText("重新获取(", "s)")
+                .setCloseKeepCountDown(false)//关闭页面保持倒计时开关
+                .setCountDownClickable(false)//倒计时期间点击事件是否生效开关
+                .setShowFormatTime(false)//是否格式化时间
+                .setIntervalUnit(TimeUnit.SECONDS)
+                .setOnCountDownStartListener(new CountDownTextView.OnCountDownStartListener() {
+                    @Override
+                    public void onStart() {
+//                        Toast.makeText(getContext(), "开始计时", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setOnCountDownTickListener(new CountDownTextView.OnCountDownTickListener() {
+                    @Override
+                    public void onTick(long untilFinished) {
+                        //剩余的时间
+                        Log.e("------", "onTick: " + untilFinished);
+                    }
+                })
+                .setOnCountDownFinishListener(new CountDownTextView.OnCountDownFinishListener() {
+                    @Override
+                    public void onFinish() {
+                        mTvSendValidationTip.setVisibility(View.INVISIBLE);
+//                        Toast.makeText(getContext(), "倒计时完毕", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SMSSDK.getVerificationCode("86", mPhoneNum);
+
+                        mCountDownTextView.startCountDown(10);
+                    }
+                });
+    }
+}

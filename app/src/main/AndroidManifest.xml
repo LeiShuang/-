@@ -11,23 +11,85 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!--点播播放器悬浮窗权限-->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!--存储-->
+
+  <!--  小视频播放权限-->
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.Camera"/>
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:name=".base.BaseApplication"
         android:allowBackup="true"
         tools:replace="android:name"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".base.HomeActivity">
+        android:usesCleartextTraffic="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        tools:targetApi="m">
+        <activity android:name=".base.HomeActivity" android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.tencent.bugly.beta.ui.BetaActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
+            android:theme="@android:style/Theme.Translucent" />
+        <!--报告详情-->
+        <activity android:name=".modules.report.report_detail.ReportDetailActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".modules.login.LoginActivity" android:screenOrientation="portrait">
+        </activity>
+
+    <!--照片详情-->
+        <activity android:name=".modules.try_use.photo_detail.PhotoDetailActivity" android:screenOrientation="portrait"/>
+        <!--试用详情-->
+        <activity android:name=".modules.try_use.try_use_detail.TryUseDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".modules.login.validation.ValidationActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".modules.login.info.SetInfoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".modules.personal.setting.SettingActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".modules.personal.accout_safe.AccountSafeActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".modules.personal.change_pwd.ChangePwdActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".modules.personal.account_address.AccountAddressActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".modules.personal.account_address.add.NewAddAddressActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".modules.personal.message.MessageActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".modules.report.other_info.OtherInformationActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".modules.personal.my_try.MyTryActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".modules.personal.my_collection.MyCollectionActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".modules.personal.my_report.MyReportActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".modules.personal.integral_mall.IntegralMallActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".modules.login.splash.SplashActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".modules.personal.integral_mall.integral_detail.IntegralDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".modules.personal.message.message_list.MessageListActivity" android:screenOrientation="portrait"/>
+
+
+        <activity android:name=".modules.report.submit_report.SubmitReportActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".modules.personal.accout_safe.modify.ModifyPhoneActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".modules.report.discuss_detail.DiscussDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".modules.personal.my_concern.MyConcernActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".modules.try_use.share_redbook.ShareRedBookActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".modules.personal.my_platform.MyPlatformActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".modules.login.user_agreement.UserAgreementActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".modules.login.third_phone.ThirdPhoneActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".modules.home.search.HomeSearchActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".modules.home.notice.NoticeActivity"  android:screenOrientation="portrait"/>
         <!--ImmersionBar适配华为（huawei）刘海屏-->
         <meta-data
             android:name="android.notch_support"
@@ -36,6 +98,30 @@
         <meta-data
             android:name="notch.config"
             android:value="portrait|landscape" />
+
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${app_package_name}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <provider
+            android:name=".utils.BuglyFileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="name,authorities,exported,grantUriPermissions">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/blugly_paths"
+                tools:replace="name,resource"/>
+        </provider>
     </application>
 
 </manifest>

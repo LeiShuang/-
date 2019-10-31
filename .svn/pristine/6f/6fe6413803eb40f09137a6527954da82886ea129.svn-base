@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_detail_title"
+        tools:text="签到得积分"
+        android:layout_marginTop="@dimen/common_margin_left"
+        android:layout_marginLeft="@dimen/common_margin_left"
+        android:textColor="@color/mine_text_color"
+        android:textSize="15sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_detail_time"
+        android:layout_below="@+id/tv_detail_title"
+        tools:text="2019-1-23 11:55:26"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="@dimen/common_margin_left"
+        android:textColor="#cbcbcb"
+        android:textSize="12sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_detail_num"
+        tools:text="+5"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/common_margin_left"
+        android:layout_marginRight="@dimen/common_margin_left"
+        android:textColor="#ffbf2a"
+        android:textSize="15sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_marginTop="@dimen/common_margin_left"
+        android:layout_below="@+id/tv_detail_time"
+        android:background="@color/split_mine"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+
+</RelativeLayout>

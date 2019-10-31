@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".base.HomeActivity">
+    <FrameLayout
+        android:id="@+id/rl_home_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+    <devlight.io.library.ntb.NavigationTabBar
+        android:id="@+id/ntb"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom"
+        app:ntb_title_mode="all"
+        app:ntb_titled="true"
+        app:ntb_title_size="@dimen/home_bottom_text_size"
+        app:ntb_badged="false"
+        app:ntb_icon_size_fraction="0.5"
+        app:ntb_bg_color="@color/colorWhite"
+        app:ntb_active_color="@color/home_tab_color"
+        app:ntb_inactive_color="@color/grey" />
+</LinearLayout>

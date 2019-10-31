@@ -1,0 +1,30 @@
+package com.zfsoft.zfsoft_product.modules.personal;
+
+import dagger.MembersInjector;
+import dagger.internal.Factory;
+import dagger.internal.MembersInjectors;
+import javax.annotation.Generated;
+
+@Generated(
+  value = "dagger.internal.codegen.ComponentProcessor",
+  comments = "https://google.github.io/dagger"
+)
+public final class PersonalFragment_Factory implements Factory<PersonalFragment> {
+  private final MembersInjector<PersonalFragment> personalFragmentMembersInjector;
+
+  public PersonalFragment_Factory(
+      MembersInjector<PersonalFragment> personalFragmentMembersInjector) {
+    assert personalFragmentMembersInjector != null;
+    this.personalFragmentMembersInjector = personalFragmentMembersInjector;
+  }
+
+  @Override
+  public PersonalFragment get() {
+    return MembersInjectors.injectMembers(personalFragmentMembersInjector, new PersonalFragment());
+  }
+
+  public static Factory<PersonalFragment> create(
+      MembersInjector<PersonalFragment> personalFragmentMembersInjector) {
+    return new PersonalFragment_Factory(personalFragmentMembersInjector);
+  }
+}

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/colorWhite"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rl_info_top"
+        android:layout_width="match_parent"
+        android:layout_height="73dp"
+        android:layout_marginLeft="@dimen/slide_title"
+        android:layout_marginRight="@dimen/slide_title"
+        android:layout_marginTop="@dimen/fivteen_padding"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_circle"
+            android:layout_width="73dp"
+            android:layout_height="73dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:id="@+id/ll_person_top"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/iv_circle"
+            android:orientation="horizontal">
+            <!--关注-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:weightSum="3"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_attention_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/report_detail_title_bg"
+                    android:textSize="@dimen/report_detail_title_size"
+                    android:textStyle="bold"
+                    tools:text="30" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/report_detail_attention"
+                    android:textColor="@color/report_detail_name_bg"
+                    android:textSize="@dimen/font_normal" />
+            </LinearLayout>
+            <!--粉丝-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:weightSum="3"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_fans_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/report_detail_title_bg"
+                    android:textSize="@dimen/report_detail_title_size"
+                    android:textStyle="bold"
+                    tools:text="30" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/fans_number"
+                    android:textColor="@color/report_detail_name_bg"
+                    android:textSize="@dimen/font_normal" />
+            </LinearLayout>
+            <!--点赞-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:weightSum="3"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_star_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/report_detail_title_bg"
+                    android:textSize="@dimen/report_detail_title_size"
+                    android:textStyle="bold"
+                    tools:text="30" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/click_star"
+                    android:textColor="@color/report_detail_name_bg"
+                    android:textSize="@dimen/font_normal" />
+                <TextView
+                    android:id="@+id/tv_is_attention"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/five_padding"
+                    android:paddingRight="@dimen/five_padding"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/report_detail_attention"
+                    android:background="@drawable/report_detail_attention_bg"/>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_below="@+id/rl_info_top"
+        tools:text="这是姓名"
+        android:layout_marginLeft="@dimen/dots_height"
+        android:textSize="@dimen/title_size"
+        android:textColor="@color/report_detail_name_bg"
+        android:layout_marginTop="@dimen/fivteen_padding"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <!--个性签名-->
+    <TextView
+        android:id="@+id/tv_person_speak"
+        android:layout_below="@+id/tv_name"
+        android:paddingTop="@dimen/ten_padding"
+        android:layout_marginBottom="@dimen/fivteen_padding"
+        android:gravity="center_vertical"
+        android:ellipsize="end"
+        android:maxEms="20"
+        android:singleLine="true"
+        tools:text="好好学习天天想啥这是一条测试文本文本文本测试文本测试文本"
+        android:layout_marginLeft="@dimen/slide_title"
+        android:layout_marginRight="@dimen/slide_title"
+        android:textSize="@dimen/font_small"
+        android:textColor="@color/report_detail_name_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

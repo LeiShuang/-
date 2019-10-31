@@ -1,0 +1,105 @@
+package com.zfsoft.zfsoft_product.modules.personal;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.gyf.barlibrary.ImmersionBar;
+import com.vondear.rxtool.RxLogTool;
+import com.vondear.rxtool.RxSPTool;
+import com.vondear.rxtool.view.RxToast;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseFragment;
+import com.zfsoft.zfsoft_product.di.ActivityScoped;
+
+import java.util.HashMap;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.wechat.friends.Wechat;
+
+
+/**
+ * 创建日期：2018/12/24 on 10:55
+ * 描述:
+ * 作者:Ls
+ */
+@ActivityScoped
+public class PersonalFragment extends BaseFragment implements View.OnClickListener {
+    @BindView(R.id.iv_message)
+    ImageView mIvMessage;// 点击进入消息界面
+    @BindView(R.id.tv_sign)
+    TextView mTvSign;//签到
+
+    @BindView(R.id.rl_concern)
+    RelativeLayout mRlConcern;//我的关注
+    @BindView(R.id.rl_fans)
+    RelativeLayout mRlFans;//我的粉丝
+    @BindView(R.id.rl_integral)
+    RelativeLayout mRlIntegral;//我的积分
+    @BindView(R.id.rl_my_trial)
+    RelativeLayout mRlMyTrial;//我的试用
+    @BindView(R.id.rl_my_collection)
+    RelativeLayout mRlMyCollection;//我的收藏
+    @BindView(R.id.rl_my_report)
+    RelativeLayout mRlMyReport;//我的报告
+    @BindView(R.id.rl_my_info)
+    RelativeLayout mRlMyInfo;//基本信息
+    @BindView(R.id.rl_my_address)
+    RelativeLayout mRlMyAddress;//联系地址
+
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.fragment_personal;
+    }
+
+    @Override
+    protected void initVariables() {
+
+    }
+
+    @Inject
+    public PersonalFragment() {
+
+    }
+
+    @Override
+    protected void handleBundle(Bundle bundle) {
+
+    }
+
+    @Override
+    protected void operateViews(View view) {
+
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    public void initPresenter() {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+       int key = v.getId();
+
+       }
+
+}

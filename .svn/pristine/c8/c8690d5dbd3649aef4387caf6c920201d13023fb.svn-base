@@ -1,0 +1,18 @@
+package com.zfsoft.zfsoft_product.entity;
+
+/**
+ * Created by ckw
+ * on 2019/1/23.
+ */
+public class SignBean {
+    //(1:签到成功，2：签到失败,3：已签到)
+    private String msgtype;
+
+    public String getMsgtype() {
+        return msgtype;
+    }
+
+    public void setMsgtype(String msgtype) {
+        this.msgtype = msgtype;
+    }
+}

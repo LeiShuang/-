@@ -1,0 +1,17 @@
+package com.zfsoft.zfsoft_product.modules.report.write;
+
+
+import dagger.Module;
+
+
+/**
+ * 创建日期：2019/1/11 on 16:26
+ * 描述:
+ * 作者:Ls
+ */
+@Module
+public abstract class WriteReportModule {
+ /*   @ActivityScoped
+    @ContributesAndroidInjector
+    abstract WriteReportActivity mWriteReportActivity();*/
+}

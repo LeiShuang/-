@@ -1,0 +1,45 @@
+package com.zfsoft.zfsoft_product.modules.report.submit_report;
+
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+
+import com.lzy.imagepicker.bean.ImageItem;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseActivity;
+import com.zfsoft.zfsoft_product.utils.ActivityUtils;
+
+import java.util.ArrayList;
+
+import javax.inject.Inject;
+
+/**
+ * 创建日期：2019/1/23 on 11:25
+ * 描述:发布图片的界面
+ * 作者:Ls
+ */
+public class SubmitReportActivity extends BaseActivity {
+    public static final int IMAGE_ITEM_ADD = -1;
+    private ArrayList<ImageItem> mMSelectedImages;
+    @Inject
+    SubmitReportFragment mSubmitReportFragment;
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_single_common;
+    }
+
+    @Override
+    protected void initView(Bundle savedInstanceState) {
+        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mSubmitReportFragment, R.id.fragment_container);
+    }
+
+    @Override
+    protected void handleBundle(@NonNull Bundle bundle) {
+
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+}

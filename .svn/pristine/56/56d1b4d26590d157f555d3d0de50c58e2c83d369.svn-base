@@ -1,0 +1,27 @@
+package com.zfsoft.zfsoft_product.modules.report.write;
+
+
+import com.zfsoft.zfsoft_product.di.FragmentScoped;
+import dagger.Module;
+import dagger.android.ContributesAndroidInjector;
+
+
+/**
+ * 创建日期：2019/1/11 on 16:26
+ * 描述:
+ * 作者:Ls
+ */
+@Module
+public abstract class WriteReportModule {
+    @FragmentScoped
+    @ContributesAndroidInjector
+    abstract SelectPicturesFragment mSelectPicturesFragment();
+
+    @FragmentScoped
+    @ContributesAndroidInjector
+    abstract CameraFragment mCameraFragment();
+
+    @FragmentScoped
+    @ContributesAndroidInjector
+    abstract SmallVideoFragment mSmallVideoFragment();
+}

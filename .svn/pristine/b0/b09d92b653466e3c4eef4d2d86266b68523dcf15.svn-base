@@ -1,0 +1,73 @@
+package com.zfsoft.zfsoft_product.common;
+
+/**
+ * 创建日期：2018/12/24 on 10:06
+ * 描述:基础配置文件
+ * 作者:Ls
+ */
+public class Config {
+
+    public static final boolean DUBUG = true;
+    /**
+     * 网络地址
+     * 测试地址
+     * */
+    //public static final String BASE_URL =  "http://10.71.21.90/";
+     //外网地址
+    //public static final String BASE_URL = "http://62.234.72.97/";
+     //外网域名
+    public static final String BASE_URL = "https://www.yilinsitian.com/";
+//    public static final String BASE_URL = "http://10.71.21.113:8082/";
+
+    public static final String HSK = "C5FCEC7318A311E9A7B300E04C12991C";
+
+    /**
+     * 加载更多相关的
+     */
+    public static final class LOADMORE {
+        public static final int VISIBLE_THRESHOLD = 2;
+
+        //起始页
+        public static final int START_PAGE = 1;
+
+        //每页加载多少条数据
+        public static final int PAGE_SIZE = 6;
+    }
+
+    /**
+     * 上传文件相关的
+     */
+    public static final class UPLOAD {
+
+        //上传文件的数据格式
+        public static final String UPLOAD_FILE_FORMAT = "multipart/form-data";
+
+
+    }
+
+    /**
+     * 数据存储相关的
+     */
+    public static final class DB {
+
+        //SharedPreferences中用戶是否是第一次登录Once的name和key的值
+        public static final String IS_FIRST_TIME_IN_NAME = "IS_FIRST_TIME_IN_NAME";
+        public static final String IS_FIRST_TIME_IN_KEY = "IS_FIRST_TIME_IN_KEY";
+
+        //保存在SharedPreferences中用户User的name值和key值
+        public static final String USER_NAME = "USER_LOGIN_NAME";
+        public static final String USER_KEY = "USER_LOGIN_KEY";
+
+        //SharedPreferences中用户是否已经登录的name值和key值 IsLogin
+        public static final String IS_LOGIN_NAME = "IS_LOGIN_NAME";
+        public static final String IS_LOGIN_KEY = "IS_LOGIN_KEY";
+
+        //SharedPreferences中是否是最新版本的name值和key值 IsNewVersion
+        public static final String IS_NEW_VERSION_NAME = "IS_NEW_VERSION_NAME";
+        public static final String IS_NEW_VERSION_KEY = "IS_NEW_VERSION_KEY";
+
+
+
+
+    }
+}

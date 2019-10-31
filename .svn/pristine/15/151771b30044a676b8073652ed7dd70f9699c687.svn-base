@@ -1,0 +1,175 @@
+package com.zfsoft.zfsoft_product.entity;
+
+
+import java.util.List;
+
+/**
+ * 创建日期：2019/1/5 on 14:11
+ * 描述:物品信息实体
+ * 作者:Ls
+ */
+public class ThingsInfoEntity {
+    /**
+     * commodityid : 1
+     * commoditytitle : 【新年礼物】纪梵希新年彩妆套装 小粉唇+小羊皮 口红唇膏正品
+     * <p>
+     * commoditysum : 1000
+     * commoditybrowse : 11514
+     * commoditytype : 1
+     * commodityurl : [{"commodityurl":"http://62.234.72.97/profile/media/cptpk/20190119160219.jpg","px":1}]
+     * commodityparameters : 天鹅绒304+小粉唇
+     * commodityprice : 655.00
+     */
+//-------------------------------------------------------------
+          /*   "commodityid":"1",
+                     "commoditytitle":"【新年礼物】纪梵希新年彩妆套装 小粉唇+小羊皮 口红唇膏正品
+                     ",
+                     "commoditysum":1000,
+                     "commoditytime":101677,
+                     "commodityapplicationsum":2,
+                     "commodityintroduction":"",
+                     "commoditydetailsURL":"",
+                     "commodityurls":[
+    {
+        "commodityurl":"http://62.234.72.97/profile/media/cptpk/20190119160219.jpg",
+            "px":1
+    }
+        ],
+                "commodityparameters":"天鹅绒304+小粉唇",
+                "commodityprice":"655.00"*/
+
+    private String commodityid;
+    private String commoditytitle;
+    private int commoditysum;
+    private int commoditytime;
+    private int commodityapplicationsum;
+    private String commodityintroduction;
+    private String commoditydetailsURL;
+    private String commodityparameters;
+    private String commodityprice;
+    private String applytype;
+    private String hasstar;
+
+    public String getHasstar() {
+        return hasstar;
+    }
+
+    public void setHasstar(String hasstar) {
+        this.hasstar = hasstar;
+    }
+
+
+    private List<CommodityurlsBean> commodityurls;
+
+    public List<CommodityurlsBean> getCommodityurls() {
+        return commodityurls;
+    }
+
+    public void setCommodityurls(List<CommodityurlsBean> commodityurls) {
+        this.commodityurls = commodityurls;
+    }
+
+    public String getApplytype() {
+        return applytype;
+    }
+
+    public void setApplytype(String applytype) {
+        this.applytype = applytype;
+    }
+
+    private int commoditybrowse;//商品热度（浏览数）
+    private int commoditytype;//类型
+
+
+
+
+    public String getCommodityid() {
+        return commodityid;
+    }
+
+    public void setCommodityid(String commodityid) {
+        this.commodityid = commodityid;
+    }
+
+    public String getCommoditytitle() {
+        return commoditytitle;
+    }
+
+    public void setCommoditytitle(String commoditytitle) {
+        this.commoditytitle = commoditytitle;
+    }
+
+    public int getCommoditysum() {
+        return commoditysum;
+    }
+
+    public void setCommoditysum(int commoditysum) {
+        this.commoditysum = commoditysum;
+    }
+
+    public int getCommoditybrowse() {
+        return commoditybrowse;
+    }
+
+    public void setCommoditybrowse(int commoditybrowse) {
+        this.commoditybrowse = commoditybrowse;
+    }
+
+    public int getCommoditytype() {
+        return commoditytype;
+    }
+
+    public void setCommoditytype(int commoditytype) {
+        this.commoditytype = commoditytype;
+    }
+
+    public String getCommodityparameters() {
+        return commodityparameters;
+    }
+
+    public void setCommodityparameters(String commodityparameters) {
+        this.commodityparameters = commodityparameters;
+    }
+
+    public String getCommodityprice() {
+        return commodityprice;
+    }
+
+    public void setCommodityprice(String commodityprice) {
+        this.commodityprice = commodityprice;
+    }
+
+
+    public int getCommoditytime() {
+        return commoditytime;
+    }
+
+    public void setCommoditytime(int commoditytime) {
+        this.commoditytime = commoditytime;
+    }
+
+    public String getCommodityintroduction() {
+        return commodityintroduction;
+    }
+
+    public void setCommodityintroduction(String commodityintroduction) {
+        this.commodityintroduction = commodityintroduction;
+    }
+
+    public String getCommoditydetailsURL() {
+        return commoditydetailsURL;
+    }
+
+    public void setCommoditydetailsURL(String commoditydetailsURL) {
+        this.commoditydetailsURL = commoditydetailsURL;
+    }
+
+    public int getCommodityapplicationsum() {
+        return commodityapplicationsum;
+    }
+
+    public void setCommodityapplicationsum(int commodityapplicationsum) {
+        this.commodityapplicationsum = commodityapplicationsum;
+    }
+
+}

@@ -1,0 +1,208 @@
+package com.zfsoft.zfsoft_product.modules.login;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.vondear.rxtool.RxActivityTool;
+import com.vondear.rxtool.view.RxToast;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseFragment;
+import com.zfsoft.zfsoft_product.base.HomeActivity;
+import com.zfsoft.zfsoft_product.common.Config;
+import com.zfsoft.zfsoft_product.entity.IsLogin;
+import com.zfsoft.zfsoft_product.entity.LoginBean;
+import com.zfsoft.zfsoft_product.entity.SignBean;
+import com.zfsoft.zfsoft_product.entity.User;
+import com.zfsoft.zfsoft_product.modules.login.validation.ValidationActivity;
+import com.zfsoft.zfsoft_product.utils.DbHelper;
+import com.zfsoft.zfsoft_product.utils.PhoneUtils;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+
+/**
+ * Created by ckw
+ * on 2019/1/22.
+ */
+public class NewLoginFragment extends BaseFragment implements LoginContract.View {
+
+    private String mLoginPhone;
+
+    @Inject
+    public NewLoginFragment() {
+    }
+
+    @Inject
+    LoginPresenter mLoginPresenter;
+
+    @BindView(R.id.tv_type_sms)
+    TextView mTvTypeSms;
+    @BindView(R.id.view_sms)
+    View mViewSms;
+    @BindView(R.id.tv_type_pwd)
+    TextView mTvTypePwd;
+    @BindView(R.id.view_pwd)
+    View mViewPwd;
+    @BindView(R.id.et_login)
+    EditText mEtPhone;
+    @BindView(R.id.et_pwd)
+    EditText mEtPassword;
+    @BindView(R.id.btn_login)
+    Button mBtnLogin;
+
+    private String mType = "sms";//登陆方式 验证码sms 密码pwd
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.fragment_login;
+    }
+
+    @Override
+    protected void initVariables() {
+
+    }
+
+    @Override
+    protected void handleBundle(Bundle bundle) {
+
+    }
+
+    @Override
+    protected void operateViews(View view) {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mLoginPresenter.dropView();
+    }
+
+    @Override
+    protected void initListener() {
+        mEtPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int length = s.toString().toCharArray().length;
+
+                if (length == 11){
+                    String password = s.toString().substring(5);
+                    mEtPassword.setText(password);
+                }
+            }
+        });
+        mBtnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mLoginPhone = mEtPhone.getText().toString().trim();
+
+                if(mType.equals("pwd")){
+                    if (judgePhoneValid(mLoginPhone)){
+                        mLoginPresenter.loginByPassword(Config.HSK, mLoginPhone,mEtPassword.getText().toString().trim());
+                    }
+
+                }else {
+                    if (judgePhoneValid(mLoginPhone)){
+                        Intent intent = new Intent(getContext(), ValidationActivity.class);
+                        intent.putExtra("phone", mLoginPhone);
+                        startActivity(intent);
+
+                    }
+
+                }
+            }
+        });
+        mTvTypePwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTvTypePwd.setTextColor(getResources().getColor(R.color.colorWhite));
+                mTvTypeSms.setTextColor(getResources().getColor(R.color.login_change_color));
+                mViewPwd.setVisibility(View.VISIBLE);
+                mViewSms.setVisibility(View.INVISIBLE);
+                mType = "pwd";
+                mEtPassword.setVisibility(View.VISIBLE);
+            }
+        });
+
+        mTvTypeSms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTvTypeSms.setTextColor(getResources().getColor(R.color.colorWhite));
+                mTvTypePwd.setTextColor(getResources().getColor(R.color.login_change_color));
+                mViewPwd.setVisibility(View.INVISIBLE);
+                mViewSms.setVisibility(View.VISIBLE);
+                mType = "sms";
+                mEtPassword.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    @Override
+    public void initPresenter() {
+        mLoginPresenter.takeView(this);
+    }
+
+    private boolean judgePhoneValid(String phone){
+        if(phone.isEmpty()){
+            RxToast.showToast("手机号不能为空哦");
+            return false;
+        }
+        if(!PhoneUtils.isMobileNO(phone)){
+            RxToast.showToast("请输入正确的手机号");
+            return false;
+        }
+
+        return true;
+    }
+
+
+
+    //记住用户登录的状态
+    private void setUserIsLogin() {
+        IsLogin isLogin = new IsLogin();
+        isLogin.setLogin(true);
+        DbHelper.saveValueBySharedPreferences(mContext, Config.DB.IS_LOGIN_NAME, Config.DB.IS_LOGIN_KEY, isLogin);
+    }
+
+    @Override
+    public void loginByPasswordSuccess(LoginBean loginBean) {
+        if(loginBean.getMsgtype().equals("1")){
+            String userid = loginBean.getUserid();
+            User user = new User();
+            user.setUserid(userid);
+            user.setPhone(mLoginPhone);
+            DbHelper.saveValueBySharedPreferences(mContext, Config.DB.USER_NAME, Config.DB.USER_KEY, user);
+            setUserIsLogin();
+            RxToast.showToast("登录成功");
+            RxActivityTool.skipActivity(getContext(), HomeActivity.class);
+        }else {
+            RxToast.showToast("登录失败");
+        }
+
+    }
+
+    @Override
+    public void loginByPasswordFailure(String errorMsg) {
+        RxToast.showToast(errorMsg);
+    }
+}

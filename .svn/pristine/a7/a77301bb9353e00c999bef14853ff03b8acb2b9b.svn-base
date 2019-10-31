@@ -1,0 +1,39 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.1.2'
+        classpath 'com.mob.sdk:MobSDK:+'
+        classpath "io.realm:realm-gradle-plugin:3.3.1"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+
+        //保证整个项目使用了tccommon下的sdk版本
+
+        flatDir {
+            dirs 'libs'
+            dirs project(':lib_tccommon').file('libs')
+        }
+        maven { url "https://jitpack.io" }
+        // 私有仓库地址
+        maven { url "http://lib.gcssloop.com:8081/repository/gcssloop-central/" }
+    }
+
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

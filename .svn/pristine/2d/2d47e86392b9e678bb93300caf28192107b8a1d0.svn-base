@@ -1,0 +1,76 @@
+package com.zfsoft.zfsoft_product.modules.home;
+
+import com.zfsoft.zfsoft_product.entity.BannerBean;
+import com.zfsoft.zfsoft_product.entity.TryNewProductBean;
+import com.zfsoft.zfsoft_product.net.ApiService;
+import com.zfsoft.zfsoft_product.net.CallBackListener;
+import com.zfsoft.zfsoft_product.net.HttpManager;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import io.reactivex.disposables.CompositeDisposable;
+
+/**
+ * Created by ckw
+ * on 2019/1/18.
+ */
+public class HomePresenter implements HomeContract.Presenter {
+
+    private CompositeDisposable mCompositeDisposable;
+    private ApiService mApiService;
+    private HomeContract.View mView;
+    private HttpManager mHttpManager;
+
+    @Inject
+    public HomePresenter(ApiService mApiService, HttpManager mHttpManager) {
+        this.mApiService = mApiService;
+        this.mHttpManager = mHttpManager;
+        mCompositeDisposable = new CompositeDisposable();
+    }
+
+    @Override
+    public void getBannerList(String hsk, String link) {
+        mHttpManager.request(mApiService.getBannerList(hsk, link), mCompositeDisposable, mView,
+                new CallBackListener<List<BannerBean>>() {
+                    @Override
+                    public void onSuccess(List<BannerBean> data) {
+                        mView.getBannerListSuccess(data);
+                    }
+
+                    @Override
+                    public void onError(String errorMsg) {
+                        mView.getBannerListFailure(errorMsg);
+                        mView.showErrorView();
+                    }
+                });
+    }
+
+    @Override
+    public void getTryNewProductList(String hsk, String link) {
+        mHttpManager.request(mApiService.getTryNewProductList(hsk, link), mCompositeDisposable, mView,
+                new CallBackListener<List<TryNewProductBean>>() {
+                    @Override
+                    public void onSuccess(List<TryNewProductBean> data) {
+                        mView.getTryNewProductListSuccess(data);
+                    }
+
+                    @Override
+                    public void onError(String errorMsg) {
+                        mView.getTryNewProductListFailure(errorMsg);
+                    }
+                });
+    }
+
+    @Override
+    public void takeView(HomeContract.View view) {
+        mView = view;
+    }
+
+    @Override
+    public void dropView() {
+        mCompositeDisposable.clear();
+        mView = null;
+    }
+}

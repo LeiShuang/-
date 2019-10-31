@@ -27,7 +27,7 @@ public abstract class BaseFragment extends DaggerFragment implements BaseView{
 
     private Unbinder mUnbinder;
 
-
+    protected com.gyf.barlibrary.ImmersionBar immersionBar;
 
 
     @Override
@@ -37,6 +37,7 @@ public abstract class BaseFragment extends DaggerFragment implements BaseView{
         initVariables();
         handleArguments();
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -69,6 +70,10 @@ public abstract class BaseFragment extends DaggerFragment implements BaseView{
     public void onDestroy() {
         super.onDestroy();
         mUnbinder.unbind();
+
+        if (immersionBar != null && immersionEnabled()) {
+            immersionBar.destroy();
+        }
     }
 
 
@@ -120,6 +125,32 @@ public abstract class BaseFragment extends DaggerFragment implements BaseView{
      */
     protected boolean immersionEnabled() {
         return false;
+    }
+
+    protected void immersionInit(){
+        if (immersionEnabled()) {
+            immersionBar = com.gyf.barlibrary.ImmersionBar.with(this);
+            immersionBar
+                    .navigationBarWithKitkatEnable(false)
+                    .init();
+        }
+    };
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (immersionEnabled()) {
+            immersionInit();
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+
+        if (!hidden && getUserVisibleHint() && immersionEnabled()) {
+            immersionInit();
+        }
     }
 
     /**

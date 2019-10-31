@@ -1,0 +1,279 @@
+package com.zfsoft.zfsoft_product.modules.home;
+
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.Toast;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.gyf.barlibrary.ImmersionBar;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.vondear.rxtool.view.RxToast;
+import com.youth.banner.Banner;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseFragment;
+import com.zfsoft.zfsoft_product.common.Config;
+import com.zfsoft.zfsoft_product.di.ActivityScoped;
+import com.zfsoft.zfsoft_product.entity.BannerBean;
+import com.zfsoft.zfsoft_product.utils.GlideImageLoader;
+import com.zfsoft.zfsoft_product.utils.SizeUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+
+/**
+ * 创建日期：2018/12/24 on 10:54
+ * 描述:
+ * 作者:Ls
+ */
+@ActivityScoped
+public class HomeFragment extends BaseFragment implements HomeContract.View {
+
+
+    @Inject
+    HomePresenter mHomePresenter;
+
+    @BindView(R.id.rv_home)
+    RecyclerView mRvHome;
+    @BindView(R.id.frame_home)
+    FrameLayout mFrameHome;
+    @BindView(R.id.refresh_home)
+    RefreshLayout mRefreshHome;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
+    private int bannerHeight;
+    private List<MultipleItem> mItemList = new ArrayList<>();
+    private List<String> mImages = new ArrayList<>();
+    private HomeAdapter mAdapter;
+    private Banner mBanner;
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.fragment_home;
+    }
+
+    @Override
+    protected void initVariables() {
+
+    }
+
+    @Inject
+    public HomeFragment() {
+
+    }
+
+    @Override
+    protected void handleBundle(Bundle bundle) {
+
+    }
+
+    @Override
+    protected void operateViews(View view) {
+        mToolbar.setTitle("");
+        ImmersionBar.setTitleBar(getActivity(), mToolbar);
+
+//        initBannerData();
+        initData();
+        GridLayoutManager manager = new GridLayoutManager(getContext(), 6);
+        mRvHome.setLayoutManager(manager);
+        mAdapter = new HomeAdapter(getContext(), mItemList, new ItemRecyclerClickListener() {
+            @Override
+            public void onRecyclerItemClick(int position) {
+                //位置 0-5
+                Toast.makeText(getActivity(), "onRecyclerItemClick: 位置："+position, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onRecyclerItemInItemClick(int position) {
+                //位置 0-5
+                Toast.makeText(getActivity(), "onRecyclerItemInItemClick: 子控件位置："+position, Toast.LENGTH_SHORT).show();
+            }
+        });
+        mAdapter.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
+                int type = mItemList.get(position).getItemType();
+                if(type == MultipleItem.TEXT){
+                    return MultipleItem.TEXT_SPAN_SIZE;
+                }else if(type == MultipleItem.IMG_SIX){
+                    return MultipleItem.IMG_SIX_SPAN_SIZE;
+                }else if(type == MultipleItem.IMG_SCROLL){
+                    return MultipleItem.IMG_SCROLL_SPAN_SIZE;
+                }else {
+                    return MultipleItem.IMG_SINGLE_SPAN_SIZE;
+                }
+            }
+        });
+        mAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
+        mRvHome.addItemDecoration(new ItemSpaceDecoration(SizeUtils.dp2px(8,getContext())));
+        mRvHome.setAdapter(mAdapter);
+
+        addHeaderView();
+
+        //初始化数据
+        mHomePresenter.getBannerList("C5FCEC7318A311E9A7B300E04C12991C","tgcc");
+    }
+
+
+    private void newData() {
+    }
+
+    //给RecyclerView添加头布局
+    private void addHeaderView() {
+        View mHeaderView = LayoutInflater.from(getActivity()).inflate(R.layout.home_header_banner,(ViewGroup) mRvHome.getParent(),false);
+        mBanner = mHeaderView.findViewById(R.id.home_banner);
+        mBanner.setImages(mImages)
+                .setImageLoader(new GlideImageLoader())
+                .setDelayTime(3000)
+                .start();
+        mAdapter.addHeaderView(mHeaderView,-2);
+        ViewGroup.LayoutParams bannerParams = mBanner.getLayoutParams();
+        bannerHeight = bannerParams.height  - ImmersionBar.getStatusBarHeight(getActivity());
+    }
+
+    /*
+    * 初始化假数据
+    * */
+    private void initData() {
+
+        MultipleItem.TitleEntity titleEntity = new MultipleItem.TitleEntity();
+        titleEntity.setTitle("试用新品");
+        MultipleItem multipleItem = new MultipleItem(MultipleItem.TEXT,MultipleItem.TEXT_SPAN_SIZE,titleEntity);
+        mItemList.add(multipleItem);
+
+        for (int i = 0; i < 6; i++) {
+            MultipleItem.SixImgEntity sixImgEntity = new MultipleItem.SixImgEntity();
+            sixImgEntity.setImgUrl("http://dpic.tiankong.com/a6/rz/QJ8813728866.jpg");
+            sixImgEntity.setPrice("100");
+            MultipleItem multipleItemSix = new MultipleItem(MultipleItem.IMG_SIX,MultipleItem.IMG_SIX_SPAN_SIZE,sixImgEntity);
+            mItemList.add(multipleItemSix);
+        }
+
+        MultipleItem.TitleEntity titleEntityTwo = new MultipleItem.TitleEntity();
+        titleEntityTwo.setTitle("试用达人");
+        MultipleItem multipleItemTwo = new MultipleItem(MultipleItem.TEXT,MultipleItem.TEXT_SPAN_SIZE,titleEntityTwo);
+        mItemList.add(multipleItemTwo);
+
+        MultipleItem.ScrollImgListEntity scrollImgListEntity = new MultipleItem.ScrollImgListEntity();
+        List<MultipleItem.ScrollImgListEntity.ScrollImgEntity> scrollImgEntities = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            MultipleItem.ScrollImgListEntity.ScrollImgEntity scrollImgEntity = new MultipleItem.ScrollImgListEntity.ScrollImgEntity();
+            scrollImgEntity.setFansNum("256");
+            scrollImgEntity.setHeadUrl("http://dpic.tiankong.com/a6/rz/QJ8813728866.jpg");
+            scrollImgEntity.setName("嘻嘻");
+            scrollImgEntity.setReportNum("120");
+            scrollImgEntities.add(scrollImgEntity);
+        }
+        scrollImgListEntity.setList(scrollImgEntities);
+        MultipleItem multipleItemScroll = new MultipleItem(MultipleItem.IMG_SCROLL,MultipleItem.IMG_SCROLL_SPAN_SIZE,scrollImgListEntity);
+        mItemList.add(multipleItemScroll);
+
+        MultipleItem.TitleEntity titleEntityThree = new MultipleItem.TitleEntity();
+        titleEntityThree.setTitle("试用报告");
+        MultipleItem multipleItemThree = new MultipleItem(MultipleItem.TEXT,MultipleItem.TEXT_SPAN_SIZE,titleEntityThree);
+        mItemList.add(multipleItemThree);
+
+
+        for (int i = 0; i < 10; i++) {
+
+            MultipleItem.SingleImgEntity singleImgEntity = new MultipleItem.SingleImgEntity();
+            singleImgEntity.setHeadUrl("http://dpic.tiankong.com/a6/rz/QJ8813728866.jpg");
+            singleImgEntity.setUserUrl("http://dpic.tiankong.com/a6/rz/QJ8813728866.jpg");
+            singleImgEntity.setContent("春江水暖，岁月静好");
+            singleImgEntity.setName("哈哈");
+            singleImgEntity.setThumbUpNum("1024");
+            MultipleItem multipleItemSingle = new MultipleItem(MultipleItem.IMG_SINGLE,MultipleItem.IMG_SINGLE_SPAN_SIZE,singleImgEntity);
+            mItemList.add(multipleItemSingle);
+        }
+
+    }
+
+    private void initBannerData(){
+        mImages.add("http://desk.zol.com.cn/showpic/1024x768_63850_14.html");
+        mImages.add("http://dpic.tiankong.com/a6/rz/QJ8813728866.jpg");
+        mImages.add("http://dpic.tiankong.com/wt/ap/QJ9105410812.jpg");
+        mImages.add("http://dpic.tiankong.com/fx/g1/QJ6846644164.jpg");
+    }
+
+    @Override
+    protected void initListener() {
+
+
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Toast.makeText(getActivity(), "点击事件：" + position, Toast.LENGTH_SHORT).show();
+                //试用新品position （0）1-6;
+                //试用达人 (7) recycleview 8
+                // 试用报告 （9）从10开始
+            }
+        });
+
+        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                //position 同上
+                Toast.makeText(getContext(), "子控件的点击:" + position, Toast.LENGTH_SHORT).show();
+                // 0 7 9 是各自的 查看更多
+            }
+        });
+
+
+        mRefreshHome.setOnRefreshListener(new OnRefreshListener(){
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+
+                RefreshState state = refreshLayout.getState();
+                refreshLayout.finishRefresh(2000);
+                mItemList.clear();
+                initData();
+                mAdapter.setNewData(mItemList);
+            }
+
+        });
+
+        mRefreshHome.setOnLoadMoreListener(null);
+    }
+
+    @Override
+    public void initPresenter() {
+        mHomePresenter.takeView(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mHomePresenter.dropView();
+    }
+
+    @Override
+    public void getBannerListSuccess(List<BannerBean> list) {
+
+        List<String> imgs = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            imgs.add(list.get(i).getHftplj());
+        }
+
+        mBanner.update(imgs);
+    }
+
+    @Override
+    public void getBannerListFailure(String errorMsy) {
+        RxToast.showToast(errorMsy);
+    }
+}

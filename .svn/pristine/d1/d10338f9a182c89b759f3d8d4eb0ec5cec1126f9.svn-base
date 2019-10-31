@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="@dimen/fivteen_padding">
+    <!--礼品-->
+    <ImageView
+        android:id="@+id/iv_gift"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:src="@mipmap/ico_home_gift"
+        android:layout_marginRight="@dimen/ten_padding"
+        android:layout_weight="1"/>
+<!--分数-->
+    <ImageView
+        android:id="@+id/iv_scroll"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="@dimen/ten_padding"
+       android:src="@mipmap/ico_home_scroll"
+        android:layout_weight="1"/>
+</LinearLayout>

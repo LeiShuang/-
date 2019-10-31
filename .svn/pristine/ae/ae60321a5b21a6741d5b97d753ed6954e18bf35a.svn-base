@@ -1,0 +1,265 @@
+package com.zfsoft.zfsoft_product.modules.personal;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.gyf.barlibrary.ImmersionBar;
+import com.vondear.rxtool.RxActivityTool;
+import com.vondear.rxtool.RxLogTool;
+import com.vondear.rxtool.RxSPTool;
+import com.vondear.rxtool.view.RxToast;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseFragment;
+import com.zfsoft.zfsoft_product.common.Config;
+import com.zfsoft.zfsoft_product.di.ActivityScoped;
+import com.zfsoft.zfsoft_product.entity.SignBean;
+import com.zfsoft.zfsoft_product.entity.UserBean;
+import com.zfsoft.zfsoft_product.modules.login.LoginActivity;
+import com.zfsoft.zfsoft_product.modules.personal.integral_mall.IntegralMallActivity;
+import com.zfsoft.zfsoft_product.modules.personal.message.MessageActivity;
+import com.zfsoft.zfsoft_product.modules.personal.my_collection.MyCollectionActivity;
+import com.zfsoft.zfsoft_product.modules.personal.my_report.MyReportActivity;
+import com.zfsoft.zfsoft_product.modules.personal.my_try.MyTryActivity;
+import com.zfsoft.zfsoft_product.modules.personal.setting.SettingActivity;
+import com.zfsoft.zfsoft_product.utils.DbHelper;
+
+import java.util.HashMap;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.wechat.friends.Wechat;
+import de.hdodenhof.circleimageview.CircleImageView;
+
+
+/**
+ * 创建日期：2018/12/24 on 10:55
+ * 描述:
+ * 作者:Ls
+ */
+@ActivityScoped
+public class PersonalFragment extends BaseFragment implements View.OnClickListener ,PersonalContract.View{
+
+    @Inject
+    PersonalPresenter mPersonalPresenter;
+
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @BindView(R.id.iv_setting)
+    ImageView mIvSetting;//进入设置界面
+    @BindView(R.id.iv_message)
+    ImageView mIvMessage;// 点击进入消息界面
+    @BindView(R.id.tv_sign)
+    TextView mTvSign;//签到
+
+    @BindView(R.id.civ_user_img)
+    CircleImageView mUserImg;
+    @BindView(R.id.tv_user_name)
+    TextView mTvUserName;//用户名
+    @BindView(R.id.tv_my_content)
+    TextView mTvMySignContent;//我的签名
+
+    @BindView(R.id.rl_concern)
+    RelativeLayout mRlConcern;//我的关注布局
+    @BindView(R.id.rl_fans)
+    RelativeLayout mRlFans;//我的粉丝布局
+    @BindView(R.id.rl_integral)
+    RelativeLayout mRlIntegral;//我的积分布局
+    @BindView(R.id.tv_concern_num)
+    TextView mTvMyConcern;//我的关注数量
+    @BindView(R.id.tv_fans_num)
+    TextView mTvMyFans;//我的粉丝数量
+    @BindView(R.id.tv_integral_num)
+    TextView mTvMyIntegral;//我的积分数量
+
+    @BindView(R.id.rl_my_trial)
+    RelativeLayout mRlMyTrial;//我的试用
+    @BindView(R.id.rl_my_collection)
+    RelativeLayout mRlMyCollection;//我的收藏
+    @BindView(R.id.rl_my_report)
+    RelativeLayout mRlMyReport;//我的报告
+
+    @BindView(R.id.rl_tell_us)
+    RelativeLayout mRlTellUs;//留言反馈
+    @BindView(R.id.rl_about_us)
+    RelativeLayout mRlAboutUs;//关于我们
+
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.fragment_personal;
+    }
+
+    @Override
+    protected void initVariables() {
+
+    }
+
+    @Inject
+    public PersonalFragment() {
+
+    }
+
+    @Override
+    protected void handleBundle(Bundle bundle) {
+
+    }
+
+    @Override
+    protected void operateViews(View view) {
+        mToolbar.setTitle("");
+        ImmersionBar.setTitleBar(getActivity(), mToolbar);
+        if(DbHelper.checkUserIsLogin(mContext)){
+            mRlConcern.setVisibility(View.VISIBLE);
+            mRlFans.setVisibility(View.VISIBLE);
+            mRlIntegral.setVisibility(View.VISIBLE);
+            mTvMySignContent.setVisibility(View.VISIBLE);
+
+            mPersonalPresenter.getUserInfo(Config.HSK,DbHelper.getUserId(mContext));
+        }else {
+            //用户未登录显示的界面
+            mRlConcern.setVisibility(View.GONE);
+            mRlFans.setVisibility(View.GONE);
+            mRlIntegral.setVisibility(View.GONE);
+            mTvMySignContent.setVisibility(View.GONE);
+            mTvUserName.setText("登录/注册");
+            mTvUserName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    RxActivityTool.skipActivity(mContext, LoginActivity.class);
+                }
+            });
+
+        }
+
+    }
+
+    @Override
+    protected void initListener() {
+        mTvSign.setOnClickListener(this);
+        mIvSetting.setOnClickListener(this);
+
+        mIvMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //消息界面
+                RxActivityTool.skipActivity(getContext(), MessageActivity.class);
+            }
+        });
+
+        mRlIntegral.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(DbHelper.checkUserIsLogin(mContext)){
+                    //积分商城
+                    RxActivityTool.skipActivity(getContext(), IntegralMallActivity.class);
+                }else {
+                    RxToast.showToast("请先登录");
+                }
+
+            }
+        });
+
+        mRlMyTrial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //我的试用
+                RxActivityTool.skipActivity(getContext(), MyTryActivity.class);
+            }
+        });
+
+        mRlMyCollection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(DbHelper.checkUserIsLogin(mContext)){
+                    //我的收藏
+                    RxActivityTool.skipActivity(getContext(), MyCollectionActivity.class);
+                }else {
+                    RxToast.showToast("请先登录");
+                }
+
+            }
+        });
+
+        mRlMyReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(DbHelper.checkUserIsLogin(mContext)){
+                    //我的报告
+                    RxActivityTool.skipActivity(getContext(), MyReportActivity.class);
+                }else {
+                    RxToast.showToast("请先登录");
+                }
+
+            }
+        });
+    }
+
+    @Override
+    public void initPresenter() {
+        mPersonalPresenter.takeView(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+       int id = v.getId();
+       switch (id){
+           case R.id.tv_sign://签到
+               mPersonalPresenter.startSign(Config.HSK, DbHelper.getUserId(getContext()));
+               break;
+           case R.id.iv_setting://设置
+               RxActivityTool.skipActivity(getContext(), SettingActivity.class);
+               break;
+       }
+    }
+
+
+    @Override
+    public void getSignResultSuccess(SignBean signBean) {
+        //(1:签到成功，2：签到失败,3：已签到)
+        if(signBean.getMsgtype().equals("1")){
+            RxToast.showToast("签到成功");
+            mTvSign.setText("已签到");
+        }else if(signBean.getMsgtype().equals("2")){
+            RxToast.showToast("签到失败");
+        }else {
+            mTvSign.setText("已签到");
+        }
+    }
+
+    @Override
+    public void getSignResultFailure(String errorMsg) {
+        RxToast.showToast(errorMsg);
+    }
+
+    @Override
+    public void getUserInfoSuccess(UserBean userBean) {
+        mTvMyConcern.setText(userBean.getMyfocus());
+        mTvMyFans.setText(userBean.getMyfans());
+        mTvMyIntegral.setText(userBean.getMyscores());
+        mTvUserName.setText(userBean.getMyname());
+        mTvMySignContent.setText(userBean.getMyintroduction());
+        Glide.with(mContext).load(userBean.getMyimg()).into(mUserImg);
+    }
+
+    @Override
+    public void getUserInfoFailure(String errorMsg) {
+        RxToast.showToast(errorMsg);
+    }
+}

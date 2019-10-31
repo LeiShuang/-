@@ -1,0 +1,126 @@
+package com.zfsoft.zfsoft_product.modules.home;
+
+
+import android.content.Context;
+import android.graphics.Paint;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.tencent.liteav.demo.common.utils.DensityUtil;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.modules.report.StaggeredItemDecoration;
+import com.zfsoft.zfsoft_product.utils.ImageLoaderHelper;
+import com.zfsoft.zfsoft_product.utils.SizeUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 创建日期：2019/1/3 on 15:18
+ * 描述:首页Adapter
+ * 作者:Ls
+ */
+public class HomeAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseViewHolder> {
+
+    private ItemRecyclerClickListener itemRecyclerClickListener;
+    private itemReportClickListener itemReportClickListener;
+
+    public HomeAdapter(Context context, List data,ItemRecyclerClickListener itemRecyclerClickListener,itemReportClickListener itemReportClickListener) {
+        super(data);
+        this.itemRecyclerClickListener = itemRecyclerClickListener;
+        this.itemReportClickListener = itemReportClickListener;
+        addItemType(MultipleItem.TEXT, R.layout.item_title_text);
+        addItemType(MultipleItem.IMG_SIX, R.layout.item_image_six);
+        addItemType(MultipleItem.IMG_SCROLL, R.layout.item_image_scroll);
+//        addItemType(MultipleItem.IMG_SINGLE, R.layout.item_image_single);
+        addItemType(MultipleItem.IMG_SINGLE, R.layout.item_home_report);
+    }
+
+
+    @Override
+    protected void convert(BaseViewHolder helper, MultipleItem item) {
+        switch (item.getItemType()){
+            case MultipleItem.TEXT:
+                helper.setText(R.id.tv_item_title,item.getTitleEntity().getTitle());
+                helper.addOnClickListener(R.id.tv_see_more);//查看更多的点击事件
+                if(item.getTitleEntity().getTitle().equals("试用达人")){
+                    ((TextView)helper.getView(R.id.tv_see_more)).setVisibility(View.INVISIBLE);
+                }else {
+                    ((TextView)helper.getView(R.id.tv_see_more)).setVisibility(View.VISIBLE);
+                }
+                break;
+            case MultipleItem.IMG_SIX:
+                if(item.getSixImgEntity().getPrice() != null){
+                    helper.setText(R.id.tv_price_one,"¥" + item.getSixImgEntity().getPrice());
+                }
+                TextView tvPrice = helper.getView(R.id.tv_price_one);
+                tvPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);
+                if(item.getSixImgEntity().getImgUrl() != null){
+                    ImageLoaderHelper.loadImage(mContext,helper.getView(R.id.iv_head_one),item.getSixImgEntity().getImgUrl());
+                }
+
+                TextView tv_apply = helper.getView(R.id.tv_apply_one);
+                if("0".equals(item.getSixImgEntity().getState())){
+                    helper.setText(R.id.tv_apply_one,"申请中");
+                    tv_apply.setTextColor(mContext.getResources().getColor(R.color.record_settings_tip));
+                    tv_apply.setBackgroundResource(R.drawable.background_text_already_apply);
+                }else if("1".equals(item.getSixImgEntity().getState())){
+                    helper.setText(R.id.tv_apply_one,"申请成功");
+                    tv_apply.setTextColor(mContext.getResources().getColor(R.color.record_settings_tip));
+                    tv_apply.setBackgroundResource(R.drawable.background_text_already_apply);
+                }else {
+                    helper.setText(R.id.tv_apply_one,"申请");
+                    tv_apply.setTextColor(mContext.getResources().getColor(R.color.apply_color));
+                    tv_apply.setBackgroundResource(R.drawable.background_text_apply);
+                }
+                helper.addOnClickListener(R.id.tv_apply_one);//申请的点击事件设置
+                break;
+            case MultipleItem.IMG_SCROLL:
+
+                RecyclerView recyclerView = helper.getView(R.id.rv_scroll);
+                recyclerView.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false));
+                HorizontalScrollAdapter adapter = new HorizontalScrollAdapter(mContext,item.getScrollImgListEntity().getList(),itemRecyclerClickListener);
+                recyclerView.setAdapter(adapter);
+                break;
+            case MultipleItem.IMG_SINGLE:
+
+                RecyclerView recyclerViewReport = helper.getView(R.id.rv_home_report);
+                recyclerViewReport.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+                recyclerViewReport.addItemDecoration(new StaggeredItemDecoration(SizeUtils.dp2px(8,mContext)));
+                ReportAdapter reportAdapter = new ReportAdapter();
+                recyclerViewReport.setAdapter(reportAdapter);
+                reportAdapter.setNewData(item.getSingleImageList().getList());
+                reportAdapter.setOnItemClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                        itemReportClickListener.onRecyclerItemClick(position);
+                    }
+                });
+//                helper.setText(R.id.tv_user_name,item.getSingleImgEntity().getName());
+//                helper.setText(R.id.tv_content,item.getSingleImgEntity().getContent());
+//                helper.setText(R.id.tv_user_name,item.getSingleImgEntity().getName());
+//                helper.setText(R.id.tv_thumb_up_number,item.getSingleImgEntity().getThumbUpNum());
+//
+//                if(item.getSingleImgEntity().getHeadUrl() != null){
+//                    ImageLoaderHelper.loadImage(mContext,helper.getView(R.id.iv_single),item.getSingleImgEntity().getHeadUrl());
+//                }
+//
+//                if(item.getSingleImgEntity().getUserUrl() != null){
+//                    ImageLoaderHelper.loadHeadImage(mContext,helper.getView(R.id.civ_user_img),item.getSingleImgEntity().getUserUrl());
+//                }
+
+                break;
+        }
+    }
+}

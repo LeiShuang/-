@@ -1,0 +1,35 @@
+package com.zfsoft.zfsoft_product.modules.report.write;
+
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.vondear.rxtool.RxPictureTool;
+import com.zfsoft.zfsoft_product.R;
+
+/**
+ * 创建日期：2019/1/19 on 14:54
+ * 描述:选择照片fragment
+ * 作者:Ls
+ */
+public class SelectPicturesFragment extends Fragment {
+    public static SelectPicturesFragment newInstance() {
+        
+        Bundle args = new Bundle();
+        
+        SelectPicturesFragment fragment = new SelectPicturesFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        return inflater.inflate(R.layout.fragment_picture,container,false);
+
+    }
+}

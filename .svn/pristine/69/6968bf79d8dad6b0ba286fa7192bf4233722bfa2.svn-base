@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:paddingBottom="@dimen/ten_padding"
+    android:paddingLeft="@dimen/common_margin_left"
+    android:paddingRight="@dimen/common_margin_left"
+    android:paddingTop="@dimen/ten_padding">
+    <!--头像-->
+    <ImageView
+        android:id="@+id/iv_father_pic"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_alignParentLeft="true"
+        android:background="@color/try_use_top_color"
+        android:scaleType="centerCrop" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/iv_father_pic"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_father_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/five_padding"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@mipmap/ico_not_star"
+            android:gravity="center_vertical"
+            tools:text="32" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/common_padding_top"
+            android:layout_toLeftOf="@+id/tv_father_star"
+            android:orientation="vertical">
+            <!--姓名-->
+            <TextView
+                android:id="@+id/tv_report_father_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/report_detail_time"
+                android:textSize="@dimen/font_normal"
+                tools:text="姓名" />
+
+            <TextView
+                android:id="@+id/tv_father_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:paddingBottom="@dimen/common_padding_top"
+                android:paddingRight="@dimen/common_padding_top"
+                android:paddingTop="@dimen/common_padding_top"
+                tools:text="这是评论哦哈哈哈哈哈萨达萨达撒多萨达撒多萨达实打实大的" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_discuss_father_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/report_detail_time"
+                    android:textSize="@dimen/font_normal"
+                    tools:text="2天前" />
+                <!--回复-->
+                <TextView
+                    android:id="@+id/tv_reply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/report_reply_margin_left"
+                    android:text="回复"
+                    android:textColor="@color/report_detail_time"
+                    android:textSize="@dimen/font_normal" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

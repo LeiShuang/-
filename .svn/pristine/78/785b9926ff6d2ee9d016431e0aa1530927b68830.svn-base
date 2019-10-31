@@ -1,0 +1,101 @@
+package com.zfsoft.zfsoft_product.entity;
+
+import java.util.List;
+
+/**
+ * 创建日期：2019/1/8 on 15:58
+ * 描述:报告详情实体
+ * 作者:Ls
+ */
+public class ReportDetailEntity {
+    private List<String> bannerUrl;//banner图片地址
+    private String reportTitle;//标题
+    private String personalPhotoUrl;//头像url
+    private String personalName;//账号姓名
+    private String personalSpeak;//个性签名
+    private String reportText;//报告正文
+    private String  time;//日期
+    private String startNumer;//点赞数量
+    private String discussNumber;//评论数
+    private List<DiscussEntity> faterDiscuss;//评论模块
+
+    public List<String> getBannerUrl() {
+        return bannerUrl;
+    }
+
+    public void setBannerUrl(List<String> bannerUrl) {
+        this.bannerUrl = bannerUrl;
+    }
+
+    public String getReportTitle() {
+        return reportTitle;
+    }
+
+    public void setReportTitle(String reportTitle) {
+        this.reportTitle = reportTitle;
+    }
+
+    public String getPersonalPhotoUrl() {
+        return personalPhotoUrl;
+    }
+
+    public void setPersonalPhotoUrl(String personalPhotoUrl) {
+        this.personalPhotoUrl = personalPhotoUrl;
+    }
+
+    public String getPersonalName() {
+        return personalName;
+    }
+
+    public void setPersonalName(String personalName) {
+        this.personalName = personalName;
+    }
+
+    public String getPersonalSpeak() {
+        return personalSpeak;
+    }
+
+    public void setPersonalSpeak(String personalSpeak) {
+        this.personalSpeak = personalSpeak;
+    }
+
+    public String getReportText() {
+        return reportText;
+    }
+
+    public void setReportText(String reportText) {
+        this.reportText = reportText;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getStartNumer() {
+        return startNumer;
+    }
+
+    public void setStartNumer(String startNumer) {
+        this.startNumer = startNumer;
+    }
+
+    public String getDiscussNumber() {
+        return discussNumber;
+    }
+
+    public void setDiscussNumber(String discussNumber) {
+        this.discussNumber = discussNumber;
+    }
+
+    public List<DiscussEntity> getFaterDiscuss() {
+        return faterDiscuss;
+    }
+
+    public void setFaterDiscuss(List<DiscussEntity> faterDiscuss) {
+        this.faterDiscuss = faterDiscuss;
+    }
+}

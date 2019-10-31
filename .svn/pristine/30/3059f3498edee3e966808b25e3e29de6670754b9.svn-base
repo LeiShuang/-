@@ -1,0 +1,123 @@
+package com.zfsoft.zfsoft_product.modules.report;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.SearchView;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ImageView;
+
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseFragment;
+import com.zfsoft.zfsoft_product.di.ActivityScoped;
+import com.zfsoft.zfsoft_product.modules.report.report_child.ReportViewPagerFragment;
+import com.zfsoft.zfsoft_product.modules.report.submit_report.SubmitReportActivity;
+import com.zfsoft.zfsoft_product.widget.MenuPopwindow;
+import com.zfsoft.zfsoft_product.widget.MenuPopwindowinfo;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+
+/**
+ * 创建日期：2018/12/24 on 10:55
+ * 描述:
+ * 作者:Ls
+ */
+@ActivityScoped
+public class ReportFragment extends BaseFragment implements View.OnClickListener, AdapterView.OnItemClickListener {
+
+
+    @BindView(R.id.report_add)
+    ImageView mReportAdd;
+    @BindView(R.id.report_search)
+    SearchView mReportSearch;
+    @BindView(R.id.report_tabLayout)
+    TabLayout mReportTabLayout;
+    @BindView(R.id.report_view_pager)
+    ViewPager mReportViewPager;
+    private List<ReportViewPagerFragment> fragmentLists;
+    private String[] tabTexts = new String[]{"热门测评","美妆","个护家清","零食"};
+    private String[] addTexts = {"发布报告"};
+    private int[] icons = {R.mipmap.ic_write_report};
+    private List<MenuPopwindowinfo> mPopDatas;
+    private MenuPopwindow mMenuPopwindow;
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.fragment_report;
+    }
+
+    @Inject
+    public ReportFragment() {
+
+    }
+
+    @Override
+    protected void initVariables() {
+        fragmentLists = new ArrayList<>();
+        for (int i = 0; i < tabTexts.length; i++) {
+            fragmentLists.add(ReportViewPagerFragment.newInstance());
+        }
+
+        mPopDatas = new ArrayList<>();
+        for (int i = 0; i <addTexts.length ; i++) {
+            MenuPopwindowinfo menuInfo = new MenuPopwindowinfo();
+            menuInfo.setResId(icons[i]);
+            menuInfo.setText(addTexts[i]);
+            mPopDatas.add(menuInfo);
+        }
+    }
+
+    @Override
+    protected void handleBundle(Bundle bundle) {
+
+    }
+
+    @Override
+    protected void operateViews(View view) {
+        mMenuPopwindow = new MenuPopwindow(getActivity(),mPopDatas);
+        FragmentManager fm = ReportFragment.this.getChildFragmentManager();
+        ReportViewPagerAdapter adapter = new ReportViewPagerAdapter(fm,tabTexts,fragmentLists);
+        mReportViewPager.setAdapter(adapter);
+        mReportTabLayout.setupWithViewPager(mReportViewPager);
+    }
+
+    @Override
+    protected void initListener() {
+        mReportAdd.setOnClickListener(this);
+    }
+
+    @Override
+    public void initPresenter() {
+
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        int key = v.getId();
+        if (key == R.id.report_add){
+            mMenuPopwindow.setOnItemClick(this);
+            mMenuPopwindow.showPopupWindow(mReportAdd);
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (position == 0){
+            //发布报告
+            mMenuPopwindow.dismiss();
+           mContext.startActivity(new Intent(getActivity(), SubmitReportActivity.class));
+        }/*else if (position == 1){
+            mMenuPopwindow.dismiss();
+            RxToast.showToast("我的草稿");
+        }*/
+    }
+}

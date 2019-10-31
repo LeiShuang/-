@@ -1,0 +1,23 @@
+package com.zfsoft.zfsoft_product.modules.report.report_detail;
+
+import com.zfsoft.zfsoft_product.di.FragmentScoped;
+import com.zfsoft.zfsoft_product.modules.report.report_child.ReportViewPagerFragment;
+
+import dagger.Module;
+import dagger.android.ContributesAndroidInjector;
+
+/**
+ * 创建日期：2019/1/8 on 19:28
+ * 描述:
+ * 作者:Ls
+ */
+@Module
+public abstract class ReportDetailModule {
+    @FragmentScoped
+    @ContributesAndroidInjector
+    abstract ReportDetailFragment mReportDetailFragment();
+
+    @FragmentScoped
+    @ContributesAndroidInjector
+    abstract ReportViewPagerFragment mReportViewPagerFragment();
+}

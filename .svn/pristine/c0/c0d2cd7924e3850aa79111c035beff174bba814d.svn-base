@@ -1,0 +1,33 @@
+package com.zfsoft.zfsoft_product.modules.home;
+
+
+import android.content.Context;
+
+import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.zfsoft.zfsoft_product.R;
+
+import java.util.List;
+
+/**
+ * 创建日期：2019/1/3 on 15:18
+ * 描述:首页Adapter
+ * 作者:Ls
+ */
+public class HomeAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseViewHolder> {
+
+    public HomeAdapter(Context context, List data) {
+        super(data);
+        addItemType(MultipleItem.TEXT, R.layout.item_title_text);
+        addItemType(MultipleItem.IMG_SIX, R.layout.item_image_six);
+        addItemType(MultipleItem.IMG_SCROLL, R.layout.item_image_scroll);
+        addItemType(MultipleItem.IMG_SINGLE, R.layout.item_image_single);
+    }
+
+
+    @Override
+    protected void convert(BaseViewHolder helper, MultipleItem item) {
+
+    }
+}

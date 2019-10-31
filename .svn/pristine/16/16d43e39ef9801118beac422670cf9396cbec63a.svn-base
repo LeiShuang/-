@@ -1,0 +1,255 @@
+package com.zfsoft.zfsoft_product.modules.report.report_detail;
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.ColorUtils;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.gyf.barlibrary.ImmersionBar;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.vondear.rxtool.view.RxToast;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseFragment;
+import com.zfsoft.zfsoft_product.di.ActivityScoped;
+import com.zfsoft.zfsoft_product.entity.ReportDetailEntity;
+import com.zfsoft.zfsoft_product.entity.ReportInfo;
+import com.zfsoft.zfsoft_product.utils.GlideImageLoader;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+
+/**
+ * 创建日期：2019/1/8 on 17:27
+ * 描述:报告详情Fragment
+ * 作者:Ls
+ */
+@ActivityScoped
+public class ReportDetailFragment extends BaseFragment implements View.OnClickListener {
+    @BindView(R.id.rv_report_detail)
+    RecyclerView mRvReportDetail;
+    @BindView(R.id.refresh_report)
+    SmartRefreshLayout mRefreshReport;
+    @BindView(R.id.iv_report_detail_back)
+    ImageView mIvReportDetailBack;
+    @BindView(R.id.iv_report_detail_share)
+    ImageView mIvReportDetailShare;
+    @BindView(R.id.iv_report_detail_like)
+    ImageView mIvReportDetailLike;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    private List<String> mImages = new ArrayList<>();
+    private LinearLayoutManager mLayoutManager;
+    private ReportDetailAdapter mAdapter;
+    private int bannerHeight;
+    private List<ReportDetailEntity> mData;
+    private ReportInfo mInfo;
+    private Banner mBanner;
+
+    public static ReportDetailFragment newInstance() {
+        Bundle args = new Bundle();
+        ReportDetailFragment fragment = new ReportDetailFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Inject
+    public ReportDetailFragment() {
+
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.fragment_report_detail;
+    }
+
+    @Override
+    protected void initVariables() {
+        //初始化数据
+        initData();
+    }
+
+    @Override
+    protected void handleBundle(Bundle bundle) {
+
+    }
+
+    @Override
+    protected void operateViews(View view) {
+        //初始化ImmersionBar让ToolBar和状态栏不重叠
+        ImmersionBar.setTitleBar(getActivity(), mToolbar);
+        mLayoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
+        mRvReportDetail.setLayoutManager(mLayoutManager);
+        mAdapter = new ReportDetailAdapter(mData);
+        mAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
+        mRvReportDetail.setAdapter(mAdapter);
+        mAdapter.setNewData(mData);
+        addHeaderView();
+        addTextViewHolder();
+        addDiscussHeader();
+
+
+    }
+    //添加评论头
+    private void addDiscussHeader() {
+        View discussHeader  = LayoutInflater.from(getActivity()).inflate(R.layout.report_report_discuss_header,(ViewGroup)mRvReportDetail.getParent(),false);
+        mAdapter.addHeaderView(discussHeader,-1);
+    }
+
+    //添加正文
+    private void addTextViewHolder() {
+        View titleView = LayoutInflater.from(getActivity()).inflate(R.layout.report_detail_second_header,(ViewGroup) mRvReportDetail.getParent(),false);
+        TextView tvTitle = titleView.findViewById(R.id.tv_report_detail_title);
+        ImageView ivPhoto = titleView.findViewById(R.id.iv_report_detail_photo);
+        TextView tvName = titleView.findViewById(R.id.iv_report_name);
+        TextView tvPersonal = titleView.findViewById(R.id.iv_report_speak);
+        TextView tvContent = titleView.findViewById(R.id.report_detail_content);
+        TextView tvDiscussNumber = titleView.findViewById(R.id.tv_report_discuss);
+        TextView tvStarNumber = titleView.findViewById(R.id.tv_star);
+        tvTitle.setText(mInfo.getReportTitle());
+        tvName.setText(mInfo.getPersonalName());
+        tvPersonal.setText(mInfo.getPersonalSpeak());
+        tvContent.setText(mInfo.getReportText());
+        tvDiscussNumber.setText(mInfo.getDiscussNumber());
+        tvStarNumber.setText(mInfo.getStartNumer());
+        Glide.with(titleView.getContext()).load(mInfo.getPersonalPhotoUrl()).into(ivPhoto);
+        mAdapter.addHeaderView(titleView,-3);
+    }
+
+    private void addHeaderView() {
+        View mHeaderView = LayoutInflater.from(getActivity()).inflate(R.layout.home_header_banner,(ViewGroup) mRvReportDetail.getParent(),false);
+        mBanner = mHeaderView.findViewById(R.id.home_banner);
+        mBanner.setImages(mImages)
+                .setImageLoader(new GlideImageLoader())
+                .setBannerStyle(BannerConfig.NUM_INDICATOR)
+                .setDelayTime(5000)
+                .start();
+        mAdapter.addHeaderView(mHeaderView,-3);
+        ViewGroup.LayoutParams bannerParams = mBanner.getLayoutParams();
+        ViewGroup.LayoutParams toolBarParams = mToolbar.getLayoutParams();
+        bannerHeight = bannerParams.height - toolBarParams.height - ImmersionBar.getStatusBarHeight(getActivity());
+    }
+
+    private void initData() {
+        mData = new ArrayList<>();
+        mInfo = new ReportInfo();
+         mImages.add("http://dpic.tiankong.com/fx/g1/QJ6846644164.jpg");
+        mImages.add("http://dpic.tiankong.com/wt/ap/QJ9105410812.jpg");
+        mImages.add("http://dpic.tiankong.com/el/vl/QJ9104352858.jpg");
+        mImages.add("http://dpic.tiankong.com/a6/rz/QJ8813728866.jpg");
+        mInfo.setBannerUrl(mImages);
+        mInfo.setReportTitle("这是文章的标题");
+        mInfo.setPersonalName("张三爱上王麻子");
+        mInfo.setPersonalSpeak("好好学习天天想啥");
+        mInfo.setReportText("这是整嗷嗷的撒大所大所大所大所大所大撒大所大所大所大所大所多撒多撒多撒多撒大所多撒多撒多撒多");
+        mInfo.setTime("2019-01-10");
+        mInfo.setStartNumer("32");
+        mInfo.setDiscussNumber("1002");
+
+        for (int i = 0; i < 5; i++) {
+            ReportDetailEntity reportDetailEntity = new ReportDetailEntity(ReportDetailEntity.VIEW_ITEM_TYPE_FATHER);
+            reportDetailEntity.getDiscussFatherEntity().setDiscussContent("这是评论内容" + i);
+            reportDetailEntity.getDiscussFatherEntity().setDiscussStarNumber("" + i);
+            reportDetailEntity.getDiscussFatherEntity().setDiscussTime("2019-01-11");
+            reportDetailEntity.getDiscussFatherEntity().setFatherName("屈臣氏美白膏");
+            reportDetailEntity.getDiscussFatherEntity().setFatherPicUrl("http://tupian.qqw21.com/article/UploadPic/2016-4/201641121524755187.jpg");
+
+           mData.add(reportDetailEntity);
+            for (int j = 0; j < 3; j++) {
+                ReportDetailEntity reportDetailEntity2 = new ReportDetailEntity(ReportDetailEntity.VIEW_ITEM_TYPE_CHILD);
+                reportDetailEntity2.getDiscussChildEntity().setCommment("这是评论回复内容" + i);
+                mData.add(reportDetailEntity2);
+            }
+        }
+    }
+
+
+    @Override
+    protected void initListener() {
+        mIvReportDetailBack.setOnClickListener(this);
+        mIvReportDetailLike.setOnClickListener(this);
+        mIvReportDetailShare.setOnClickListener(this);
+        mRvReportDetail.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private int totalDy = 0;
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                totalDy += dy;
+                float alpha = totalDy / bannerHeight;
+                if (totalDy <= bannerHeight){
+                    //如果小于 滑动截止高度（Banner的高度 - ToolBar的高度 - 状态栏高度）
+                    mToolbar.setBackgroundColor(ColorUtils.blendARGB(Color.TRANSPARENT, ContextCompat.getColor(getContext(),R.color.try_use_top_color),alpha));
+                }else {
+                    mToolbar.setBackgroundColor(ColorUtils.blendARGB(Color.TRANSPARENT,ContextCompat.getColor(getContext(),R.color.try_use_top_color),1));
+                }
+            }
+        });
+
+        mRefreshReport.setOnRefreshListener(new OnRefreshListener(){
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+
+                RefreshState state = refreshLayout.getState();
+                if (state == RefreshState.PullDownToRefresh){
+                    mToolbar.setVisibility(View.GONE);
+                }
+                refreshLayout.finishRefresh(2000);
+                mData.clear();
+                initData();
+                mAdapter.setNewData(mData);
+                mToolbar.setVisibility(View.VISIBLE);
+            }
+
+        });
+    }
+
+    @Override
+    public void initPresenter() {
+
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        int key = v.getId();
+        if (key == R.id.iv_report_detail_back){
+            getActivity().finish();
+        }else if (key == R.id.iv_report_detail_like){
+            RxToast.showToast("点击了喜欢");
+        }else if (key == R.id.iv_report_detail_share){
+            RxToast.showToast("点击了分享");
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mBanner.startAutoPlay();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mBanner.stopAutoPlay();
+    }
+}

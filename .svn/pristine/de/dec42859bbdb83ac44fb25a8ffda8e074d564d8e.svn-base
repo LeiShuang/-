@@ -1,0 +1,88 @@
+package com.zfsoft.zfsoft_product.modules.personal.account_address;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.RelativeLayout;
+
+import com.vondear.rxtool.RxActivityTool;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseFragment;
+import com.zfsoft.zfsoft_product.modules.personal.account_address.add.NewAddAddressActivity;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+
+/**
+ * Created by ckw
+ * on 2019/1/19.
+ */
+public class AccountAddressFragment extends BaseFragment{
+
+    @BindView(R.id.rl_back)
+    RelativeLayout mRlBack;
+    @BindView(R.id.rl_add_address)
+    RelativeLayout mRlAddNewAddress;
+
+    @Inject
+    public AccountAddressFragment() {
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.fragment_account_address;
+    }
+
+    @Override
+    protected void initVariables() {
+
+    }
+
+    @Override
+    protected void handleBundle(Bundle bundle) {
+
+    }
+
+    @Override
+    protected void operateViews(View view) {
+
+    }
+
+    @Override
+    protected void initListener() {
+        mRlBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+
+        mRlAddNewAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RxActivityTool.skipActivity(getContext(), NewAddAddressActivity.class);
+            }
+        });
+    }
+
+    @Override
+    public void initPresenter() {
+
+    }
+
+    @Override
+    protected boolean immersionEnabled() {
+        return true;
+    }
+
+    @Override
+    protected void immersionInit() {
+        super.immersionInit();
+        if (immersionBar == null) {
+            return;
+        }
+        immersionBar.statusBarDarkFont(true);
+        immersionBar.statusBarColor(R.color.colorWhite)
+                .init();
+    }
+}

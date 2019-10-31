@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="F:\Demon\PersonalDevelop\TG\lib_tccommon\libs"><file name="LiteAVSDK_UGC_5.4.6097.aar" path="F:\Demon\PersonalDevelop\TG\lib_tccommon\libs\LiteAVSDK_UGC_5.4.6097.aar"/></source></dataSet><dataSet config="release"><source path="F:\Demon\PersonalDevelop\TG\lib_tccommon\src\release\jniLibs"/></dataSet></merger>

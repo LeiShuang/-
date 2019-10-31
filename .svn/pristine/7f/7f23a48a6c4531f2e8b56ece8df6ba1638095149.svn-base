@@ -1,0 +1,595 @@
+package com.zfsoft.zfsoft_product.di;
+
+import android.app.Activity;
+import android.app.Application;
+import android.app.Fragment;
+import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.ContentProvider;
+import android.content.Context;
+import com.google.gson.Gson;
+import com.zfsoft.zfsoft_product.base.BaseApplication;
+import com.zfsoft.zfsoft_product.base.BaseApplication_MembersInjector;
+import com.zfsoft.zfsoft_product.base.HomeActivity;
+import com.zfsoft.zfsoft_product.base.HomeActivity_MembersInjector;
+import com.zfsoft.zfsoft_product.base.HomeModule_MHomeFragment;
+import com.zfsoft.zfsoft_product.base.HomeModule_MNewsFragment;
+import com.zfsoft.zfsoft_product.base.HomeModule_MPersonalFragment;
+import com.zfsoft.zfsoft_product.base.HomeModule_MShoppingFragment;
+import com.zfsoft.zfsoft_product.modules.home.HomeFragment;
+import com.zfsoft.zfsoft_product.modules.home.HomeFragment_Factory;
+import com.zfsoft.zfsoft_product.modules.home.HomeFragment_MembersInjector;
+import com.zfsoft.zfsoft_product.modules.personal.PersonalFragment;
+import com.zfsoft.zfsoft_product.modules.personal.PersonalFragment_Factory;
+import com.zfsoft.zfsoft_product.modules.personal.PersonalFragment_MembersInjector;
+import com.zfsoft.zfsoft_product.modules.report.ReportFragment;
+import com.zfsoft.zfsoft_product.modules.report.ReportFragment_Factory;
+import com.zfsoft.zfsoft_product.modules.report.ReportFragment_MembersInjector;
+import com.zfsoft.zfsoft_product.modules.try_use.TryUseFragment;
+import com.zfsoft.zfsoft_product.modules.try_use.TryUseFragment_Factory;
+import com.zfsoft.zfsoft_product.modules.try_use.TryUseFragment_MembersInjector;
+import com.zfsoft.zfsoft_product.net.ApiService;
+import com.zfsoft.zfsoft_product.net.HttpManager;
+import dagger.MembersInjector;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.DispatchingAndroidInjector_Factory;
+import dagger.internal.DoubleCheck;
+import dagger.internal.InstanceFactory;
+import dagger.internal.MapProviderFactory;
+import dagger.internal.Preconditions;
+import java.util.Map;
+import javax.annotation.Generated;
+import javax.inject.Provider;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+
+@Generated(
+  value = "dagger.internal.codegen.ComponentProcessor",
+  comments = "https://google.github.io/dagger"
+)
+public final class DaggerAppComponent implements AppComponent {
+  private Provider<ActivityBindingModule_HomeActivity.HomeActivitySubcomponent.Builder>
+      homeActivitySubcomponentBuilderProvider;
+
+  private Provider<AndroidInjector.Factory<? extends Activity>> bindAndroidInjectorFactoryProvider;
+
+  private Provider<
+          Map<Class<? extends Activity>, Provider<AndroidInjector.Factory<? extends Activity>>>>
+      mapOfClassOfAndProviderOfFactoryOfProvider;
+
+  private Provider<DispatchingAndroidInjector<Activity>> dispatchingAndroidInjectorProvider;
+
+  private Provider<DispatchingAndroidInjector<BroadcastReceiver>>
+      dispatchingAndroidInjectorProvider2;
+
+  private Provider<DispatchingAndroidInjector<Fragment>> dispatchingAndroidInjectorProvider3;
+
+  private Provider<DispatchingAndroidInjector<Service>> dispatchingAndroidInjectorProvider4;
+
+  private Provider<DispatchingAndroidInjector<ContentProvider>> dispatchingAndroidInjectorProvider5;
+
+  private Provider<DispatchingAndroidInjector<android.support.v4.app.Fragment>>
+      dispatchingAndroidInjectorProvider6;
+
+  private MembersInjector<BaseApplication> baseApplicationMembersInjector;
+
+  private Provider<Application> applicationProvider;
+
+  private Provider<Context> bindContextProvider;
+
+  private Provider<Gson> provideGsonProvider;
+
+  private Provider<String> bindBaseUrlProvider;
+
+  private Provider<HttpLoggingInterceptor> provideHttpLoggingInterceptorProvider;
+
+  private Provider<OkHttpClient> provideOkHttpClientProvider;
+
+  private Provider<Retrofit> provideRetrofitProvider;
+
+  private Provider<ApiService> provideApiServiceProvider;
+
+  private Provider<HttpManager> provideHttpHelperProvider;
+
+  private DaggerAppComponent(Builder builder) {
+    assert builder != null;
+    initialize(builder);
+  }
+
+  public static AppComponent.Builder builder() {
+    return new Builder();
+  }
+
+  @SuppressWarnings("unchecked")
+  private void initialize(final Builder builder) {
+
+    this.homeActivitySubcomponentBuilderProvider =
+        new dagger.internal.Factory<
+            ActivityBindingModule_HomeActivity.HomeActivitySubcomponent.Builder>() {
+          @Override
+          public ActivityBindingModule_HomeActivity.HomeActivitySubcomponent.Builder get() {
+            return new HomeActivitySubcomponentBuilder();
+          }
+        };
+
+    this.bindAndroidInjectorFactoryProvider = (Provider) homeActivitySubcomponentBuilderProvider;
+
+    this.mapOfClassOfAndProviderOfFactoryOfProvider =
+        MapProviderFactory
+            .<Class<? extends Activity>, AndroidInjector.Factory<? extends Activity>>builder(1)
+            .put(HomeActivity.class, bindAndroidInjectorFactoryProvider)
+            .build();
+
+    this.dispatchingAndroidInjectorProvider =
+        DispatchingAndroidInjector_Factory.create(mapOfClassOfAndProviderOfFactoryOfProvider);
+
+    this.dispatchingAndroidInjectorProvider2 =
+        DispatchingAndroidInjector_Factory.create(
+            MapProviderFactory
+                .<Class<? extends BroadcastReceiver>,
+                    AndroidInjector.Factory<? extends BroadcastReceiver>>
+                    empty());
+
+    this.dispatchingAndroidInjectorProvider3 =
+        DispatchingAndroidInjector_Factory.create(
+            MapProviderFactory
+                .<Class<? extends Fragment>, AndroidInjector.Factory<? extends Fragment>>empty());
+
+    this.dispatchingAndroidInjectorProvider4 =
+        DispatchingAndroidInjector_Factory.create(
+            MapProviderFactory
+                .<Class<? extends Service>, AndroidInjector.Factory<? extends Service>>empty());
+
+    this.dispatchingAndroidInjectorProvider5 =
+        DispatchingAndroidInjector_Factory.create(
+            MapProviderFactory
+                .<Class<? extends ContentProvider>,
+                    AndroidInjector.Factory<? extends ContentProvider>>
+                    empty());
+
+    this.dispatchingAndroidInjectorProvider6 =
+        DispatchingAndroidInjector_Factory.create(
+            MapProviderFactory
+                .<Class<? extends android.support.v4.app.Fragment>,
+                    AndroidInjector.Factory<? extends android.support.v4.app.Fragment>>
+                    empty());
+
+    this.baseApplicationMembersInjector =
+        BaseApplication_MembersInjector.create(
+            dispatchingAndroidInjectorProvider,
+            dispatchingAndroidInjectorProvider2,
+            dispatchingAndroidInjectorProvider3,
+            dispatchingAndroidInjectorProvider4,
+            dispatchingAndroidInjectorProvider5,
+            dispatchingAndroidInjectorProvider6);
+
+    this.applicationProvider = InstanceFactory.create(builder.application);
+
+    this.bindContextProvider = (Provider) applicationProvider;
+
+    this.provideGsonProvider =
+        DoubleCheck.provider(NetModule_ProvideGsonFactory.create(builder.netModule));
+
+    this.bindBaseUrlProvider = NetModule_BindBaseUrlFactory.create(builder.netModule);
+
+    this.provideHttpLoggingInterceptorProvider =
+        DoubleCheck.provider(
+            NetModule_ProvideHttpLoggingInterceptorFactory.create(builder.netModule));
+
+    this.provideOkHttpClientProvider =
+        DoubleCheck.provider(
+            NetModule_ProvideOkHttpClientFactory.create(
+                builder.netModule, provideHttpLoggingInterceptorProvider));
+
+    this.provideRetrofitProvider =
+        DoubleCheck.provider(
+            NetModule_ProvideRetrofitFactory.create(
+                builder.netModule, bindBaseUrlProvider, provideOkHttpClientProvider));
+
+    this.provideApiServiceProvider =
+        DoubleCheck.provider(
+            NetModule_ProvideApiServiceFactory.create(builder.netModule, provideRetrofitProvider));
+
+    this.provideHttpHelperProvider =
+        DoubleCheck.provider(NetModule_ProvideHttpHelperFactory.create(builder.netModule));
+  }
+
+  @Override
+  public void inject(BaseApplication arg0) {
+    baseApplicationMembersInjector.injectMembers(arg0);
+  }
+
+  @Override
+  public Context getContext() {
+    return bindContextProvider.get();
+  }
+
+  @Override
+  public Gson getGson() {
+    return provideGsonProvider.get();
+  }
+
+  @Override
+  public ApiService getApiService() {
+    return provideApiServiceProvider.get();
+  }
+
+  @Override
+  public HttpManager getHttpManager() {
+    return provideHttpHelperProvider.get();
+  }
+
+  @Override
+  public Retrofit getRetrofit() {
+    return provideRetrofitProvider.get();
+  }
+
+  private static final class Builder implements AppComponent.Builder {
+    private NetModule netModule;
+
+    private Application application;
+
+    @Override
+    public AppComponent build() {
+      if (netModule == null) {
+        this.netModule = new NetModule();
+      }
+      if (application == null) {
+        throw new IllegalStateException(Application.class.getCanonicalName() + " must be set");
+      }
+      return new DaggerAppComponent(this);
+    }
+
+    @Override
+    public Builder application(Application application) {
+      this.application = Preconditions.checkNotNull(application);
+      return this;
+    }
+  }
+
+  private final class HomeActivitySubcomponentBuilder
+      extends ActivityBindingModule_HomeActivity.HomeActivitySubcomponent.Builder {
+    private HomeActivity seedInstance;
+
+    @Override
+    public ActivityBindingModule_HomeActivity.HomeActivitySubcomponent build() {
+      if (seedInstance == null) {
+        throw new IllegalStateException(HomeActivity.class.getCanonicalName() + " must be set");
+      }
+      return new HomeActivitySubcomponentImpl(this);
+    }
+
+    @Override
+    public void seedInstance(HomeActivity arg0) {
+      this.seedInstance = Preconditions.checkNotNull(arg0);
+    }
+  }
+
+  private final class HomeActivitySubcomponentImpl
+      implements ActivityBindingModule_HomeActivity.HomeActivitySubcomponent {
+    private Provider<HomeModule_MHomeFragment.HomeFragmentSubcomponent.Builder>
+        homeFragmentSubcomponentBuilderProvider;
+
+    private Provider<AndroidInjector.Factory<? extends android.support.v4.app.Fragment>>
+        bindAndroidInjectorFactoryProvider;
+
+    private Provider<HomeModule_MShoppingFragment.ReportFragmentSubcomponent.Builder>
+        reportFragmentSubcomponentBuilderProvider;
+
+    private Provider<AndroidInjector.Factory<? extends android.support.v4.app.Fragment>>
+        bindAndroidInjectorFactoryProvider2;
+
+    private Provider<HomeModule_MNewsFragment.TryUseFragmentSubcomponent.Builder>
+        tryUseFragmentSubcomponentBuilderProvider;
+
+    private Provider<AndroidInjector.Factory<? extends android.support.v4.app.Fragment>>
+        bindAndroidInjectorFactoryProvider3;
+
+    private Provider<HomeModule_MPersonalFragment.PersonalFragmentSubcomponent.Builder>
+        personalFragmentSubcomponentBuilderProvider;
+
+    private Provider<AndroidInjector.Factory<? extends android.support.v4.app.Fragment>>
+        bindAndroidInjectorFactoryProvider4;
+
+    private Provider<
+            Map<
+                Class<? extends android.support.v4.app.Fragment>,
+                Provider<AndroidInjector.Factory<? extends android.support.v4.app.Fragment>>>>
+        mapOfClassOfAndProviderOfFactoryOfProvider;
+
+    private Provider<DispatchingAndroidInjector<android.support.v4.app.Fragment>>
+        dispatchingAndroidInjectorProvider;
+
+    private MembersInjector<HomeFragment> homeFragmentMembersInjector;
+
+    private Provider<HomeFragment> homeFragmentProvider;
+
+    private MembersInjector<TryUseFragment> tryUseFragmentMembersInjector;
+
+    private Provider<TryUseFragment> tryUseFragmentProvider;
+
+    private MembersInjector<PersonalFragment> personalFragmentMembersInjector;
+
+    private Provider<PersonalFragment> personalFragmentProvider;
+
+    private MembersInjector<ReportFragment> reportFragmentMembersInjector;
+
+    private Provider<ReportFragment> reportFragmentProvider;
+
+    private MembersInjector<HomeActivity> homeActivityMembersInjector;
+
+    private HomeActivitySubcomponentImpl(HomeActivitySubcomponentBuilder builder) {
+      assert builder != null;
+      initialize(builder);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void initialize(final HomeActivitySubcomponentBuilder builder) {
+
+      this.homeFragmentSubcomponentBuilderProvider =
+          new dagger.internal.Factory<HomeModule_MHomeFragment.HomeFragmentSubcomponent.Builder>() {
+            @Override
+            public HomeModule_MHomeFragment.HomeFragmentSubcomponent.Builder get() {
+              return new HomeFragmentSubcomponentBuilder();
+            }
+          };
+
+      this.bindAndroidInjectorFactoryProvider = (Provider) homeFragmentSubcomponentBuilderProvider;
+
+      this.reportFragmentSubcomponentBuilderProvider =
+          new dagger.internal.Factory<
+              HomeModule_MShoppingFragment.ReportFragmentSubcomponent.Builder>() {
+            @Override
+            public HomeModule_MShoppingFragment.ReportFragmentSubcomponent.Builder get() {
+              return new ReportFragmentSubcomponentBuilder();
+            }
+          };
+
+      this.bindAndroidInjectorFactoryProvider2 =
+          (Provider) reportFragmentSubcomponentBuilderProvider;
+
+      this.tryUseFragmentSubcomponentBuilderProvider =
+          new dagger.internal.Factory<
+              HomeModule_MNewsFragment.TryUseFragmentSubcomponent.Builder>() {
+            @Override
+            public HomeModule_MNewsFragment.TryUseFragmentSubcomponent.Builder get() {
+              return new TryUseFragmentSubcomponentBuilder();
+            }
+          };
+
+      this.bindAndroidInjectorFactoryProvider3 =
+          (Provider) tryUseFragmentSubcomponentBuilderProvider;
+
+      this.personalFragmentSubcomponentBuilderProvider =
+          new dagger.internal.Factory<
+              HomeModule_MPersonalFragment.PersonalFragmentSubcomponent.Builder>() {
+            @Override
+            public HomeModule_MPersonalFragment.PersonalFragmentSubcomponent.Builder get() {
+              return new PersonalFragmentSubcomponentBuilder();
+            }
+          };
+
+      this.bindAndroidInjectorFactoryProvider4 =
+          (Provider) personalFragmentSubcomponentBuilderProvider;
+
+      this.mapOfClassOfAndProviderOfFactoryOfProvider =
+          MapProviderFactory
+              .<Class<? extends android.support.v4.app.Fragment>,
+                  AndroidInjector.Factory<? extends android.support.v4.app.Fragment>>
+                  builder(4)
+              .put(HomeFragment.class, bindAndroidInjectorFactoryProvider)
+              .put(ReportFragment.class, bindAndroidInjectorFactoryProvider2)
+              .put(TryUseFragment.class, bindAndroidInjectorFactoryProvider3)
+              .put(PersonalFragment.class, bindAndroidInjectorFactoryProvider4)
+              .build();
+
+      this.dispatchingAndroidInjectorProvider =
+          DispatchingAndroidInjector_Factory.create(mapOfClassOfAndProviderOfFactoryOfProvider);
+
+      this.homeFragmentMembersInjector =
+          HomeFragment_MembersInjector.create(dispatchingAndroidInjectorProvider);
+
+      this.homeFragmentProvider =
+          DoubleCheck.provider(HomeFragment_Factory.create(homeFragmentMembersInjector));
+
+      this.tryUseFragmentMembersInjector =
+          TryUseFragment_MembersInjector.create(dispatchingAndroidInjectorProvider);
+
+      this.tryUseFragmentProvider =
+          DoubleCheck.provider(TryUseFragment_Factory.create(tryUseFragmentMembersInjector));
+
+      this.personalFragmentMembersInjector =
+          PersonalFragment_MembersInjector.create(dispatchingAndroidInjectorProvider);
+
+      this.personalFragmentProvider =
+          DoubleCheck.provider(PersonalFragment_Factory.create(personalFragmentMembersInjector));
+
+      this.reportFragmentMembersInjector =
+          ReportFragment_MembersInjector.create(dispatchingAndroidInjectorProvider);
+
+      this.reportFragmentProvider =
+          DoubleCheck.provider(ReportFragment_Factory.create(reportFragmentMembersInjector));
+
+      this.homeActivityMembersInjector =
+          HomeActivity_MembersInjector.create(
+              dispatchingAndroidInjectorProvider,
+              DaggerAppComponent.this.dispatchingAndroidInjectorProvider3,
+              homeFragmentProvider,
+              tryUseFragmentProvider,
+              personalFragmentProvider,
+              reportFragmentProvider);
+    }
+
+    @Override
+    public void inject(HomeActivity arg0) {
+      homeActivityMembersInjector.injectMembers(arg0);
+    }
+
+    private final class HomeFragmentSubcomponentBuilder
+        extends HomeModule_MHomeFragment.HomeFragmentSubcomponent.Builder {
+      private HomeFragment seedInstance;
+
+      @Override
+      public HomeModule_MHomeFragment.HomeFragmentSubcomponent build() {
+        if (seedInstance == null) {
+          throw new IllegalStateException(HomeFragment.class.getCanonicalName() + " must be set");
+        }
+        return new HomeFragmentSubcomponentImpl(this);
+      }
+
+      @Override
+      public void seedInstance(HomeFragment arg0) {
+        this.seedInstance = Preconditions.checkNotNull(arg0);
+      }
+    }
+
+    private final class HomeFragmentSubcomponentImpl
+        implements HomeModule_MHomeFragment.HomeFragmentSubcomponent {
+      private MembersInjector<HomeFragment> homeFragmentMembersInjector;
+
+      private HomeFragmentSubcomponentImpl(HomeFragmentSubcomponentBuilder builder) {
+        assert builder != null;
+        initialize(builder);
+      }
+
+      @SuppressWarnings("unchecked")
+      private void initialize(final HomeFragmentSubcomponentBuilder builder) {
+
+        this.homeFragmentMembersInjector =
+            HomeFragment_MembersInjector.create(
+                HomeActivitySubcomponentImpl.this.dispatchingAndroidInjectorProvider);
+      }
+
+      @Override
+      public void inject(HomeFragment arg0) {
+        homeFragmentMembersInjector.injectMembers(arg0);
+      }
+    }
+
+    private final class ReportFragmentSubcomponentBuilder
+        extends HomeModule_MShoppingFragment.ReportFragmentSubcomponent.Builder {
+      private ReportFragment seedInstance;
+
+      @Override
+      public HomeModule_MShoppingFragment.ReportFragmentSubcomponent build() {
+        if (seedInstance == null) {
+          throw new IllegalStateException(ReportFragment.class.getCanonicalName() + " must be set");
+        }
+        return new ReportFragmentSubcomponentImpl(this);
+      }
+
+      @Override
+      public void seedInstance(ReportFragment arg0) {
+        this.seedInstance = Preconditions.checkNotNull(arg0);
+      }
+    }
+
+    private final class ReportFragmentSubcomponentImpl
+        implements HomeModule_MShoppingFragment.ReportFragmentSubcomponent {
+      private MembersInjector<ReportFragment> reportFragmentMembersInjector;
+
+      private ReportFragmentSubcomponentImpl(ReportFragmentSubcomponentBuilder builder) {
+        assert builder != null;
+        initialize(builder);
+      }
+
+      @SuppressWarnings("unchecked")
+      private void initialize(final ReportFragmentSubcomponentBuilder builder) {
+
+        this.reportFragmentMembersInjector =
+            ReportFragment_MembersInjector.create(
+                HomeActivitySubcomponentImpl.this.dispatchingAndroidInjectorProvider);
+      }
+
+      @Override
+      public void inject(ReportFragment arg0) {
+        reportFragmentMembersInjector.injectMembers(arg0);
+      }
+    }
+
+    private final class TryUseFragmentSubcomponentBuilder
+        extends HomeModule_MNewsFragment.TryUseFragmentSubcomponent.Builder {
+      private TryUseFragment seedInstance;
+
+      @Override
+      public HomeModule_MNewsFragment.TryUseFragmentSubcomponent build() {
+        if (seedInstance == null) {
+          throw new IllegalStateException(TryUseFragment.class.getCanonicalName() + " must be set");
+        }
+        return new TryUseFragmentSubcomponentImpl(this);
+      }
+
+      @Override
+      public void seedInstance(TryUseFragment arg0) {
+        this.seedInstance = Preconditions.checkNotNull(arg0);
+      }
+    }
+
+    private final class TryUseFragmentSubcomponentImpl
+        implements HomeModule_MNewsFragment.TryUseFragmentSubcomponent {
+      private MembersInjector<TryUseFragment> tryUseFragmentMembersInjector;
+
+      private TryUseFragmentSubcomponentImpl(TryUseFragmentSubcomponentBuilder builder) {
+        assert builder != null;
+        initialize(builder);
+      }
+
+      @SuppressWarnings("unchecked")
+      private void initialize(final TryUseFragmentSubcomponentBuilder builder) {
+
+        this.tryUseFragmentMembersInjector =
+            TryUseFragment_MembersInjector.create(
+                HomeActivitySubcomponentImpl.this.dispatchingAndroidInjectorProvider);
+      }
+
+      @Override
+      public void inject(TryUseFragment arg0) {
+        tryUseFragmentMembersInjector.injectMembers(arg0);
+      }
+    }
+
+    private final class PersonalFragmentSubcomponentBuilder
+        extends HomeModule_MPersonalFragment.PersonalFragmentSubcomponent.Builder {
+      private PersonalFragment seedInstance;
+
+      @Override
+      public HomeModule_MPersonalFragment.PersonalFragmentSubcomponent build() {
+        if (seedInstance == null) {
+          throw new IllegalStateException(
+              PersonalFragment.class.getCanonicalName() + " must be set");
+        }
+        return new PersonalFragmentSubcomponentImpl(this);
+      }
+
+      @Override
+      public void seedInstance(PersonalFragment arg0) {
+        this.seedInstance = Preconditions.checkNotNull(arg0);
+      }
+    }
+
+    private final class PersonalFragmentSubcomponentImpl
+        implements HomeModule_MPersonalFragment.PersonalFragmentSubcomponent {
+      private MembersInjector<PersonalFragment> personalFragmentMembersInjector;
+
+      private PersonalFragmentSubcomponentImpl(PersonalFragmentSubcomponentBuilder builder) {
+        assert builder != null;
+        initialize(builder);
+      }
+
+      @SuppressWarnings("unchecked")
+      private void initialize(final PersonalFragmentSubcomponentBuilder builder) {
+
+        this.personalFragmentMembersInjector =
+            PersonalFragment_MembersInjector.create(
+                HomeActivitySubcomponentImpl.this.dispatchingAndroidInjectorProvider);
+      }
+
+      @Override
+      public void inject(PersonalFragment arg0) {
+        personalFragmentMembersInjector.injectMembers(arg0);
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:background="@color/colorWhite"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorGray"
+        android:layout_marginLeft="57dp"
+        android:layout_marginRight="@dimen/ten_padding"
+        android:layout_marginTop="@dimen/five_padding"
+        android:padding="@dimen/ten_padding">
+        <!--评论内容-->
+        <TextView
+            android:id="@+id/tv_child_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            tools:text = "主人回复 ： 萨达所大所大所大所多撒大所多撒多"/>
+    </RelativeLayout>
+</RelativeLayout>

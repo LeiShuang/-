@@ -1,0 +1,365 @@
+package com.zfsoft.zfsoft_product.modules.report.report_detail;
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.ColorUtils;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.gyf.barlibrary.ImmersionBar;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.vondear.rxtool.view.RxToast;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseFragment;
+import com.zfsoft.zfsoft_product.di.ActivityScoped;
+import com.zfsoft.zfsoft_product.entity.InfoServer;
+import com.zfsoft.zfsoft_product.entity.ReportDetailEntity;
+import com.zfsoft.zfsoft_product.entity.ReportInfo;
+import com.zfsoft.zfsoft_product.utils.GlideImageLoader;
+import com.zfsoft.zfsoft_product.utils.ImageLoaderHelper;
+import com.zfsoft.zfsoft_product.utils.KeyboardUtils;
+import com.zfsoft.zfsoft_product.utils.ShareUtils;
+import com.zfsoft.zfsoft_product.widget.ListBottomSheetDialogFragment;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import de.hdodenhof.circleimageview.CircleImageView;
+
+/**
+ * 创建日期：2019/1/8 on 17:27
+ * 描述:报告详情Fragment
+ * 作者:Ls
+ */
+@ActivityScoped
+public class ReportDetailFragment extends BaseFragment implements View.OnClickListener {
+    @BindView(R.id.rv_report_detail)
+    RecyclerView mRvReportDetail;
+    @BindView(R.id.refresh_report)
+    SmartRefreshLayout mRefreshReport;
+    @BindView(R.id.iv_report_detail_back)
+    ImageView mIvReportDetailBack;
+    @BindView(R.id.iv_report_detail_share)
+    ImageView mIvReportDetailShare;
+    @BindView(R.id.iv_report_detail_like)
+    ImageView mIvReportDetailLike;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    private List<String> mImages = new ArrayList<>();
+    private LinearLayoutManager mLayoutManager;
+    private ReportDetailAdapter mAdapter;
+    private int bannerHeight;
+    private List<ReportDetailEntity> mData;
+    private ReportInfo mInfo;
+    private Banner mBanner;
+
+    public static ReportDetailFragment newInstance() {
+        Bundle args = new Bundle();
+        ReportDetailFragment fragment = new ReportDetailFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Inject
+    public ReportDetailFragment() {
+
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.fragment_report_detail;
+    }
+
+    @Override
+    protected void initVariables() {
+        //初始化数据
+        initData();
+    }
+
+    @Override
+    protected void handleBundle(Bundle bundle) {
+
+    }
+
+    @Override
+    protected void operateViews(View view) {
+        //初始化ImmersionBar让ToolBar和状态栏不重叠
+        ImmersionBar.setTitleBar(getActivity(), mToolbar);
+        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        mRvReportDetail.setLayoutManager(mLayoutManager);
+        mAdapter = new ReportDetailAdapter(mData);
+        mAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
+        mRvReportDetail.setAdapter(mAdapter);
+        mAdapter.setNewData(mData);
+        addHeaderView();
+        addTextViewHolder();
+        addDiscussHeader();
+        addFootView();
+
+    }
+
+    /**
+     * 添加脚布局
+     */
+    private void addFootView() {
+        View footCommentView = LayoutInflater.from(getActivity()).inflate(R.layout.report_detail_foot_view, (ViewGroup) mRvReportDetail.getParent(), false);
+        footCommentView.findViewById(R.id.tv_see_more_comment).setOnClickListener(this);
+        mAdapter.addFooterView(footCommentView);
+    }
+
+    //添加评论头
+    private void addDiscussHeader() {
+        View discussHeader = LayoutInflater.from(getActivity()).inflate(R.layout.report_detail_discuss_header, (ViewGroup) mRvReportDetail.getParent(), false);
+      final   TextView tv_write = discussHeader.findViewById(R.id.tv_write_discuss);
+        tv_write.setOnClickListener(this);
+        mAdapter.addHeaderView(discussHeader, -1);
+    }
+
+    //添加正文
+    private void addTextViewHolder() {
+        View titleView = LayoutInflater.from(getActivity()).inflate(R.layout.report_detail_second_header, (ViewGroup) mRvReportDetail.getParent(), false);
+        TextView tvTitle = titleView.findViewById(R.id.tv_report_detail_title);
+        CircleImageView ivPhoto = titleView.findViewById(R.id.iv_report_detail_photo);
+        TextView tvName = titleView.findViewById(R.id.iv_report_name);
+        TextView tvPersonal = titleView.findViewById(R.id.iv_report_speak);
+        TextView tvTime = titleView.findViewById(R.id.report_detail_time);
+        TextView tvContent = titleView.findViewById(R.id.report_detail_content);
+        TextView tvDiscussNumber = titleView.findViewById(R.id.tv_report_discuss);
+        TextView tvStarNumber = titleView.findViewById(R.id.tv_star);
+        TextView tvAttention = titleView.findViewById(R.id.tv_attention);
+        tvTitle.setText(mInfo.getReportTitle());
+        tvName.setText(mInfo.getPersonalName());
+        tvPersonal.setText(mInfo.getPersonalSpeak());
+        ImageLoaderHelper.loadImage(mContext,ivPhoto, mInfo.getPersonalPhotoUrl());
+        tvContent.setText(mInfo.getReportText());
+        tvTime.setText(mInfo.getTime());
+        tvDiscussNumber.setText(mInfo.getDiscussNumber());
+        tvStarNumber.setText(mInfo.getStartNumer());
+        tvDiscussNumber.setOnClickListener(this);
+        Glide.with(titleView.getContext()).load(mInfo.getPersonalPhotoUrl()).into(ivPhoto);
+        ivPhoto.setOnClickListener(this);
+        tvStarNumber.setOnClickListener(this);
+        tvAttention.setOnClickListener(this);
+        mAdapter.addHeaderView(titleView, -3);
+    }
+
+    private void addHeaderView() {
+        View mHeaderView = LayoutInflater.from(getActivity()).inflate(R.layout.home_header_banner, (ViewGroup) mRvReportDetail.getParent(), false);
+        mBanner = mHeaderView.findViewById(R.id.home_banner);
+        mBanner.setImages(mImages)
+                .setImageLoader(new GlideImageLoader())
+                .setBannerStyle(BannerConfig.NUM_INDICATOR)
+                .setDelayTime(5000)
+                .start();
+        mAdapter.addHeaderView(mHeaderView, -3);
+        ViewGroup.LayoutParams bannerParams = mBanner.getLayoutParams();
+        ViewGroup.LayoutParams toolBarParams = mToolbar.getLayoutParams();
+        bannerHeight = bannerParams.height - toolBarParams.height - ImmersionBar.getStatusBarHeight(getActivity());
+    }
+
+    private void initData() {
+        mData = new ArrayList<>();
+        mInfo = new ReportInfo();
+        mImages.add("http://dpic.tiankong.com/fx/g1/QJ6846644164.jpg");
+        mImages.add("http://dpic.tiankong.com/wt/ap/QJ9105410812.jpg");
+        mImages.add("http://dpic.tiankong.com/el/vl/QJ9104352858.jpg");
+        mImages.add("http://dpic.tiankong.com/a6/rz/QJ8813728866.jpg");
+        mInfo.setBannerUrl(mImages);
+        mInfo.setPersonalPhotoUrl("http://tupian.qqw21.com/article/UploadPic/2016-4/201641121524755187.jpg");
+        mInfo.setReportTitle("这是文章的标题");
+        mInfo.setPersonalName("张三爱上王麻子");
+        mInfo.setPersonalSpeak("好好学习天天想啥");
+        mInfo.setReportText("这是整嗷嗷的撒大所大所大所大所大所大撒大所大所大所大所大所多撒多撒多撒多撒大所多撒多撒多撒多");
+        mInfo.setTime("2019-01-10");
+        mInfo.setStartNumer("32");
+        mInfo.setDiscussNumber("1002");
+        mData.addAll(InfoServer.getDiscussInfos(5, 3));
+
+    }
+
+
+    @Override
+    protected void initListener() {
+        mIvReportDetailBack.setOnClickListener(this);
+        mIvReportDetailLike.setOnClickListener(this);
+        mIvReportDetailShare.setOnClickListener(this);
+
+        mRvReportDetail.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private int totalDy = 0;
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                totalDy += dy;
+                float alpha = totalDy / bannerHeight;
+                if (totalDy <= bannerHeight) {
+                    //如果小于 滑动截止高度（Banner的高度 - ToolBar的高度 - 状态栏高度）
+                    mToolbar.setBackgroundColor(ColorUtils.blendARGB(Color.TRANSPARENT, ContextCompat.getColor(getContext(), R.color.try_use_top_color), alpha));
+                } else {
+                    mToolbar.setBackgroundColor(ColorUtils.blendARGB(Color.TRANSPARENT, ContextCompat.getColor(getContext(), R.color.try_use_top_color), 1));
+                }
+            }
+        });
+
+        mRefreshReport.setOnRefreshListener(new OnRefreshListener() {
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+
+                RefreshState state = refreshLayout.getState();
+                if (state == RefreshState.PullDownToRefresh) {
+                    mToolbar.setVisibility(View.GONE);
+                }
+                refreshLayout.finishRefresh(2000);
+                mData.clear();
+                initData();
+                mAdapter.setNewData(mData);
+                mToolbar.setVisibility(View.VISIBLE);
+            }
+
+        });
+
+        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.iv_father_pic){
+                    RxToast.showToast("头像");
+                }else if (view.getId() == R.id.tv_reply){
+                    showCommentInput();
+                }else if (view.getId() == R.id.tv_father_star){
+                    RxToast.showToast("点赞");
+                }else if (view.getId() == R.id.tv_child_content){
+                  showCommentInput();
+                }else if (view.getId() == R.id.tv_sum_comment){
+                    RxToast.showToast("查看剩余评论条数");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void initPresenter() {
+
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        int key = v.getId();
+        if (key == R.id.iv_report_detail_back) {
+            getActivity().finish();
+        } else if (key == R.id.iv_report_detail_like) {
+            RxToast.showToast("点击了喜欢");
+        } else if (key == R.id.iv_report_detail_share) {
+            ShareUtils.setShareInfo(getContext());
+        } else if (key == R.id.tv_write_discuss || key == R.id.tv_report_discuss) {
+            showCommentInput();
+        } else if (key == R.id.tv_see_more_comment) {
+            ListBottomSheetDialogFragment fragment = new ListBottomSheetDialogFragment();
+            fragment.show(getChildFragmentManager(), "");
+        }else if (key == R.id.tv_star){
+            RxToast.showToast("点赞");
+        }else if (key == R.id.tv_attention){
+            RxToast.showToast("关注");
+        }else if (key == R.id.iv_report_detail_photo){
+            RxToast.showToast("点击了头像");
+        }
+    }
+
+
+    private BottomSheetDialog mDialog;
+    private void showCommentInput() {
+        mDialog = new BottomSheetDialog(getContext(),R.style.dialog_soft_input);
+        View commentView = LayoutInflater.from(getContext()).inflate(R.layout.common_dialog_layout,null);
+        final EditText commentText = (EditText) commentView.findViewById(R.id.dialog_comment_et);
+        final Button bt_comment = (Button) commentView.findViewById(R.id.dialog_comment_bt);
+        commentText.setHint(getString(R.string.please_input_discuss));
+        mDialog.setContentView(commentView);
+        /**
+         * 解决BoottomSheetDialog显示不全的问题
+         * */
+        View parent = (View) commentView.getParent();
+        BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
+        commentView.measure(0,0);
+        behavior.setPeekHeight(commentView.getMeasuredHeight());
+
+
+        bt_comment.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                String commentContent = commentText.getText().toString().trim();
+                if(!TextUtils.isEmpty(commentContent)){
+                    mDialog.dismiss();
+                    KeyboardUtils.hideInput(getContext(),commentText);
+                   // presenter.addDiscuss(mId,commentContent,"");
+
+                }else {
+                    RxToast.showToast("评论内容不能为空");
+                }
+            }
+        });
+        commentText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(!TextUtils.isEmpty(s) && s.length()>2){
+                    bt_comment.setBackgroundColor(Color.parseColor("#FFB568"));
+                }else {
+                    bt_comment.setBackgroundColor(Color.parseColor("#D8D8D8"));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!TextUtils.isEmpty(s) && s.length()>2){
+                    bt_comment.setBackgroundColor(Color.parseColor("#FFB568"));
+                }else {
+                    bt_comment.setBackgroundColor(Color.parseColor("#D8D8D8"));
+                }
+            }
+        });
+        mDialog.show();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mBanner.startAutoPlay();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mBanner.stopAutoPlay();
+    }
+}

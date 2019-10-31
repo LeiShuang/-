@@ -1,0 +1,32 @@
+package com.zfsoft.zfsoft_product.utils;
+
+import android.content.Context;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.youth.banner.loader.ImageLoader;
+import com.zfsoft.zfsoft_product.R;
+
+/**
+ * 创建日期：2019/1/15 on 18:30
+ * 描述:
+ * 作者:Ls
+ */
+public class GlideImageLoader extends ImageLoader{
+    //图片加载器
+
+        @Override
+        public void displayImage(Context context, Object path, ImageView imageView) {
+
+            Glide.with(context)
+                    .load(path)
+                    .crossFade(500)
+                    .placeholder(R.mipmap.icon_default_banner)
+                    .error(R.mipmap.icon_default_banner)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imageView);
+        }
+
+
+}

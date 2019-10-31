@@ -1,0 +1,33 @@
+package com.zfsoft.zfsoft_product.net;
+
+import com.zfsoft.zfsoft_product.entity.BannerBean;
+import com.zfsoft.zfsoft_product.entity.TryNewProductBean;
+
+import java.util.List;
+
+import io.reactivex.Observable;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
+
+/**
+ * 创建日期：2018/12/24 on 10:15
+ * 描述:接口类
+ * 作者:Ls
+ */
+public interface ApiService {
+
+
+    /*
+     * 轮播图数据
+     * */
+    @GET("system/connect/tgcc")
+    Observable<Response<List<BannerBean>>> getBannerList(@Query("hsk") String hsk, @Query("link") String link);
+
+    /*
+    * 首页试用新品 6条数据 system/connect/cp/xplist
+    * */
+    @GET("system/connect/cp/xplist")
+    Observable<Response<List<TryNewProductBean>>> getTryNewProductList(@Query("hsk") String hsk, @Query("link") String link);
+
+
+}

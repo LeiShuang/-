@@ -10,8 +10,64 @@ public class Config {
     public static final boolean DUBUG = true;
     /**
      * 网络地址
+     * 测试地址
      * */
-    public static final String BASE_URL =  "http://218.3.172.95:8081/";
+    //外网域名
+     public static final String BASE_URL = "https://admin.021share.com/";
+    public static final String HSK = "C5FCEC7318A311E9A7B300E04C12991C";
+    /**
+     * 分享产品
+     * */
+    public static final String SHARE_PRODUCT = "html5/index.html#/pages/repoetDetail/repoetDetail?";
+    /**
+     * 分享报告
+     * */
+    public static final String SHARE_REPORT = "html5/index.html#/pages/tryDetail/tryDetail?";
+    /**
+     * 加载更多相关的
+     */
+    public static final class LOADMORE {
+        public static final int VISIBLE_THRESHOLD = 2;
+
+        //起始页
+        public static final int START_PAGE = 1;
+
+        //每页加载多少条数据
+        public static final int PAGE_SIZE = 6;
+    }
+
+    /**
+     * 上传文件相关的
+     */
+    public static final class UPLOAD {
+
+        //上传文件的数据格式
+        public static final String UPLOAD_FILE_FORMAT = "multipart/form-data";
 
 
+    }
+
+    /**
+     * 数据存储相关的
+     */
+    public static final class DB {
+
+        //SharedPreferences中用戶是否是第一次登录Once的name和key的值
+        public static final String IS_FIRST_TIME_IN_NAME = "IS_FIRST_TIME_IN_NAME";
+        public static final String IS_FIRST_TIME_IN_KEY = "IS_FIRST_TIME_IN_KEY";
+
+        //保存在SharedPreferences中用户User的name值和key值
+        public static final String USER_NAME = "USER_LOGIN_NAME";
+        public static final String USER_KEY = "USER_LOGIN_KEY";
+
+        //SharedPreferences中用户是否已经登录的name值和key值 IsLogin
+        public static final String IS_LOGIN_NAME = "IS_LOGIN_NAME";
+        public static final String IS_LOGIN_KEY = "IS_LOGIN_KEY";
+
+        //SharedPreferences中是否是最新版本的name值和key值 IsNewVersion
+        public static final String IS_NEW_VERSION_NAME = "IS_NEW_VERSION_NAME";
+        public static final String IS_NEW_VERSION_KEY = "IS_NEW_VERSION_KEY";
+
+
+    }
 }

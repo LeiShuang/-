@@ -1,0 +1,81 @@
+package com.zfsoft.zfsoft_product.entity;
+
+/**
+ * 创建日期：2019/1/5 on 14:11
+ * 描述:物品信息实体
+ * 作者:Ls
+ */
+public class ThingsInfoEntity  {
+    private int commoditytype;//类型
+    private String commodityid;
+    private String commoditytitle;//标题
+    private String commodityurl;//图片地址
+    private String commodityparameters;//大小
+    private int commoditysum;//数量
+    private String commodityprice;//单价
+    private int commoditybrowse;//火爆度
+
+    public int getCommoditytype() {
+        return commoditytype;
+    }
+
+    public void setCommoditytype(int commoditytype) {
+        this.commoditytype = commoditytype;
+    }
+
+    public String getCommodityid() {
+        return commodityid;
+    }
+
+    public void setCommodityid(String commodityid) {
+        this.commodityid = commodityid;
+    }
+
+    public String getCommoditytitle() {
+        return commoditytitle;
+    }
+
+    public void setCommoditytitle(String commoditytitle) {
+        this.commoditytitle = commoditytitle;
+    }
+
+    public String getCommodityurl() {
+        return commodityurl;
+    }
+
+    public void setCommodityurl(String commodityurl) {
+        this.commodityurl = commodityurl;
+    }
+
+    public String getCommodityparameters() {
+        return commodityparameters;
+    }
+
+    public void setCommodityparameters(String commodityparameters) {
+        this.commodityparameters = commodityparameters;
+    }
+
+    public int getCommoditysum() {
+        return commoditysum;
+    }
+
+    public void setCommoditysum(int commoditysum) {
+        this.commoditysum = commoditysum;
+    }
+
+    public String getCommodityprice() {
+        return commodityprice;
+    }
+
+    public void setCommodityprice(String commodityprice) {
+        this.commodityprice = commodityprice;
+    }
+
+    public int getCommoditybrowse() {
+        return commoditybrowse;
+    }
+
+    public void setCommoditybrowse(int commoditybrowse) {
+        this.commoditybrowse = commoditybrowse;
+    }
+}

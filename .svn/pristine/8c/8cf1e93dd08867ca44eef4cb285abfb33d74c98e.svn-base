@@ -1,0 +1,44 @@
+package com.zfsoft.zfsoft_product.entity;
+
+/**
+ * Created by ckw
+ * on 2019/1/21.
+ */
+public class MyTrySingleBean {
+    private String productUrl;
+    private String productTitle;
+    private String productNum;
+    private String productApplyNum;
+
+    public String getProductUrl() {
+        return productUrl;
+    }
+
+    public void setProductUrl(String productUrl) {
+        this.productUrl = productUrl;
+    }
+
+    public String getProductTitle() {
+        return productTitle;
+    }
+
+    public void setProductTitle(String productTitle) {
+        this.productTitle = productTitle;
+    }
+
+    public String getProductNum() {
+        return productNum;
+    }
+
+    public void setProductNum(String productNum) {
+        this.productNum = productNum;
+    }
+
+    public String getProductApplyNum() {
+        return productApplyNum;
+    }
+
+    public void setProductApplyNum(String productApplyNum) {
+        this.productApplyNum = productApplyNum;
+    }
+}

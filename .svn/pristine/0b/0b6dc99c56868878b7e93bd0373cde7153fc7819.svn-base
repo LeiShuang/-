@@ -1,0 +1,23 @@
+package com.zfsoft.zfsoft_product.modules.personal;
+
+import com.zfsoft.zfsoft_product.base.BasePresenter;
+import com.zfsoft.zfsoft_product.base.BaseView;
+import com.zfsoft.zfsoft_product.entity.SignBean;
+
+/**
+ * Created by ckw
+ * on 2019/1/23.
+ */
+public class PersonalContract {
+    public interface View extends BaseView{
+        //签到
+        void getSignResultSuccess(SignBean signBean);
+        void getSignResultFailure(String errorMsg);
+
+        //
+
+    }
+    public interface Presenter extends BasePresenter<View>{
+        void startSign(String hsk,String userId);
+    }
+}

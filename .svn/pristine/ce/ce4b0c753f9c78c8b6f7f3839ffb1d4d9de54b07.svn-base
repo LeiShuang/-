@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.gcssloop.widget.RCRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rc_container"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:round_corner="4dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/rl_one"
+            android:background="@color/colorWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            
+            <ImageView
+                android:id="@+id/iv_head_one"
+                android:src="@mipmap/icon_default"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="96dp" />
+
+            <TextView
+                android:id="@+id/tv_apply_one"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="5dp"
+                android:layout_below="@+id/iv_head_one"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/background_text_apply"
+                android:textColor="#FA857C"
+                android:gravity="center"
+                android:textSize="13sp"
+                android:text="@string/apply_for"
+                android:paddingBottom="2dp"
+                android:paddingTop="2dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_price_one"
+                tools:text="价格"
+                android:textSize="14sp"
+                android:maxLines="1"
+                app:autoSizeTextType="uniform"
+                app:autoSizeStepGranularity="1sp"
+                app:autoSizeMinTextSize="8sp"
+                app:autoSizeMaxTextSize="14sp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="2dp"
+                android:layout_toLeftOf="@+id/tv_apply_one"
+                android:layout_alignParentLeft="true"
+                android:layout_alignBaseline="@+id/tv_apply_one"
+                android:textColor="#CBCBCB"
+                android:layout_below="@+id/iv_head_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            
+            
+        </RelativeLayout>
+
+
+</com.gcssloop.widget.RCRelativeLayout>

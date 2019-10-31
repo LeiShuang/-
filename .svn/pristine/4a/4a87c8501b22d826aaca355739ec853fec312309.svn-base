@@ -1,0 +1,36 @@
+package com.zfsoft.zfsoft_product.modules.try_use.try_use_detail;
+
+import com.zfsoft.zfsoft_product.base.BaseListView;
+import com.zfsoft.zfsoft_product.base.BasePresenter;
+import com.zfsoft.zfsoft_product.base.BaseView;
+import com.zfsoft.zfsoft_product.entity.ProductInfo;
+import com.zfsoft.zfsoft_product.entity.ReportInfo;
+import com.zfsoft.zfsoft_product.entity.ResponseListInfo;
+
+/**
+ * 创建日期：2019/1/21 on 17:03
+ * 描述:
+ * 作者:Ls
+ */
+public interface TryUseDetailContract  {
+    interface UseDetailView extends BaseView {
+        void getInfoSuccess(ProductInfo info);
+        void getInfoFailed(String errorMsg);
+
+    }
+
+    interface UseDetailPresenter extends BasePresenter<UseDetailView>{
+        void getProductsDetails(String hsk,String id);
+    }
+    /***
+     * 某个商品报告列表视图
+     */
+
+    interface UseProductView extends BaseListView<ReportInfo>{
+
+    }
+
+    interface  TryUseReportPresenter extends BasePresenter<UseProductView>{
+        void getOneProductsTestReport(String hsk,String id,int page,int size);
+    }
+}

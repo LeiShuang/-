@@ -1,0 +1,62 @@
+package com.zfsoft.zfsoft_product.modules.try_use.try_use_detail;
+
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.ImageView;
+
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseActivity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+/**
+ * 创建日期：2019/1/11 on 17:30
+ * 描述:试用详情activity
+ * 作者:Ls
+ */
+public class TryUseDetailActivity extends BaseActivity implements View.OnClickListener {
+    @BindView(R.id.iv_back)
+    ImageView mIvBack;
+    @BindView(R.id.iv_try_use_like)
+    ImageView mIvTryUseLike;
+    @BindView(R.id.try_detail_tabLayout)
+    TabLayout mTryDetailTabLayout;
+    @BindView(R.id.try_user_detail_viewPager)
+    ViewPager mTryUserDetailViewPager;
+    private List<Fragment> mFragmentList;
+    private String[] tabTexts = new String[]{"产品详情","试用报告"};
+    @Override
+    protected int getLayoutId() {
+        return R.layout.actitity_try_use_detail;
+    }
+
+    @Override
+    protected void initView(Bundle savedInstanceState) {
+        mFragmentList = new ArrayList<>();
+
+    }
+
+    @Override
+    protected void handleBundle(@NonNull Bundle bundle) {
+
+    }
+
+    @Override
+    protected void initListener() {
+        mIvBack.setOnClickListener(this);
+        mIvTryUseLike.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+
+    }
+}

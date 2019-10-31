@@ -1,0 +1,364 @@
+package com.zfsoft.zfsoft_product.base;
+
+import android.app.ActivityManager;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Typeface;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.gyf.barlibrary.ImmersionBar;
+import com.vondear.rxtool.view.RxToast;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.common.Config;
+import com.zfsoft.zfsoft_product.entity.MyTrySingleBean;
+import com.zfsoft.zfsoft_product.entity.ResponseListInfo;
+import com.zfsoft.zfsoft_product.modules.home.HomeFragment;
+import com.zfsoft.zfsoft_product.modules.home.HomeItemClickListener;
+import com.zfsoft.zfsoft_product.modules.login.LoginActivity;
+import com.zfsoft.zfsoft_product.modules.personal.PersonalFragment;
+import com.zfsoft.zfsoft_product.modules.personal.my_try.MyTryActivity;
+import com.zfsoft.zfsoft_product.modules.report.ReportFragment;
+import com.zfsoft.zfsoft_product.modules.send_report.SendReportContract;
+import com.zfsoft.zfsoft_product.modules.send_report.SendReportPresenter;
+import com.zfsoft.zfsoft_product.modules.try_use.TryUseFragment;
+import com.zfsoft.zfsoft_product.utils.DbHelper;
+import com.zfsoft.zfsoft_product.utils.FragmentUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import devlight.io.library.ntb.NavigationTabBar;
+
+/**
+ * 主页Activity,通过FragmentTransaction来管理Fragment
+ */
+public class HomeActivity extends BaseActivity implements HomeItemClickListener, SendReportContract.View, View.OnClickListener {
+
+    @Inject
+    HomeFragment mGetHomeFragment;
+
+    @Inject
+    TryUseFragment mGetTryUseFragment;
+
+    @Inject
+    PersonalFragment mGetPersonalFragment;
+
+    @Inject
+    ReportFragment mGetReportFragment;
+    @Inject
+    SendReportPresenter mSendReportPresenter;
+    private TextView mBottomHome;
+    private TextView mBottomTry;
+    private ImageButton mBtnHomeSubmit;
+    private TextView mBottomShare;
+    private TextView mBottomMine;
+    private int mCurrentIndex = 0;
+    private FragmentManager mFragmentManager;
+
+    public static final String TAG_HOME_FRAGMENT = "HomeFragment";
+    public static final String TAG_PERSONAL_FRAGMENT = "PersonalFragment";
+    public static final String TAG_NEWS_FRAGMENT = "TryUseFragment";
+    public static final String TAG_SHOPPING_FRAGMENT = "ReportFragment";
+    private HomeFragment mHomeFragment;
+    private TryUseFragment mTryUseFragment;
+    private PersonalFragment mPersonalFragment;
+    private ReportFragment mReportFragment;
+    private ArrayList<TextView> tvList;
+
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_home;
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putInt("currentIndex", mCurrentIndex);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mCurrentIndex = savedInstanceState.getInt("currentIndex", 0);
+        showFragment(mCurrentIndex);
+    }
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        ImmersionBar.with(this).init();
+    }
+
+
+    @Override
+    protected void initView(Bundle savedInstanceState) {
+        mBottomHome = findViewById(R.id.bottom_home);
+        mBottomTry = findViewById(R.id.bottom_try);
+        mBottomShare = findViewById(R.id.bottom_share);
+        mBottomMine = findViewById(R.id.bottom_mine);
+        mBtnHomeSubmit = findViewById(R.id.btn_home_submit);
+        initBottomView();
+        mFragmentManager = getSupportFragmentManager();
+        initSaveInstanceState(savedInstanceState);
+        changeToSelectView(mCurrentIndex);
+        showFragment(mCurrentIndex);
+        initPresenter();
+
+    }
+
+    @Override
+    protected void initListener() {
+        mBottomHome.setOnClickListener(this);
+        mBottomTry.setOnClickListener(this);
+        mBottomShare.setOnClickListener(this);
+        mBottomMine.setOnClickListener(this);
+        mBtnHomeSubmit.setOnClickListener(this);
+    }
+
+    /**
+     * 初始化底部Button
+     */
+    private void initBottomView() {
+        tvList = new ArrayList<>();
+        tvList.add(mBottomHome);
+        tvList.add(mBottomTry);
+        tvList.add(mBottomShare);
+        tvList.add(mBottomMine);
+    }
+
+    /**
+     * 底部按钮视图的改变(选中和没选中时的状态)
+     */
+    private void changeToSelectView(int currentIndex) {
+        for (int i = 0; i < tvList.size(); i++) {
+            if (currentIndex == i) {
+                tvList.get(i).setEnabled(false);
+                tvList.get(i).setTextColor(getResources().getColor(R.color.colorText));
+                tvList.get(i).setTextSize(getResources().getDimension(R.dimen.report_detail_title_size));
+                tvList.get(i).setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+            } else {
+                tvList.get(i).setEnabled(true);
+                tvList.get(i).setTextColor(getResources().getColor(R.color.report_star_bg));
+                tvList.get(i).setTextSize(getResources().getDimension(R.dimen.font_normal));
+                tvList.get(i).setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+            }
+        }
+    }
+
+    private void showFragment(int currentIndex) {
+        hideAllFragment();
+        switch (currentIndex) {
+            case 0:
+                ImmersionBar.with(this).reset().transparentStatusBar().init();
+                FragmentUtils.show(mHomeFragment);
+                break;
+            case 1:
+                ImmersionBar.with(this).reset().statusBarColor(R.color.try_use_top_color).init();
+                FragmentUtils.show(mTryUseFragment);
+                break;
+            case 2:
+                ImmersionBar.with(this).reset().statusBarColor(R.color.try_use_top_color).init();
+                FragmentUtils.show(mReportFragment);
+                break;
+            case 3:
+                ImmersionBar.with(this).reset().statusBarColor(R.color.login_bar_color).init();
+                FragmentUtils.show(mPersonalFragment);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void hideAllFragment() {
+        FragmentUtils.hide(mHomeFragment);
+        FragmentUtils.hide(mReportFragment);
+        FragmentUtils.hide(mTryUseFragment);
+        FragmentUtils.hide(mPersonalFragment);
+    }
+
+    private void initSaveInstanceState(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            mCurrentIndex = savedInstanceState.getInt("currentIndex");
+            mHomeFragment = (HomeFragment) FragmentUtils.findFragment(mFragmentManager, HomeFragment.class);
+            mTryUseFragment = (TryUseFragment) mFragmentManager.findFragmentByTag(TAG_NEWS_FRAGMENT);
+            mReportFragment = (ReportFragment) mFragmentManager.findFragmentByTag(TAG_SHOPPING_FRAGMENT);
+            mPersonalFragment = (PersonalFragment) mFragmentManager.findFragmentByTag(TAG_PERSONAL_FRAGMENT);
+        } else {
+            mHomeFragment = mGetHomeFragment;
+            mTryUseFragment = mGetTryUseFragment;
+            mReportFragment = mGetReportFragment;
+            mPersonalFragment = mGetPersonalFragment;
+        }
+
+        mHomeFragment.setmHomeItemClickListener(this);
+        addAllFragment();
+    }
+
+    private void addAllFragment() {
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        FragmentUtils.add(mFragmentManager, mHomeFragment, R.id.rl_home_container);
+        FragmentUtils.add(mFragmentManager, mTryUseFragment, R.id.rl_home_container);
+        FragmentUtils.add(mFragmentManager, mReportFragment, R.id.rl_home_container);
+        FragmentUtils.add(mFragmentManager, mPersonalFragment, R.id.rl_home_container);
+    }
+
+
+    @Override
+    protected void handleBundle(@NonNull Bundle bundle) {
+
+    }
+
+
+    /**
+     * 点击首页"+"号操作
+     */
+    private void gotoSendReport() {
+        if (DbHelper.checkUserIsLogin(HomeActivity.this)) {
+            mSendReportPresenter.getReportSize(Config.HSK, DbHelper.getUserId(HomeActivity.this), "3", 1, Config.LOADMORE.PAGE_SIZE);
+        } else {
+            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+
+    }
+
+    @Override
+    public void setOnTryNewMoreClick() {
+        changeToSelectView(1);
+        showFragment(1);
+
+    }
+
+    @Override
+    public void setOnTryPersonClick() {
+
+    }
+
+    @Override
+    public void setOnTryReportClick() {
+        changeToSelectView(2);
+        showFragment(2);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public void onBackPressed() {
+        exit();
+    }
+
+    private static boolean isExit = false;  // 标识是否退出
+
+    private static Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            isExit = false;
+        }
+    };
+
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void exit() {
+        if (!isExit) {
+            isExit = true;
+            Toast.makeText(this, "再按一次返回键退出程序", Toast.LENGTH_SHORT).show();
+            mHandler.sendEmptyMessageDelayed(0, 2000);  // 利用handler延迟发送更改状态信息
+        } else {
+            // 1\. 通过Context获取ActivityManager
+            ActivityManager activityManager = (ActivityManager) this.getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+
+            // 2\. 通过ActivityManager获取任务栈
+            List<ActivityManager.AppTask> appTaskList = activityManager.getAppTasks();
+
+            // 3\. 逐个关闭Activity
+            for (ActivityManager.AppTask appTask : appTaskList) {
+                appTask.finishAndRemoveTask();
+
+                System.exit(0);
+            }
+        }
+    }
+
+
+    @Override
+    public void getReportSizeSuccess(ResponseListInfo<MyTrySingleBean> data) {
+        if (data != null && data.getData() != null && data.getSize() > 0) {
+            Intent intent = new Intent(HomeActivity.this, MyTryActivity.class);
+            intent.putExtra("home", true);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } else {
+            RxToast.showToast(getResources().getString(R.string.home_no_send_report_now));
+            mCurrentIndex = 1;
+            changeToSelectView(mCurrentIndex);
+            showFragment(mCurrentIndex);
+        }
+    }
+
+    @Override
+    public void getReportSizeFailed(String errorMsg) {
+        RxToast.showToast("发布异常");
+    }
+
+    @Override
+    public void initPresenter() {
+        mSendReportPresenter.takeView(this);
+    }
+
+    @Override
+    public boolean isActive() {
+        return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        int key = v.getId();
+        switch (key) {
+            case R.id.bottom_home:
+                mCurrentIndex = 0;
+                changeToSelectView(mCurrentIndex);
+                showFragment(mCurrentIndex);
+                break;
+            case R.id.bottom_try:
+                mCurrentIndex = 1;
+                changeToSelectView(mCurrentIndex);
+                showFragment(mCurrentIndex);
+                break;
+            case R.id.bottom_share:
+                mCurrentIndex = 2;
+                changeToSelectView(mCurrentIndex);
+                showFragment(mCurrentIndex);
+                break;
+            case R.id.bottom_mine:
+                mCurrentIndex = 3;
+                changeToSelectView(mCurrentIndex);
+                showFragment(mCurrentIndex);
+                break;
+            case R.id.btn_home_submit:
+                //点击中间发布的
+                gotoSendReport();
+                break;
+            default:
+                break;
+        }
+    }
+}

@@ -1,0 +1,240 @@
+package com.zfsoft.zfsoft_product.modules.report.other_info;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.vondear.rxtool.RxActivityTool;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseListFragmentWithHead;
+import com.zfsoft.zfsoft_product.common.Config;
+import com.zfsoft.zfsoft_product.entity.OtherBean;
+import com.zfsoft.zfsoft_product.entity.SignBean;
+import com.zfsoft.zfsoft_product.entity.TestReportBean;
+import com.zfsoft.zfsoft_product.modules.report.report_detail.ReportDetailActivity;
+import com.zfsoft.zfsoft_product.modules.try_use.photo_detail.PhotoDetailActivity;
+import com.zfsoft.zfsoft_product.utils.DbHelper;
+import com.zfsoft.zfsoft_product.utils.ImageLoaderHelper;
+import com.zfsoft.zfsoft_product.utils.SizeUtils;
+import com.zfsoft.zfsoft_product.utils.ToastUtils;
+
+import javax.inject.Inject;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
+/**
+ * 创建日期：2019/1/17 on 16:55
+ * 描述:他人信息Fragment
+ * 作者:Ls
+ */
+public class OtherInformationFragment extends BaseListFragmentWithHead<TestReportBean, OtherInformationPresenter> implements OtherInformationContract.View, View.OnClickListener {
+
+    private OtherInformationAdapter mAdapter;
+
+    private String mOtherUserId;
+
+    @Inject
+    OtherInformationPresenter mOtherInformationPresenter;
+    private CircleImageView mUserImg;
+    private TextView mTvAttentionNumber;
+    private TextView mTvFansNumber;
+    private TextView mTvStarNumber;
+    private TextView mTvIsAttention;
+    private TextView mTvName;
+    private TextView mTvIntroduce;
+    private OtherBean mOtherBean;
+
+    @Inject
+    public OtherInformationFragment() {
+
+    }
+
+    @Override
+    protected void initVariables() {
+        mOtherUserId = getArguments().getString("otherUserId");
+    }
+
+    @Override
+    protected void setSpecificPresenter() {
+        mOtherInformationPresenter.takeView(this);
+    }
+
+    @Override
+    protected void onItemCLick(BaseQuickAdapter adapter, int position) {
+        TestReportBean testReportBean = (TestReportBean) adapter.getData().get(position);
+        int id = testReportBean.getId();
+        Bundle bundle = new Bundle();
+        bundle.putInt("reportId", id);
+        bundle.putString("reportUserId", testReportBean.getTalented());
+        RxActivityTool.skipActivity(getActivity(), ReportDetailActivity.class, bundle);
+    }
+
+    @Override
+    public void loadData() {
+        super.loadData();
+        mOtherInformationPresenter.getMyReportList(Config.HSK, mOtherUserId, start_page, PAGE_SIZE);
+        mOtherInformationPresenter.getOtherPersonInfo(Config.HSK, DbHelper.getUserId(mContext), mOtherUserId);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mOtherInformationPresenter.dropView();
+    }
+
+    @Override
+    protected void initFootView(BaseQuickAdapter adapter) {
+
+    }
+
+    @Override
+    protected void initHeader(BaseQuickAdapter adapter) {
+        View personalInfoView = LayoutInflater.from(mContext).inflate(R.layout.other_info_header_item, null);
+        //头像
+        mUserImg = personalInfoView.findViewById(R.id.iv_circle);
+        mUserImg.setOnClickListener(this);
+        //关注
+        mTvAttentionNumber = personalInfoView.findViewById(R.id.tv_attention_number);
+        //粉丝数量
+        mTvFansNumber = personalInfoView.findViewById(R.id.tv_fans_number);
+        //点赞
+        mTvStarNumber = personalInfoView.findViewById(R.id.tv_star_number);
+        mTvIsAttention = personalInfoView.findViewById(R.id.tv_is_attention);
+        if (DbHelper.checkUserIsLogin(mContext)){
+           if (DbHelper.getUserId(mContext).equals(mOtherUserId)){
+                mTvIsAttention.setVisibility(View.GONE);
+            }
+        }
+        //是否关注
+
+        mTvIsAttention.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (mOtherBean.getType().equals("2")) {//未关注状态
+                    mOtherInformationPresenter.addAttention(Config.HSK, DbHelper.getUserId(mContext), mOtherUserId, "1");
+                } else {
+                    mOtherInformationPresenter.addAttention(Config.HSK, DbHelper.getUserId(mContext), mOtherUserId, "2");
+                }
+            }
+        });
+        //姓名
+        mTvName = personalInfoView.findViewById(R.id.tv_name);
+        //个性签名
+        mTvIntroduce = personalInfoView.findViewById(R.id.tv_person_speak);
+
+        mAdapter.addHeaderView(personalInfoView, -2);
+
+        View reportInfoView = LayoutInflater.from(mContext).inflate(R.layout.other_info_his_report, null);
+        mAdapter.addHeaderView(reportInfoView, -1);
+    }
+
+    @Override
+    public RecyclerView.ItemDecoration getItemDecoration() {
+        return new TwoHeaderItemDecoration(SizeUtils.dp2px(8, getContext()));
+    }
+
+    @Override
+    protected BaseQuickAdapter<TestReportBean, BaseViewHolder> getAdapter() {
+        mAdapter = new OtherInformationAdapter();
+        return mAdapter;
+    }
+
+
+    @Override
+    protected RecyclerView.LayoutManager getLayoutManager() {
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        return staggeredGridLayoutManager;
+    }
+
+    @Override
+    public void getOtherPersonSuccess(OtherBean userBean) {
+        if (userBean != null) {
+            mOtherBean = userBean;
+            String type = userBean.getType();
+            if (type != null) {
+                if (userBean.getType().equals("2")) {// 2 未关注状态
+                    mTvIsAttention.setText("关注");
+                } else {//已经关注状态
+                    mTvIsAttention.setText("已关注");
+                }
+            }
+
+            mTvStarNumber.setText(String.valueOf(userBean.getLikesum()));
+            mTvAttentionNumber.setText(String.valueOf(userBean.getMyfocus()));
+            mTvFansNumber.setText(String.valueOf(userBean.getMyfans()));
+            mTvName.setText(userBean.getMyname());
+            mTvIntroduce.setText(userBean.getMyintroduction());
+            ImageLoaderHelper.loadHeadImage(mContext, mUserImg, userBean.getMyimg());
+        }
+
+    }
+
+    @Override
+    public void getOtherPersonFailure(String errorMsg) {
+        ToastUtils.showCenterToast(getContext(), errorMsg);
+    }
+
+    @Override
+    public void addAttentionSuccess(SignBean signBean) {
+        String msgtype = signBean.getMsgtype();
+
+        //(1:关注成功，2：关注失败)
+        if (mOtherBean.getType().equals("2")) {//未关注，调关注接口
+            if (msgtype.equals("1")) {
+                mTvIsAttention.setText("已关注");
+                mOtherBean.setType("1");
+                ToastUtils.showCenterToast(getContext(), "关注成功");
+            } else {
+                mTvIsAttention.setText("关注");
+                mOtherBean.setType("2");
+                ToastUtils.showCenterToast(getContext(), "关注失败");
+            }
+        } else if (mOtherBean.getType().equals("1")) {// 已关注
+            if (msgtype.equals("1")) {//取消关注成功
+                mTvIsAttention.setText("关注");
+                mOtherBean.setType("2");
+                ToastUtils.showCenterToast(getContext(), "取关成功");
+            } else {
+                mTvIsAttention.setText("已关注");
+                mOtherBean.setType("1");
+                ToastUtils.showCenterToast(getContext(), "取关失败");
+            }
+        }
+
+    }
+
+    @Override
+    public void addAttentionFailure(String errorMsg) {
+        ToastUtils.showCenterToast(getContext(), errorMsg);
+    }
+
+    @Override
+    public void onClick(View v) {
+        int key = v.getId();
+        switch (key) {
+            case R.id.iv_circle:
+                if (!TextUtils.isEmpty(mOtherBean.getMyimg())) {
+                    Intent intent = new Intent(v.getContext(),PhotoDetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("photo_detail", mOtherBean.getMyimg());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                } else {
+                    return;
+                }
+                break;
+
+            default:
+                break;
+
+        }
+    }
+}

@@ -1,0 +1,98 @@
+package com.zfsoft.zfsoft_product.modules.home;
+
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.utils.ImageLoaderHelper;
+
+import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
+/**
+ * Created by ckw
+ * on 2019/1/16.
+ */
+public class HorizontalScrollAdapter extends RecyclerView.Adapter<HorizontalScrollAdapter.ScrollHolder> {
+
+    private Context mContext;
+    private List<MultipleItem.ScrollImgListEntity.ScrollImgEntity> mList;
+    private ItemRecyclerClickListener itemRecyclerClickListener;
+
+    public HorizontalScrollAdapter(Context mContext, List<MultipleItem.ScrollImgListEntity.ScrollImgEntity> mList,ItemRecyclerClickListener itemRecyclerClickListener) {
+        this.mContext = mContext;
+        this.mList = mList;
+        this.itemRecyclerClickListener = itemRecyclerClickListener;
+    }
+
+    @NonNull
+    @Override
+    public ScrollHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_scroll,parent,false);
+        ScrollHolder holder = new ScrollHolder(view);
+        return holder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ScrollHolder holder, int position) {
+        MultipleItem.ScrollImgListEntity.ScrollImgEntity scrollImgEntity = mList.get(position);
+        if(scrollImgEntity.getType().equals("1")){
+            holder.concern.setText("关注");
+            holder.concern.setBackgroundResource(R.drawable.background_text_concern);
+        }else {
+            holder.concern.setText("已关注");
+            holder.concern.setBackgroundResource(R.drawable.background_full_concern);
+        }
+        holder.reportNum.setText("报告 "+scrollImgEntity.getReportNum());
+        holder.fansNum.setText("粉丝 "+scrollImgEntity.getFansNum());
+        holder.userName.setText(scrollImgEntity.getName());
+        ImageLoaderHelper.loadHeadImage(mContext,holder.circleImageView,scrollImgEntity.getHeadUrl());
+    }
+
+    @Override
+    public int getItemCount() {
+        return mList != null? mList.size():0;
+    }
+
+    class ScrollHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private CircleImageView circleImageView;
+        private TextView userName;
+        private TextView fansNum;
+        private TextView reportNum;
+        private TextView concern;
+        public ScrollHolder(View itemView) {
+            super(itemView);
+            circleImageView = itemView.findViewById(R.id.civ_user_head);
+            userName = itemView.findViewById(R.id.tv_user_name);
+            fansNum = itemView.findViewById(R.id.tv_fans_num);
+            reportNum = itemView.findViewById(R.id.tv_report_number);
+            concern = itemView.findViewById(R.id.tv_concern);
+            itemView.setOnClickListener(this);
+            concern.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            int id = v.getId();
+
+            if(id == R.id.tv_concern){
+                if (itemRecyclerClickListener != null) {
+                    itemRecyclerClickListener.onRecyclerItemInItemClick(getAdapterPosition(),(TextView) v);
+                }
+            }else {
+                if (itemRecyclerClickListener != null) {
+                    itemRecyclerClickListener.onRecyclerItemClick(getAdapterPosition());
+                }
+            }
+        }
+    }
+}

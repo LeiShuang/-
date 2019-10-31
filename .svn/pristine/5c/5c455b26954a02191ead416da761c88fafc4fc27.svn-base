@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.gcssloop.widget.RCRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_child_bg"
+    app:round_corner="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite">
+        <!--物品图片-->
+        <ImageView
+            android:id="@+id/iv_child_pic"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ico_child_bg" />
+        <!--标题-->
+        <TextView
+            android:id="@+id/tv_child_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_child_pic"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:padding="@dimen/five_padding"
+            android:singleLine="true"
+            android:textColor="@color/colorSmallBlack"
+            android:textSize="@dimen/font_normal"
+            android:textStyle="bold"
+            tools:text="这是一个标题测撒所大所多撒大所大所多撒多撒奥术大师大所多撒多撒多" />
+        <!-- <RelativeLayout
+             android:id="@+id/rl_child_1"
+             android:layout_below="@+id/tv_child_title"
+             android:padding="@dimen/five_padding"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+             &lt;!&ndash;一个商品的体积&ndash;&gt;
+             <TextView
+                 android:id="@+id/tv_child_size"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentLeft="true"
+                 android:textColor="@color/grey"
+                 tools:text="50ml"
+                 android:gravity="center_vertical|left"/>
+             <TextView
+                 android:id="@+id/tv_child_numer"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentRight="true"
+                 tools:text="数量: 10"
+                 android:textColor="@color/grey"
+                 android:gravity="center_vertical|right"/>
+         </RelativeLayout>-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_child_title"
+            android:padding="@dimen/five_padding">
+            <!--一个商品的体积-->
+            <TextView
+                android:id="@+id/tv_child_numer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/grey"
+                tools:text="数量 : 10" />
+
+            <TextView
+                android:id="@+id/tv_child_fire"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:drawableLeft="@mipmap/ico_fire"
+                android:drawablePadding="@dimen/five_padding"
+                android:gravity="center_vertical|right"
+                android:textColor="@color/grey"
+                tools:text="500" />
+        </RelativeLayout>
+    </RelativeLayout>
+</com.gcssloop.widget.RCRelativeLayout>

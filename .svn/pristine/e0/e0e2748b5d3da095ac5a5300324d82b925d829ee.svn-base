@@ -1,0 +1,46 @@
+package com.zfsoft.zfsoft_product.modules.report.write;
+
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseActivity;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+/**
+ * 创建日期：2019/1/11 on 14:38
+ * 描述:写报告界面
+ * 作者:Ls
+ */
+public class WriteReportActivity extends BaseActivity {
+    @BindView(R.id.tv_back)
+    ImageView mTvBack;
+    @BindView(R.id.tv_top_send)
+    TextView mTvTopSend;
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_write_report;
+    }
+
+    @Override
+    protected void initView(Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    protected void handleBundle(@NonNull Bundle bundle) {
+
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+
+}

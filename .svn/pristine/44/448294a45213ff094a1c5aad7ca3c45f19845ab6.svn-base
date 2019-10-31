@@ -1,0 +1,26 @@
+package com.zfsoft.zfsoft_product.entity;
+
+import java.security.PrivateKey;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 创建日期：2019/1/12 on 14:30
+ * 描述:假数据帮助类
+ * 作者:Ls
+ */
+public class InfoServer {
+    private List<ReportInfo> mReportInfos;
+    public List<ReportInfo> getReportList(int size){
+        mReportInfos = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            ReportInfo info = new ReportInfo();
+            info.setShowPicUrl("http://dpic.tiankong.com/fx/g1/QJ6846644164.jpg");
+            info.setReportTitle("报告标题" + i);
+            info.setPersonalName("张麻子"+ i);
+            info.setPersonalPhotoUrl("http://tupian.qqw21.com/article/UploadPic/2016-4/201641121524755187.jpg");
+            info.setStartNumer("" + i);
+        }
+        return null;
+    }
+}

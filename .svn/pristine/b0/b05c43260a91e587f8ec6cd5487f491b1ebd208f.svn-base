@@ -1,0 +1,76 @@
+package com.zfsoft.zfsoft_product.modules.report.write;
+
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
+
+import com.gyf.barlibrary.ImmersionBar;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseActivity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+/**
+ * 创建日期：2019/1/11 on 14:38
+ * 描述:写报告界面
+ * 作者:Ls
+ */
+public class WriteReportActivity extends BaseActivity {
+    private List<String> textTitles;
+    private List<Fragment> fragmentLists;
+    private FragmentManager mManager;
+    private TabLayout mTabLayout;
+    private ViewPager mViewPager;
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_write_report;
+    }
+
+    @Override
+    protected void initView(Bundle savedInstanceState) {
+        fragmentLists = new ArrayList<>();
+        mTabLayout = findViewById(R.id.bottom_tabLayout);
+        mViewPager = findViewById(R.id.write_report_viewPager);
+        fragmentLists.add(SelectPicturesFragment.newInstance());
+        fragmentLists.add(CameraFragment.newInstance());
+        fragmentLists.add(SmallVideoFragment.newInstance());
+
+       WriteReportViewPagerAdapter adapter = new WriteReportViewPagerAdapter(mManager,fragmentLists,textTitles);
+       mViewPager.setAdapter(adapter);
+       mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    @Override
+    protected void handleBundle(@NonNull Bundle bundle) {
+
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+
+    @Override
+    public void initVariables() {
+        mManager = getSupportFragmentManager();
+        textTitles = new ArrayList<>();
+        textTitles.add("相册");
+        textTitles.add("拍照");
+        textTitles.add("拍视频");
+    }
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        ImmersionBar.with(this).fullScreen(true);
+    }
+}

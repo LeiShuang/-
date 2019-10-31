@@ -1,0 +1,133 @@
+package com.zfsoft.zfsoft_product.modules.report.other_info;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseListFragment;
+import com.zfsoft.zfsoft_product.entity.InfoServer;
+import com.zfsoft.zfsoft_product.entity.ReportInfo;
+import com.zfsoft.zfsoft_product.entity.UserInfo;
+import com.zfsoft.zfsoft_product.modules.personal.my_try.MyTryPresenter;
+import com.zfsoft.zfsoft_product.modules.report.report_child.ChildItemDecoration;
+import com.zfsoft.zfsoft_product.modules.report.report_detail.ReportDetailActivity;
+import com.zfsoft.zfsoft_product.utils.ImageLoaderHelper;
+import com.zfsoft.zfsoft_product.utils.SizeUtils;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
+/**
+ * 创建日期：2019/1/17 on 16:55
+ * 描述:他人信息Fragment
+ * 作者:Ls
+ */
+public class OtherInformationFragment extends BaseListFragment<ReportInfo,MyTryPresenter> {
+
+    private OtherInformationAdapter mAdapter;
+    private UserInfo mInfo;
+    private List<ReportInfo> lists;
+
+    @Inject
+    public OtherInformationFragment(){
+
+    }
+
+    @Override
+    protected void initVariables() {
+        mInfo = InfoServer.getUserInfo();
+        //lists = InfoServer.getReportList(20);
+    }
+
+    @Override
+    protected void setSpecificPresenter() {
+
+    }
+
+    @Override
+    protected void onItemCLick(BaseQuickAdapter adapter, int position) {
+        mContext.startActivity(new Intent(getActivity(), ReportDetailActivity.class));
+    }
+
+    public static OtherInformationFragment newInstance() {
+        
+        Bundle args = new Bundle();
+        OtherInformationFragment fragment = new OtherInformationFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
+    @Override
+    protected void initFootView(BaseQuickAdapter adapter) {
+        View personalInfoView = LayoutInflater.from(mContext).inflate(R.layout.other_info_header_item,null);
+        //头像
+        CircleImageView ivPic = personalInfoView.findViewById(R.id.iv_circle);
+        ImageLoaderHelper.loadImage(mContext,ivPic,mInfo.getPersonPicUrl());
+        //关注
+        TextView tvAttentionNumber  = personalInfoView.findViewById(R.id.tv_attention_number);
+        tvAttentionNumber.setText(mInfo.getAttentionNumber());
+        //粉丝数量
+        TextView tvFansNumber = personalInfoView.findViewById(R.id.tv_fans_number);
+        tvFansNumber.setText(mInfo.getFensNumber());
+        //点赞
+        TextView tvStarNumber = personalInfoView.findViewById(R.id.tv_star_number);
+        tvStarNumber.setText(mInfo.getStarNumber());
+        //是否关注
+         TextView tvHasattention = personalInfoView.findViewById(R.id.tv_is_attention);
+         tvHasattention.setText(mInfo.isHasAttention() ? "已关注" : "关注");
+        //姓名
+        TextView tvName = personalInfoView.findViewById(R.id.tv_name);
+        tvName.setText(mInfo.getName());
+        //个性签名
+        TextView tvSpeak = personalInfoView.findViewById(R.id.tv_person_speak);
+        tvSpeak.setText(mInfo.getPersonalSpeak());
+        mAdapter.addHeaderView(personalInfoView,-2);
+
+        View reportInfoView = LayoutInflater.from(mContext).inflate(R.layout.other_info_his_report,null);
+        mAdapter.addHeaderView(reportInfoView,-1);
+    }
+
+    @Override
+    protected void initHeader(BaseQuickAdapter adapter) {
+
+    }
+
+
+
+
+
+    @Override
+    public void loadFailure(String errorMsg) {
+        super.loadFailure(errorMsg);
+    }
+
+    @Override
+    public RecyclerView.ItemDecoration getItemDecoration() {
+        return new TwoHeaderItemDecoration(SizeUtils.dp2px(8,getContext()));
+    }
+
+    @Override
+    protected BaseQuickAdapter<ReportInfo, BaseViewHolder> getAdapter() {
+        mAdapter = new OtherInformationAdapter();
+        mAdapter.setNewData(lists);
+        return mAdapter;
+    }
+
+
+    @Override
+    protected RecyclerView.LayoutManager getLayoutManager() {
+        GridLayoutManager manager = new GridLayoutManager(mContext,2);
+        return manager;
+    }
+}

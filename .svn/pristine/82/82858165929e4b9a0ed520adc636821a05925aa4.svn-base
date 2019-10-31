@@ -1,0 +1,104 @@
+<resources>
+    <string name="app_name">零兔壹021</string>
+    <string name="toolbar_subtitle">subtitle</string>
+    <string name="share_photo_name">图片分享</string>
+    <string name="share_url_name">复制链接</string>
+    <string name="share_red_book">小红书</string>
+
+    <!--权限相关-->
+    <string name="request_permissions">权限请求</string>
+    <string name="permissions_rationale">该APP需要相应的权限,请到设置页面去设置</string>
+    <string name="Ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="share">分享</string>
+    <string name="send">发送</string>
+
+    <!--SmartRefresh-->
+    <string name="header_pulling">下拉可以刷新</string>
+    <string name="header_refreshing">正在刷新...</string>
+    <string name="header_loading">正在加载...</string>
+    <string name="header_release">释放立即刷新</string>
+    <string name="header_finish">刷新完成</string>
+    <string name="header_failed">刷新失败</string>
+    <string name="header_update">上次更新 M-d HH:mm</string>
+    <string name="footer_pulling">上拉加载更多</string>
+    <string name="footer_release">释放立即加载</string>
+    <string name="footer_loading">正在刷新...</string>
+    <string name="footer_refreshing">正在加载...</string>
+    <string name="footer_finish">加载完成</string>
+    <string name="footer_failed">加载失败</string>
+    <string name="footer_nothing">全部加载完成</string>
+
+
+    <!--空布局-->
+    <string name="no_data_attention">暂无数据</string>
+
+    <!--无网络-->
+    <string name="no_net_error">网络错误,点击重新加载!</string>
+
+    <!--加载错误-->
+    <string name="load_error">加载失败,点击刷新</string>
+
+    <string name="report_detail_attention">关注</string>
+
+    <string name="report_discuss_top">报告评论</string>
+    <string name="write_discuss">写评论</string>
+    <string name="text_submit">发布</string>
+    <string name="submit_discuss">发布报告</string>
+    <string name="submit">发布</string>
+    <string name="try_use_now">立即申请</string>
+    <string name="share_get_scroll">分享得积分</string>
+    <string name="all_discuss">全部评论</string>
+    <string name="produce_introduce">产品简介</string>
+    <string name="cancel_get">申请已取消</string>
+    <string name="please_input_discuss">请输入评论</string>
+    <string name="his_report_list">TA的报告</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="login_register">登录/注册</string>
+    <string name="login_tip">请输入手机号</string>
+    <string name="pwd_tip">请输入密码</string>
+    <string name="set_pwd">请设置密码</string>
+    <string name="set_pwd_again">请再次输入密码</string>
+    <string name="validation_tip">请输入验证码</string>
+    <string name="validation_send">验证码已发送</string>
+    <string name="login_by_pwd">通过密码登录</string>
+    <string name="get_validation">获取验证码</string>
+    <string name="see_more">查看更多</string>
+    <string name="apply_for">申请</string>
+    <string name="fans_number">粉丝</string>
+    <string name="click_star">点赞</string>
+    <string name="please_input_title">请输入标题</string>
+    <string name="please_input_try_use_speak">写下你的试用心得~</string>
+    <string name="all_reply">全部回复</string>
+    <string name="click_star_attention">[点赞]是严肃的，不可以反悔哦</string>
+    <string name="share_red_book_string">小红书分享</string>
+    <string name="submit_report_wait">发布中,请稍后...</string>
+    <string name="submit_report_success">发布成功</string>
+    <string name="submit_report_failed">发布失败</string>
+    <string name="photo"></string>
+    <!--暂无更多数据提示-->
+    <string name="no_more_discuss">暂无更多评论</string>
+    <string name="base_no_data_more">我也是有底线的</string>
+    <!-- 共享过度动画 -->
+    <string name="transition_photos">transition_animation_news_photos</string>
+    <!--图库-->
+    <string name="home_no_send_report_now">你还不需要提交试用报告哦,不要放弃努力,快去申请最新免费试用吧!</string>
+
+    <string name="select_from_album">相册选取</string>
+    <string name="take_pictures">拍照</string>
+    <string name="request_permission_by_select_from_album">从相册中选取需要有读文件和写文件的权限</string>
+    <string name="request_permission_by_camera">拍照需要CAMERA权限和写权限</string>
+    <string name="please_insert_sdcard">请确认已经插入SD卡</string>
+    <string name="dir_create_failure">目录创建失败</string>
+    <string name="icon_upload_failure">头像上传失败</string>
+
+    <!--提交-->
+    <string name="please_input_title_first">请输入标题(30字以内)</string>
+    <string name="please_input_content_first">填写报告内容会更好喔(#^.^#)</string>
+    <string name="please_input_share_url">请输入小红书笔记地址</string>
+    <string name="submit_share_url">提交</string>
+    <string name="share_url_text_title">填写说明</string>
+    <string name="share_url_text_hint">因为小红书未提供直接分享接口，请输入小红书笔记地址方便我们核对，核对成功可以增加积分哦</string>
+
+</resources>

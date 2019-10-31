@@ -1,0 +1,73 @@
+package com.zfsoft.zfsoft_product.modules.personal.my_try;
+
+import android.os.Bundle;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.zfsoft.zfsoft_product.base.BaseListFragment;
+import com.zfsoft.zfsoft_product.entity.MyTrySingleBean;
+import com.zfsoft.zfsoft_product.entity.ResponseListInfo;
+
+import javax.inject.Inject;
+
+/**
+ * Created by ckw
+ * on 2019/1/21.
+ */
+public class MyTrySingleFragment extends BaseListFragment<MyTrySingleBean,MyTryPresenter>  implements MyTryContract.View{
+
+    @Inject
+    public MyTrySingleFragment() {
+    }
+
+    @Inject
+    MyTryPresenter myTryPresenter;
+
+    public static MyTrySingleFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        MyTrySingleFragment fragment = new MyTrySingleFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void setSpecificPresenter() {
+        myTryPresenter.takeView(this);
+    }
+
+    @Override
+    protected void initFootView(BaseQuickAdapter adapter) {
+
+    }
+
+    @Override
+    protected void initHeader(BaseQuickAdapter adapter) {
+
+    }
+
+    @Override
+    protected void onItemCLick() {
+
+    }
+
+    @Override
+    public void loadData() {
+        super.loadData();
+        myTryPresenter.getMyTryList("","");
+    }
+
+    @Override
+    protected BaseQuickAdapter<MyTrySingleBean, BaseViewHolder> getAdapter() {
+        return new MyTrySingleAdapter();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        myTryPresenter.dropView();
+    }
+
+
+}

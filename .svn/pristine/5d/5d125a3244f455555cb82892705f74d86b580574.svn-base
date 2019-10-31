@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:background="@color/colorWhite">
+
+    <RelativeLayout
+        android:background="@color/try_use_top_color"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+        <ImageView
+            android:id="@+id/report_add"
+            android:src="@mipmap/ico_add"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/fivteen_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+       <android.support.v7.widget.SearchView
+           android:id="@+id/report_search"
+           android:background="@color/try_use_search_bg"
+           android:layout_centerVertical="true"
+           android:layout_toLeftOf="@+id/report_add"
+           android:layout_marginRight="@dimen/ten_padding"
+           android:layout_marginTop="@dimen/ten_padding"
+           android:layout_marginBottom="@dimen/ten_padding"
+           android:layout_marginLeft="@dimen/fivteen_padding"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"/>
+    </RelativeLayout>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/report_tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@color/try_use_top_color"
+        app:tabIndicatorColor="@android:color/white"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@android:color/white"
+        app:tabTextColor="@color/colorBarText" />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/report_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

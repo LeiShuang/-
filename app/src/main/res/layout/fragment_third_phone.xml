@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/background_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/et_login_third"
+        android:paddingLeft="16dp"
+        android:layout_marginTop="140dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:hint="@string/login_tip"
+        android:inputType="number"
+        android:background="@drawable/background_input"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
+        android:textSize="15sp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp" />
+
+    <EditText
+        android:id="@+id/et_sms_code"
+        android:layout_below="@+id/et_login_third"
+        android:paddingLeft="16dp"
+        android:inputType="number"
+        android:layout_marginTop="18dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:hint="@string/validation_tip"
+        android:background="@drawable/background_input"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp" />
+
+
+    <com.zfsoft.zfsoft_product.modules.login.CountDownTextView
+        android:id="@+id/count_down_view"
+        android:text="@string/get_validation"
+        android:layout_alignBaseline="@+id/et_sms_code"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="44dp"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_below="@+id/et_sms_code"
+        android:textColor="#fa857c"
+        android:textSize="15sp"
+        android:background="@drawable/background_login_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="登录"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:layout_height="45dp" />
+
+</RelativeLayout>

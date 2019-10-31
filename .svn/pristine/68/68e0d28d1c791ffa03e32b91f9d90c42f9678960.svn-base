@@ -1,0 +1,36 @@
+package com.zfsoft.zfsoft_product.modules.report.other_info;
+
+import android.widget.ImageView;
+import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.entity.ReportInfo;
+import com.zfsoft.zfsoft_product.utils.ImageLoaderHelper;
+import de.hdodenhof.circleimageview.CircleImageView;
+
+/**
+ * 创建日期：2019/1/17 on 18:33
+ * 描述:他人个人信息展示页面适配器
+ * 作者:Ls
+ */
+public class OtherInformationAdapter extends BaseQuickAdapter<ReportInfo,BaseViewHolder> {
+    public OtherInformationAdapter() {
+        super(R.layout.item_report_child_view);
+    }
+
+    @Override
+    protected void convert(BaseViewHolder helper, ReportInfo item) {
+        ImageLoaderHelper.loadImageWithRoundedCorners(mContext, (ImageView) helper.getView(R.id.ic_report_show_pic),item.getShowPicUrl());
+        helper.setText(R.id.tv_report_title,item.getReportTitle());
+        Glide.with(mContext)
+                .load(item.getPersonalPhotoUrl())
+                .placeholder(R.mipmap.iv_default)
+                .error(R.mipmap.iv_default)
+                .into((CircleImageView)helper.getView(R.id.tv_reporter_pic));
+
+        helper.setText(R.id.tv_reporter_name,item.getPersonalName());
+        helper.setText(R.id.tv_star_number,item.getStartNumer());
+
+    }
+}

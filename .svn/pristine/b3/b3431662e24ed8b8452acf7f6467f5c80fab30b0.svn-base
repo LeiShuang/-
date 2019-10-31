@@ -1,0 +1,48 @@
+package com.zfsoft.zfsoft_product.di;
+
+import dagger.internal.Factory;
+import dagger.internal.Preconditions;
+import javax.annotation.Generated;
+import javax.inject.Provider;
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+
+@Generated(
+  value = "dagger.internal.codegen.ComponentProcessor",
+  comments = "https://google.github.io/dagger"
+)
+public final class NetModule_ProvideRetrofitFactory implements Factory<Retrofit> {
+  private final NetModule module;
+
+  private final Provider<String> baseUrlProvider;
+
+  private final Provider<OkHttpClient> clientProvider;
+
+  public NetModule_ProvideRetrofitFactory(
+      NetModule module, Provider<String> baseUrlProvider, Provider<OkHttpClient> clientProvider) {
+    assert module != null;
+    this.module = module;
+    assert baseUrlProvider != null;
+    this.baseUrlProvider = baseUrlProvider;
+    assert clientProvider != null;
+    this.clientProvider = clientProvider;
+  }
+
+  @Override
+  public Retrofit get() {
+    return Preconditions.checkNotNull(
+        module.provideRetrofit(baseUrlProvider.get(), clientProvider.get()),
+        "Cannot return null from a non-@Nullable @Provides method");
+  }
+
+  public static Factory<Retrofit> create(
+      NetModule module, Provider<String> baseUrlProvider, Provider<OkHttpClient> clientProvider) {
+    return new NetModule_ProvideRetrofitFactory(module, baseUrlProvider, clientProvider);
+  }
+
+  /** Proxies {@link NetModule#provideRetrofit(String, OkHttpClient)}. */
+  public static Retrofit proxyProvideRetrofit(
+      NetModule instance, String baseUrl, OkHttpClient client) {
+    return instance.provideRetrofit(baseUrl, client);
+  }
+}

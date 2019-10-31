@@ -1,0 +1,44 @@
+package com.zfsoft.zfsoft_product.modules.try_use.try_use_detail;
+
+import android.os.Bundle;
+import android.view.View;
+
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseFragment;
+
+/**
+ * 创建日期：2019/1/12 on 14:23
+ * 描述:产品详情fragment
+ * 作者:Ls
+ */
+public class ProductDetailFragment extends BaseFragment {
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.fragment_producet_detail;
+    }
+
+    @Override
+    protected void initVariables() {
+
+    }
+
+    @Override
+    protected void handleBundle(Bundle bundle) {
+
+    }
+
+    @Override
+    protected void operateViews(View view) {
+
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    public void initPresenter() {
+
+    }
+}

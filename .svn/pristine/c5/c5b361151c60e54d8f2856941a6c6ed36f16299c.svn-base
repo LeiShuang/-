@@ -1,0 +1,21 @@
+package com.zfsoft.zfsoft_product.modules.personal.my_try;
+
+import com.zfsoft.zfsoft_product.base.BasePresenter;
+import com.zfsoft.zfsoft_product.base.BaseView;
+import com.zfsoft.zfsoft_product.entity.MyTrySingleBean;
+import com.zfsoft.zfsoft_product.entity.ResponseListInfo;
+
+/**
+ * Created by ckw
+ * on 2019/1/21.
+ */
+public class MyTryContract {
+    public interface View extends BaseView{
+        void getMyTryListSuccess(ResponseListInfo<MyTrySingleBean> listInfo);
+        void getMyTryListFailure(String errorMsg);
+    }
+
+    public interface Presenter extends BasePresenter<View>{
+        void getMyTryList(String hsk,String link);
+    }
+}

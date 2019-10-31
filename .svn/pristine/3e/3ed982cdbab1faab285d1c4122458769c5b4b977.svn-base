@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.zfsoft.zfsoft_product">
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!--点播播放器悬浮窗权限-->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!--存储-->
+
+    <application
+        android:name=".base.BaseApplication"
+        android:allowBackup="true"
+        tools:replace="android:name"
+        android:icon="@mipmap/logo"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".base.HomeActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <!--报告详情-->
+        <activity android:name=".modules.report.report_detail.ReportDetailActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".modules.report.write.WriteReportActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".modules.login.LoginActivity" android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--试用详情-->
+        <activity android:name=".modules.try_use.try_use_detail.TryUseDetailActivity" />
+        <activity android:name=".modules.login.validation.ValidationActivity" />
+        <activity android:name=".modules.login.info.SetInfoActivity" />
+        <activity android:name=".modules.personal.setting.SettingActivity" />
+        <activity android:name=".modules.personal.accout_safe.AccountSafeActivity" />
+        <activity android:name=".modules.personal.change_pwd.ChangePwdActivity" />
+        <activity android:name=".modules.personal.account_address.AccountAddressActivity" />
+        <activity android:name=".modules.personal.account_address.add.NewAddAddressActivity" />
+        <activity android:name=".modules.personal.message.MessageActivity" />
+        <activity android:name=".modules.report.other_info.OtherInformationActivity"/>
+        <activity android:name=".modules.personal.my_try.MyTryActivity" />
+        <activity android:name=".modules.personal.my_collection.MyCollectionActivity" />
+        <activity android:name=".modules.personal.my_report.MyReportActivity" />
+        <activity android:name=".modules.personal.integral_mall.IntegralMallActivity" />
+        <!--ImmersionBar适配华为（huawei）刘海屏-->
+        <meta-data
+            android:name="android.notch_support"
+            android:value="true"/>
+        <!--适配小米（xiaomi）刘海屏-->
+        <meta-data
+            android:name="notch.config"
+            android:value="portrait|landscape" />
+    </application>
+
+</manifest>

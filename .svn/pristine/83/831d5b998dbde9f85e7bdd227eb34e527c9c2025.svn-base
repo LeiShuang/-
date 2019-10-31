@@ -1,0 +1,44 @@
+package com.zfsoft.zfsoft_product.di;
+
+import dagger.internal.Factory;
+import dagger.internal.Preconditions;
+import javax.annotation.Generated;
+import javax.inject.Provider;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+
+@Generated(
+  value = "dagger.internal.codegen.ComponentProcessor",
+  comments = "https://google.github.io/dagger"
+)
+public final class NetModule_ProvideOkHttpClientFactory implements Factory<OkHttpClient> {
+  private final NetModule module;
+
+  private final Provider<HttpLoggingInterceptor> loggingInterceptorProvider;
+
+  public NetModule_ProvideOkHttpClientFactory(
+      NetModule module, Provider<HttpLoggingInterceptor> loggingInterceptorProvider) {
+    assert module != null;
+    this.module = module;
+    assert loggingInterceptorProvider != null;
+    this.loggingInterceptorProvider = loggingInterceptorProvider;
+  }
+
+  @Override
+  public OkHttpClient get() {
+    return Preconditions.checkNotNull(
+        module.provideOkHttpClient(loggingInterceptorProvider.get()),
+        "Cannot return null from a non-@Nullable @Provides method");
+  }
+
+  public static Factory<OkHttpClient> create(
+      NetModule module, Provider<HttpLoggingInterceptor> loggingInterceptorProvider) {
+    return new NetModule_ProvideOkHttpClientFactory(module, loggingInterceptorProvider);
+  }
+
+  /** Proxies {@link NetModule#provideOkHttpClient(HttpLoggingInterceptor)}. */
+  public static OkHttpClient proxyProvideOkHttpClient(
+      NetModule instance, HttpLoggingInterceptor loggingInterceptor) {
+    return instance.provideOkHttpClient(loggingInterceptor);
+  }
+}

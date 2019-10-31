@@ -1,0 +1,102 @@
+package com.zfsoft.zfsoft_product.base;
+
+import android.support.v4.app.Fragment;
+import com.zfsoft.zfsoft_product.modules.home.HomeFragment;
+import com.zfsoft.zfsoft_product.modules.personal.PersonalFragment;
+import com.zfsoft.zfsoft_product.modules.report.ReportFragment;
+import com.zfsoft.zfsoft_product.modules.try_use.TryUseFragment;
+import dagger.MembersInjector;
+import dagger.android.DispatchingAndroidInjector;
+import javax.annotation.Generated;
+import javax.inject.Provider;
+
+@Generated(
+  value = "dagger.internal.codegen.ComponentProcessor",
+  comments = "https://google.github.io/dagger"
+)
+public final class HomeActivity_MembersInjector implements MembersInjector<HomeActivity> {
+  private final Provider<DispatchingAndroidInjector<Fragment>> supportFragmentInjectorProvider;
+
+  private final Provider<DispatchingAndroidInjector<android.app.Fragment>>
+      frameworkFragmentInjectorProvider;
+
+  private final Provider<HomeFragment> mGetHomeFragmentProvider;
+
+  private final Provider<TryUseFragment> mGetTryUseFragmentProvider;
+
+  private final Provider<PersonalFragment> mGetPersonalFragmentProvider;
+
+  private final Provider<ReportFragment> mGetReportFragmentProvider;
+
+  public HomeActivity_MembersInjector(
+      Provider<DispatchingAndroidInjector<Fragment>> supportFragmentInjectorProvider,
+      Provider<DispatchingAndroidInjector<android.app.Fragment>> frameworkFragmentInjectorProvider,
+      Provider<HomeFragment> mGetHomeFragmentProvider,
+      Provider<TryUseFragment> mGetTryUseFragmentProvider,
+      Provider<PersonalFragment> mGetPersonalFragmentProvider,
+      Provider<ReportFragment> mGetReportFragmentProvider) {
+    assert supportFragmentInjectorProvider != null;
+    this.supportFragmentInjectorProvider = supportFragmentInjectorProvider;
+    assert frameworkFragmentInjectorProvider != null;
+    this.frameworkFragmentInjectorProvider = frameworkFragmentInjectorProvider;
+    assert mGetHomeFragmentProvider != null;
+    this.mGetHomeFragmentProvider = mGetHomeFragmentProvider;
+    assert mGetTryUseFragmentProvider != null;
+    this.mGetTryUseFragmentProvider = mGetTryUseFragmentProvider;
+    assert mGetPersonalFragmentProvider != null;
+    this.mGetPersonalFragmentProvider = mGetPersonalFragmentProvider;
+    assert mGetReportFragmentProvider != null;
+    this.mGetReportFragmentProvider = mGetReportFragmentProvider;
+  }
+
+  public static MembersInjector<HomeActivity> create(
+      Provider<DispatchingAndroidInjector<Fragment>> supportFragmentInjectorProvider,
+      Provider<DispatchingAndroidInjector<android.app.Fragment>> frameworkFragmentInjectorProvider,
+      Provider<HomeFragment> mGetHomeFragmentProvider,
+      Provider<TryUseFragment> mGetTryUseFragmentProvider,
+      Provider<PersonalFragment> mGetPersonalFragmentProvider,
+      Provider<ReportFragment> mGetReportFragmentProvider) {
+    return new HomeActivity_MembersInjector(
+        supportFragmentInjectorProvider,
+        frameworkFragmentInjectorProvider,
+        mGetHomeFragmentProvider,
+        mGetTryUseFragmentProvider,
+        mGetPersonalFragmentProvider,
+        mGetReportFragmentProvider);
+  }
+
+  @Override
+  public void injectMembers(HomeActivity instance) {
+    if (instance == null) {
+      throw new NullPointerException("Cannot inject members into a null reference");
+    }
+    dagger.android.support.DaggerAppCompatActivity_MembersInjector.injectSupportFragmentInjector(
+        instance, supportFragmentInjectorProvider);
+    dagger.android.support.DaggerAppCompatActivity_MembersInjector.injectFrameworkFragmentInjector(
+        instance, frameworkFragmentInjectorProvider);
+    instance.mGetHomeFragment = mGetHomeFragmentProvider.get();
+    instance.mGetTryUseFragment = mGetTryUseFragmentProvider.get();
+    instance.mGetPersonalFragment = mGetPersonalFragmentProvider.get();
+    instance.mGetReportFragment = mGetReportFragmentProvider.get();
+  }
+
+  public static void injectMGetHomeFragment(
+      HomeActivity instance, Provider<HomeFragment> mGetHomeFragmentProvider) {
+    instance.mGetHomeFragment = mGetHomeFragmentProvider.get();
+  }
+
+  public static void injectMGetTryUseFragment(
+      HomeActivity instance, Provider<TryUseFragment> mGetTryUseFragmentProvider) {
+    instance.mGetTryUseFragment = mGetTryUseFragmentProvider.get();
+  }
+
+  public static void injectMGetPersonalFragment(
+      HomeActivity instance, Provider<PersonalFragment> mGetPersonalFragmentProvider) {
+    instance.mGetPersonalFragment = mGetPersonalFragmentProvider.get();
+  }
+
+  public static void injectMGetReportFragment(
+      HomeActivity instance, Provider<ReportFragment> mGetReportFragmentProvider) {
+    instance.mGetReportFragment = mGetReportFragmentProvider.get();
+  }
+}

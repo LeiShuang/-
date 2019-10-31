@@ -1,0 +1,39 @@
+package com.zfsoft.zfsoft_product.modules.report.write;
+
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+
+import java.util.List;
+
+/**
+ * 创建日期：2019/1/19 on 13:40
+ * 描述:发布报告viewpager适配器
+ * 作者:Ls
+ */
+public class WriteReportViewPagerAdapter extends FragmentPagerAdapter {
+    private List<Fragment> mFragmentLists;
+    private List<String> bottomTitles;
+    public WriteReportViewPagerAdapter(FragmentManager fm, List<Fragment> fragmentLists,List<String> titleLists) {
+        super(fm);
+        mFragmentLists = fragmentLists;
+        bottomTitles = titleLists;
+    }
+
+    @Override
+    public Fragment getItem(int position) {
+        return mFragmentLists.get(position);
+    }
+
+    @Override
+    public int getCount() {
+        return bottomTitles.size();
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return bottomTitles.get(position);
+    }
+}

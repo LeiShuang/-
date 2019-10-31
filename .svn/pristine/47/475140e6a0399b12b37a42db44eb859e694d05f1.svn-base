@@ -1,0 +1,67 @@
+package com.zfsoft.zfsoft_product.modules.login.info;
+
+import android.os.Bundle;
+import android.view.View;
+
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseFragment;
+
+import javax.inject.Inject;
+
+/**
+ * Created by ckw
+ * on 2019/1/17.
+ */
+public class SetInfoFragment extends BaseFragment {
+
+    @Inject
+    public SetInfoFragment() {
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.fragment_set_info;
+    }
+
+    @Override
+    protected void initVariables() {
+
+    }
+
+    @Override
+    protected void handleBundle(Bundle bundle) {
+
+    }
+
+    @Override
+    protected void operateViews(View view) {
+
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    public void initPresenter() {
+
+    }
+
+    @Override
+    protected boolean immersionEnabled() {
+        return true;
+    }
+
+    @Override
+    protected void immersionInit() {
+        super.immersionInit();
+//        if (immersionBar == null) {
+//            return;
+//        }
+//        immersionBar.statusBarDarkFont(true);
+//        immersionBar.statusBarColor(R.color.colorWhite)
+//                .fitsSystemWindows(true)
+//                .init();
+    }
+}

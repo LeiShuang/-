@@ -1,0 +1,166 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.mob.sdk'
+apply plugin: 'realm-android'
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.zfsoft.zfsoft_product"
+        minSdkVersion 19
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+
+        /**
+         * 腾讯小视频ndk配置
+         * */
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a"
+        }
+        manifestPlaceholders = [
+                app_package_name: "com.zfsoft.zfsoft_product"
+        ]
+    }
+
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+
+MobSDK {
+    /*appKey "297675bf5a7d0"
+    appSecret "4458de019a38ed907f2fac483ed3f3bf"*/
+    appKey "297675bf5a7d0"
+    appSecret "4458de019a38ed907f2fac483ed3f3bf"
+   /* appKey "d580ad56b4b5"
+    appSecret "7fcae59a62342e7e2759e9e397c82bdd"*/
+    SMSSDK {}
+    ShareSDK {
+        devInfo {
+            //已填写
+            SinaWeibo {
+                appKey "2280602709"
+                appSecret "481f3b45c166f4ec2730149a4a4137dc"
+                callbackUri "http://www.sharesdk.cn"
+            }
+
+            //已通过
+            Wechat {
+                appId "wxadc2f39cdfc88fe7"
+                appSecret "e4e16c5ce5acfa9abf480a102de94d5e"
+                withShareTicket true
+                miniprogramType 0
+                enable true
+            }
+            //已填写
+            QQ {
+                appId "101539418"
+                appKey "67f062bf2548928046eca9b7d6e52cfd"
+            }
+
+            WechatMoments {
+                appId "wxadc2f39cdfc88fe7"
+                appSecret "e4e16c5ce5acfa9abf480a102de94d5e"
+            }
+            QZone {
+
+                appId "101539418"
+                appKey "67f062bf2548928046eca9b7d6e52cfd"
+                shareByAppClient true
+                bypassApproval false
+                enable true
+            }
+           /* WechatFavorite {
+                appId "wx4868b35061f87885"
+                appSecret "64020361b8ec4c99936c0e3999a9f249"
+            }*/
+        }
+    }
+}
+dependencies {
+    implementation project(path: ':imagepicker')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar'], dir: 'libs/upload')
+    implementation project(':lib_tccommon')
+    implementation project(':lib_tcvideoediter')
+    implementation project(':lib_tcvideojoiner')
+    implementation project(':lib_tcvideorecord')
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support:support-v4:27.1.1'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    //
+    implementation 'devlight.io:navigationtabbar:1.2.5'
+    //butterKnife
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    //轮播图
+    implementation 'com.youth.banner:banner:1.4.10'
+    //RxTool
+    //基础工具库
+    implementation 'com.github.vondear.RxTool:RxKit:v2.2.7'
+    // Dagger dependencies
+    annotationProcessor "com.google.dagger:dagger-compiler:2.11"
+    compileOnly 'org.glassfish:javax.annotation:10.0-b28'
+    implementation 'com.google.dagger:dagger:2.11'
+    implementation 'com.google.dagger:dagger-android:2.11'
+    implementation 'com.google.dagger:dagger-android-support:2.11'
+    annotationProcessor "com.google.dagger:dagger-android-processor:2.11"
+    //network retrofit+rxjava+okhttp 网络请求相关
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.3'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    //android权限管理
+    implementation 'pub.devrel:easypermissions:1.1.1'
+    //沉浸式状态栏
+    implementation 'com.gyf.immersionbar:immersionbar:2.3.3-beta09'
+    //SmartRefersh
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-18'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-18'
+    //没有使用特殊Header，可以不加这行
+    //BRVAHelper
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.44'
+    //加载动画
+    implementation 'com.github.zzz40500:android-shapeLoadingView:1.0.3.2'
+    //圆形图片
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+    //圆角背景
+    implementation 'com.gcssloop.widget:rclayout:1.8.1'
+    //选择器
+    implementation 'com.github.fanhua1994:WheelPicker:1.0.2'
+    //倒计时控件
+    implementation 'com.github.iwgang:countdownview:2.1.6'
+    //视频播放器
+    implementation 'com.shuyu:GSYVideoPlayer:6.0.3'
+    implementation 'com.android.support:multidex:1.0.3'
+    //选择器
+    implementation 'com.contrarywind:Android-PickerView:4.1.7'
+    /*implementation files('libs/upload/bolts-tasks-1.4.0.jar')
+    implementation files('libs/upload/cosxml-5.4.10.jar')
+    //implementation files('libs/upload/okhttp-3.8.1.jar')
+    implementation files('libs/upload/okio-1.13.0.jar')
+    implementation files('libs/upload/qcloud-foundation-1.5.1.jar')
+    implementation files('libs/upload/xstream-1.4.7.jar')*/
+}

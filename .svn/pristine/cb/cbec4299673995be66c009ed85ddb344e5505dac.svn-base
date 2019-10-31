@@ -1,0 +1,189 @@
+package com.zfsoft.zfsoft_product.modules.login.login_new;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.vondear.rxtool.RxActivityTool;
+import com.vondear.rxtool.view.RxToast;
+import com.zfsoft.zfsoft_product.R;
+import com.zfsoft.zfsoft_product.base.BaseFragment;
+import com.zfsoft.zfsoft_product.base.HomeActivity;
+import com.zfsoft.zfsoft_product.common.Config;
+import com.zfsoft.zfsoft_product.entity.IsLogin;
+import com.zfsoft.zfsoft_product.entity.SignBean;
+import com.zfsoft.zfsoft_product.entity.User;
+import com.zfsoft.zfsoft_product.modules.login.LoginContract;
+import com.zfsoft.zfsoft_product.modules.login.LoginPresenter;
+import com.zfsoft.zfsoft_product.modules.login.validation.ValidationActivity;
+import com.zfsoft.zfsoft_product.utils.DbHelper;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+
+/**
+ * Created by ckw
+ * on 2019/1/22.
+ */
+public class NewLoginFragment extends BaseFragment implements LoginContract.View {
+
+    @Inject
+    public NewLoginFragment() {
+    }
+
+    @Inject
+    LoginPresenter mLoginPresenter;
+
+    @BindView(R.id.tv_type_sms)
+    TextView mTvTypeSms;
+    @BindView(R.id.view_sms)
+    View mViewSms;
+    @BindView(R.id.tv_type_pwd)
+    TextView mTvTypePwd;
+    @BindView(R.id.view_pwd)
+    View mViewPwd;
+    @BindView(R.id.et_login)
+    EditText mEtPhone;
+    @BindView(R.id.et_pwd)
+    EditText mEtPassword;
+    @BindView(R.id.btn_login)
+    Button mBtnLogin;
+
+    private String mType = "sms";//登陆方式 验证码sms 密码pwd
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.fragment_login;
+    }
+
+    @Override
+    protected void initVariables() {
+
+    }
+
+    @Override
+    protected void handleBundle(Bundle bundle) {
+
+    }
+
+    @Override
+    protected void operateViews(View view) {
+
+    }
+
+    @Override
+    protected void initListener() {
+        mBtnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String phone = mEtPhone.getText().toString().trim();
+
+                if(mType.equals("pwd")){
+                    if (judgePhoneValid(phone)){
+                        mLoginPresenter.loginByPassword(Config.HSK,phone,mEtPassword.getText().toString().trim());
+                    }
+
+                }else {
+                    if (judgePhoneValid(phone)){
+                        Intent intent = new Intent(getContext(), ValidationActivity.class);
+                        intent.putExtra("phone",phone);
+                        startActivity(intent);
+
+                    }
+
+                }
+            }
+        });
+        mTvTypePwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTvTypePwd.setTextColor(getResources().getColor(R.color.colorWhite));
+                mTvTypeSms.setTextColor(getResources().getColor(R.color.login_change_color));
+                mViewPwd.setVisibility(View.VISIBLE);
+                mViewSms.setVisibility(View.INVISIBLE);
+                mType = "pwd";
+                mEtPassword.setVisibility(View.VISIBLE);
+            }
+        });
+
+        mTvTypeSms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTvTypeSms.setTextColor(getResources().getColor(R.color.colorWhite));
+                mTvTypePwd.setTextColor(getResources().getColor(R.color.login_change_color));
+                mViewPwd.setVisibility(View.INVISIBLE);
+                mViewSms.setVisibility(View.VISIBLE);
+                mType = "sms";
+                mEtPassword.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    @Override
+    public void initPresenter() {
+        mLoginPresenter.takeView(this);
+    }
+
+    private boolean judgePhoneValid(String phone){
+        if(phone.isEmpty()){
+            RxToast.showToast("手机号不能为空哦");
+            return false;
+        }
+        if(!isMobileNO(phone)){
+            RxToast.showToast("请输入正确的手机号");
+            return false;
+        }
+
+        return true;
+    }
+
+    private  boolean isMobileNO(String mobileNums) {
+        /**
+         * 判断字符串是否符合手机号码格式
+         * 移动号段: 134,135,136,137,138,139,147,150,151,152,157,158,159,170,178,182,183,184,187,188
+         * 联通号段: 130,131,132,145,155,156,170,171,175,176,185,186
+         * 电信号段: 133,149,153,170,173,177,180,181,189
+         * @param str
+         * @return 待检测的字符串
+         */
+
+        // "[1]"代表下一位为数字可以是几，"[0-9]"代表可以为0-9中的一个，
+        // "[5,7,9]"表示可以是5,7,9中的任意一位,[^4]表示除4以外的任何一个,
+        // \\d{9}"代表后面是可以是0～9的数字，有9位。
+        String telRegex = "^((13[0-9])|(14[5,7,9])|(15[^4])|(18[0-9])|(17[0,1,3,5,6,7,8])|(166))\\d{8}$";
+        if (TextUtils.isEmpty(mobileNums))
+            return false;
+        else
+            return mobileNums.matches(telRegex);
+    }
+
+    //记住用户登录的状态
+    private void setUserIsLogin() {
+        IsLogin isLogin = new IsLogin();
+        isLogin.setLogin(true);
+        DbHelper.saveValueBySharedPreferences(mContext, Config.DB.IS_LOGIN_NAME, Config.DB.IS_LOGIN_KEY, isLogin);
+    }
+
+    @Override
+    public void loginByPasswordSuccess(SignBean signBean) {
+        User user = new User();
+        user.setUserid("3");
+        user.setPhone("16685265858");
+        user.setXm("小明");
+        DbHelper.saveValueBySharedPreferences(mContext, Config.DB.USER_NAME, Config.DB.USER_KEY, user);
+        RxToast.showToast("登陆成功");
+        setUserIsLogin();
+        RxActivityTool.skipActivity(getContext(), HomeActivity.class);
+    }
+
+    @Override
+    public void loginByPasswordFailure(String errorMsg) {
+        RxToast.showToast(errorMsg);
+    }
+}
